@@ -10,6 +10,8 @@ import GridView from './GridView';
 import LedgerMaster from './LedgerMaster';
 import SalesInvoice from './SalesInvoice';
 import EntityProperties from './EntityProperties';
+import TrialBalance from './TrialBalance';
+import StockSummary from './StockSummary';
 
 function getComponent(tab, onQuickAccess, darkMode, quickAccessItems, onToggleQuickAccess) {
   if (!tab) return <Dashboard onQuickAccess={onQuickAccess} darkMode={darkMode} quickAccessItems={quickAccessItems} onToggleQuickAccess={onToggleQuickAccess} />;
@@ -25,6 +27,14 @@ function getComponent(tab, onQuickAccess, darkMode, quickAccessItems, onToggleQu
 
   if (href === '/Setup/Security/EntityProperties') {
     return <EntityProperties darkMode={darkMode} />;
+  }
+
+  if (href === '/Account/Reporting/TrialBalance') {
+    return <TrialBalance darkMode={darkMode} />;
+  }
+
+  if (href === '/Inventory/Reporting/StockSummary') {
+    return <StockSummary darkMode={darkMode} />;
   }
 
   const isForm =

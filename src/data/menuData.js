@@ -139,6 +139,7 @@ export const menuData = [
               { "text": "Pending Customer For Approval", "href": "/Account/Creation/PendingCustomer" }
             ]
           },
+          { "text": "Trial Balance", "href": "/Account/Reporting/TrialBalance" },
           { "text": "DayBook", "href": "/Account/Reporting/DayBook" },
           {
             "text": "Annual Report",
@@ -294,7 +295,8 @@ export const menuData = [
           },
           { "text": "Product Wise Summary", "href": "/Inventory/Reporting/ProductMonthlySummary" },
           { "text": "Near Expiry", "href": "/Inventory/Reporting/NearExpiry" },
-          { "text": "Stock Transfer Register", "href": "/Inventory/Reporting/StockTransfer" }
+          { "text": "Stock Transfer Register", "href": "/Inventory/Reporting/StockTransfer" },
+          { "text": "Stock Summary", "href": "/Inventory/Reporting/StockSummary" }
         ]
       }
     ]
