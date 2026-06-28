@@ -112,7 +112,6 @@ body {
   font-size: 13.5px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  overflow: hidden;
 }
 
 .font-mono { font-family: var(--font-mono) !important; letter-spacing: -0.02em; }

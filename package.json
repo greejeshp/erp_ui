@@ -16,8 +16,11 @@
     "ag-grid-react": "^35.3.1",
     "antd": "^6.4.4",
     "dayjs": "^1.11.21",
+    "framer-motion": "^12.42.0",
+    "lucide-react": "^1.22.0",
     "react": "^19.2.6",
-    "react-dom": "^19.2.6"
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.18.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

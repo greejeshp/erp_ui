@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import CreateNewPanel from './CreateNewPanel';
 import { menuData } from '../data/menuData';
+import { CompanySwitcher } from '../App';
 
 const MODULE_ICONS = {
   'Quick Access':         <ThunderboltOutlined style={{ color: '#f59e0b' }} />,

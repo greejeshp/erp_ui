@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ConfigProvider } from 'antd';
+import { HashRouter } from 'react-router-dom';
 import App from './App';
 import './index.css';
+import { OnboardingProvider } from './context/OnboardingContext';
 import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -15,7 +17,7 @@ const theme = {
     colorError: '#ef4444',
     colorInfo: '#3b82f6',
     borderRadius: 8,
-    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+    fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif",
     fontSize: 13,
     colorBgContainer: '#ffffff',
     colorBgLayout: '#f0f2f5',
@@ -58,6 +60,7 @@ const theme = {
       headerBg: '#fafafa',
     },
     Tabs: {
+      flex: 1,
       inkBarColor: '#4f46e5',
       itemActiveColor: '#4f46e5',
       itemSelectedColor: '#4f46e5',
@@ -66,5 +69,9 @@ const theme = {
 };
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <App />
+  <OnboardingProvider>
+    <HashRouter>
+      <App />
+    </HashRouter>
+  </OnboardingProvider>
 );
