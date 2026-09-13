@@ -1,57 +1,49 @@
-name: Deploy static content to Pages
+name: Deploy to Windows VM via Self-Hosted Runner (Non-Admin)
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: [ master, main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    branches:
+      - master
 
 jobs:
-  # Single deploy job since we're just deploying; feel free to split into build and deploy jobs
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: [self-hosted, Windows, X64]
+
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build Production SPA Bundle
         run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - name: Deploy Dist to User Web Directory
+        run: |
+          $targetDir = "$HOME\pivotal-erp-web"
+          if (!(Test-Path $targetDir)) {
+            New-Item -ItemType Directory -Path $targetDir -Force
+          }
+          Copy-Item -Path "dist\*" -Destination $targetDir -Recurse -Force
+        shell: powershell
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository build output directory
-          path: './dist'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Ensure Web Server is Running on Port 8081
+        run: |
+          $port = 8081
+          $targetDir = "$HOME\pivotal-erp-web"
+          $conn = Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue
+          if (-not $conn) {
+            Write-Host "Port $port is not listening. Launching background server..."
+            Start-Process powershell -WindowStyle Hidden -ArgumentList "-Command", "npx --yes serve -s '$targetDir' -l $port"
+            Start-Sleep -Seconds 3
+          } else {
+            Write-Host "Port $port is active and serving updated static files from $targetDir."
+          }
+        shell: powershell
