@@ -5,42 +5,143 @@
    ═══════════════════════════════════════════════════════════════ */
 
 /* ── The original/default palette (stored for reset) ─────────── */
-export const DEFAULT_PALETTE_ID = 'emerald-tangerine';
+export const DEFAULT_PALETTE_ID = 'nordic-deep-teal';
 
-export const DEFAULT_PALETTE = {
-  id: DEFAULT_PALETTE_ID,
-  name: 'Emerald Tangerine Morning',
-  description: 'The original Dynamic ERP palette — forest green with tangerine accents.',
-  swatches: ['#28694b', '#ff5f2d', '#ebebdc', '#ffffff', '#6e6e73'],
+export const NORDIC_DEEP_TEAL_PALETTE = {
+  id: 'nordic-deep-teal',
+  name: 'Nordic Deep Teal',
+  subtitle: 'OPTION 3',
+  tag: 'Linear Style',
+  description: 'Distinguished executive look, lowest eye glare on data tables.',
+  swatches: ['#092825', '#0F766E', '#14B8A6', '#F7F9F9'],
+  previewItem: {
+    title: 'Ledger Annexure 13',
+    badge: 'Reconciled',
+    amount: 'रू 62,72,500',
+    button: 'Sync Ledger',
+  },
   vars: {
-    '--primary':              '#28694b',
-    '--primary-mid':          '#1f543c',
-    '--primary-light':        '#e5efe9',
-    '--primary-hover':        '#1b4733',
-    '--accent-blue':          '#ff5f2d',
-    '--accent':               '#ff5f2d',
-    '--bg-layout':            '#ebebdc',
-    '--bg-app':               '#ebebdc',
-    '--bg-card':              '#ffffff',
-    '--bg-sidebar':           '#ffffff',
-    '--border-color':         '#dcdccc',
-    '--border-input':         '#c1c1b3',
-    '--text-main':            '#29292c',
-    '--text-secondary':       '#6e6e73',
-    '--text-muted':           '#a1a195',
-    '--text-sidebar':         '#424245',
-    '--text-sidebar-hover':   '#28694b',
-    '--text-logo':            '#28694b',
-    '--bg-sidebar-hover':     '#e5efe9',
-    '--gray-50':              '#f6f6f2',
-    '--gray-100':             '#ebebdc',
-    '--gray-200':             '#dcdccc',
+    '--primary':              '#0F766E',
+    '--primary-mid':          '#115E59',
+    '--primary-light':        '#E6F4F2',
+    '--primary-hover':        '#0D5E58',
+    '--accent-blue':          '#14B8A6',
+    '--accent':               '#14B8A6',
+    '--bg-layout':            '#F7F9F9',
+    '--bg-app':               '#F7F9F9',
+    '--bg-card':              '#FFFFFF',
+    '--bg-sidebar':           '#092825',
+    '--border-color':         '#E2E8F0',
+    '--border-input':         '#CBD5E1',
+    '--text-main':            '#0F172A',
+    '--text-secondary':       '#475569',
+    '--text-muted':           '#64748B',
+    '--text-sidebar':         'rgba(255, 255, 255, 0.85)',
+    '--text-sidebar-hover':   '#14B8A6',
+    '--text-logo':            '#0F766E',
+    '--bg-sidebar-hover':     '#0F3D39',
+    '--gray-50':              '#F8FAFC',
+    '--gray-100':             '#F1F5F9',
+    '--gray-200':             '#E2E8F0',
+    '--finance-blue':         '#0F766E',
+    '--color-primary':        '#0F766E',
+    '--color-accent':         '#14B8A6',
+    '--color-debit':          '#0F766E',
+    '--color-credit':         '#14B8A6',
+    '--heading-color':        '#0F766E',
+    '--sidebar-bg':           'linear-gradient(180deg, #092825 0%, #0F3D39 100%)',
   },
 };
 
+export const DEFAULT_PALETTE = NORDIC_DEEP_TEAL_PALETTE;
+
 /* ── Color palettes ────────────────────────────────────────────── */
 export const COLOR_PALETTES = [
-  DEFAULT_PALETTE,
+  NORDIC_DEEP_TEAL_PALETTE,
+  {
+    id: 'fintech-precision',
+    name: 'Fintech Precision',
+    subtitle: 'OPTION 1',
+    tag: 'Logo Matched',
+    description: 'Modern 2026 Ramp/Stripe feel, exact fit for Pivotal logo.',
+    swatches: ['#0A1128', '#0084E6', '#48BB28', '#F8FAFC'],
+    previewItem: {
+      title: 'Sales Invoice #2081',
+      badge: 'IRD Matched',
+      amount: 'रू 12,40,000',
+      button: 'Post Voucher',
+    },
+    vars: {
+      '--primary':            '#0084E6',
+      '--primary-mid':        '#0069CC',
+      '--primary-light':      '#EBF5FF',
+      '--primary-hover':      '#005BB5',
+      '--accent-blue':        '#48BB28',
+      '--accent':             '#48BB28',
+      '--bg-layout':          '#F8FAFC',
+      '--bg-app':             '#F8FAFC',
+      '--bg-card':            '#FFFFFF',
+      '--bg-sidebar':         '#0A1128',
+      '--border-color':       '#E2E8F0',
+      '--border-input':       '#CBD5E1',
+      '--text-main':          '#0F172A',
+      '--text-secondary':     '#475569',
+      '--text-muted':         '#64748B',
+      '--text-sidebar':       'rgba(255, 255, 255, 0.85)',
+      '--text-sidebar-hover': '#0084E6',
+      '--text-logo':          '#0084E6',
+      '--bg-sidebar-hover':   '#131E3A',
+      '--finance-blue':       '#0084E6',
+      '--color-primary':      '#0084E6',
+      '--color-accent':       '#48BB28',
+      '--color-debit':        '#0084E6',
+      '--color-credit':       '#48BB28',
+      '--heading-color':      '#0084E6',
+      '--sidebar-bg':         'linear-gradient(180deg, #0A1128 0%, #131E3A 100%)',
+    },
+  },
+  {
+    id: 'institutional-cobalt',
+    name: 'Institutional Cobalt',
+    subtitle: 'OPTION 2',
+    tag: 'SAP / Oracle',
+    description: 'Traditional banking stability, maximum CFO audit trust.',
+    swatches: ['#0F172A', '#0F52BA', '#E2E8F0', '#FFFFFF'],
+    previewItem: {
+      title: 'Audit Trial Balance',
+      badge: 'NFRS Valid',
+      amount: 'रू 4,82,50,000',
+      button: 'Generate P&L',
+    },
+    vars: {
+      '--primary':            '#0F52BA',
+      '--primary-mid':        '#0D459D',
+      '--primary-light':      '#EEF4FD',
+      '--primary-hover':      '#0A3882',
+      '--accent-blue':        '#3B82F6',
+      '--accent':             '#3B82F6',
+      '--bg-layout':          '#F8FAFC',
+      '--bg-app':             '#F8FAFC',
+      '--bg-card':            '#FFFFFF',
+      '--bg-sidebar':         '#0F172A',
+      '--border-color':       '#E2E8F0',
+      '--border-input':       '#CBD5E1',
+      '--text-main':          '#0F172A',
+      '--text-secondary':     '#475569',
+      '--text-muted':         '#64748B',
+      '--text-sidebar':       'rgba(255, 255, 255, 0.85)',
+      '--text-sidebar-hover': '#0F52BA',
+      '--text-logo':          '#0F52BA',
+      '--bg-sidebar-hover':   '#1E293B',
+      '--finance-blue':       '#0F52BA',
+      '--color-primary':      '#0F52BA',
+      '--color-accent':       '#3B82F6',
+      '--color-debit':        '#0F52BA',
+      '--color-credit':       '#3B82F6',
+      '--heading-color':      '#0F52BA',
+      '--sidebar-bg':         'linear-gradient(180deg, #0F172A 0%, #1E293B 100%)',
+    },
+  },
 
   {
     id: 'heirloom-plum-brunch',
@@ -251,11 +352,41 @@ export const FONT_OPTIONS = [
 ];
 
 /* ── Apply a palette to the document root ──────────────────────── */
-export function applyPalette(palette) {
+export function applyPalette(palette, sidebarMode = null) {
   const root = document.documentElement;
   Object.entries(palette.vars).forEach(([key, value]) => {
     root.style.setProperty(key, value);
   });
+
+  // Determine effective sidebar mode: passed mode > palette default > 'dark'
+  const effectiveSidebarMode = sidebarMode || palette.sidebarMode || (palette.vars['--bg-sidebar'] === '#ffffff' ? 'light' : 'dark');
+
+  if (effectiveSidebarMode === 'light') {
+    // Light sidebar theme
+    root.style.setProperty('--sidebar-type', 'light');
+    root.style.setProperty('--bg-sidebar', '#FFFFFF');
+    root.style.setProperty('--sidebar-bg', '#FFFFFF');
+    root.style.setProperty('--sidebar-border', 'rgba(0, 0, 0, 0.08)');
+    root.style.setProperty('--sidebar-text', '#1E293B');
+    root.style.setProperty('--text-sidebar', '#1E293B');
+    root.style.setProperty('--text-sidebar-hover', palette.vars['--primary'] || '#0F766E');
+    root.style.setProperty('--bg-sidebar-hover', palette.vars['--primary-light'] || '#E6F4F2');
+  } else {
+    // Dark sidebar theme (matches palette dark tone)
+    const darkBg = palette.vars['--bg-sidebar'] && palette.vars['--bg-sidebar'] !== '#ffffff' 
+      ? palette.vars['--bg-sidebar'] 
+      : (palette.swatches[0] || '#092825');
+    const darkGrad = palette.vars['--sidebar-bg'] || `linear-gradient(180deg, ${darkBg} 0%, #0F3D39 100%)`;
+
+    root.style.setProperty('--sidebar-type', 'dark');
+    root.style.setProperty('--bg-sidebar', darkBg);
+    root.style.setProperty('--sidebar-bg', darkGrad);
+    root.style.setProperty('--sidebar-border', 'rgba(255, 255, 255, 0.08)');
+    root.style.setProperty('--sidebar-text', 'rgba(255, 255, 255, 0.85)');
+    root.style.setProperty('--text-sidebar', 'rgba(255, 255, 255, 0.85)');
+    root.style.setProperty('--text-sidebar-hover', palette.vars['--accent'] || '#14B8A6');
+    root.style.setProperty('--bg-sidebar-hover', 'rgba(255, 255, 255, 0.08)');
+  }
 }
 
 /* ── Apply a font to the document root ────────────────────────── */
@@ -280,21 +411,25 @@ export function resetToDefault() {
   const defaultVarKeys = Object.keys(DEFAULT_PALETTE.vars);
   defaultVarKeys.forEach(key => root.style.removeProperty(key));
   root.style.removeProperty('--font-sans');
+  root.style.removeProperty('--sidebar-type');
   document.body.style.fontFamily = '';
 }
 
 /* ── LocalStorage persistence ─────────────────────────────────── */
 const STORAGE_KEY_PALETTE = 'erp-branding-palette';
 const STORAGE_KEY_FONT    = 'erp-branding-font';
+const STORAGE_KEY_SIDEBAR = 'erp-branding-sidebar-mode';
 
-export function saveBranding(paletteId, fontId) {
+export function saveBranding(paletteId, fontId, sidebarMode = 'dark') {
   localStorage.setItem(STORAGE_KEY_PALETTE, paletteId);
   localStorage.setItem(STORAGE_KEY_FONT, fontId);
+  localStorage.setItem(STORAGE_KEY_SIDEBAR, sidebarMode);
 }
 
 export function loadBranding() {
   return {
-    paletteId: localStorage.getItem(STORAGE_KEY_PALETTE) || DEFAULT_PALETTE_ID,
-    fontId:    localStorage.getItem(STORAGE_KEY_FONT)    || 'montserrat',
+    paletteId:   localStorage.getItem(STORAGE_KEY_PALETTE) || DEFAULT_PALETTE_ID,
+    fontId:      localStorage.getItem(STORAGE_KEY_FONT)    || 'montserrat',
+    sidebarMode: localStorage.getItem(STORAGE_KEY_SIDEBAR) || 'dark',
   };
 }

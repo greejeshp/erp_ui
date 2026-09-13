@@ -9,20 +9,21 @@ import SpotlightSearch from './components/SpotlightSearch';
 import QuickCreateModal from './components/QuickCreateModal';
 import BrandingModal from './components/BrandingModal';
 import { Plus, ChevronDown, Check, LogOut, Upload, ArrowRight, Globe } from 'lucide-react';
-import { OnboardingProvider, useOnboarding } from './context/OnboardingContext';
-import LandingPage from './pages/LandingPage';
-import Step1_AdminDetails from './pages/steps/Step1_AdminDetails';
-import Step2_Payment from './pages/steps/Step2_Payment';
-import Step3_Welcome from './pages/steps/Step3_Welcome';
-import Step4_CompanySetup from './pages/steps/Step4_CompanySetup';
-import Step5_DomainSetup from './pages/steps/Step5_DomainSetup';
-import CustomDomainLogin from './pages/CustomDomainLogin';
-import WorkspaceLookup from './pages/WorkspaceLookup';
+import PublicLayout from './layouts/PublicLayout';
+import LandingPage from './pages/public/LandingPage';
+import LoginPage from './pages/public/LoginPage';
+import SignupPage from './pages/public/SignupPage';
+import TrialPage from './pages/public/TrialPage';
+import BlogPage from './pages/public/BlogPage';
+import ChangePasswordPage from './pages/ChangePasswordPage';
+import { useAuthStore } from './lib/store/authStore';
+import { useThemeStore } from './lib/store/themeStore';
+import { useOnboarding } from './context/OnboardingContext';
 import {
   COLOR_PALETTES, FONT_OPTIONS, DEFAULT_PALETTE_ID,
   applyPalette, applyFont, loadBranding,
 } from './data/brandingConfig';
-import './index.css';
+import './styles/globals.css';
 
 const { Sider, Content } = Layout;
 
@@ -81,18 +82,18 @@ function findMenuItemByHref(nodes, href, module = '') {
 const getTheme = (isDark) => ({
   algorithm: isDark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
   token: {
-    colorPrimary: isDark ? '#1f543c' : '#28694b',
-    colorSuccess: '#0f9d58',
-    colorWarning: '#f29900',
+    colorPrimary: isDark ? '#029d7e' : '#00B894',
+    colorSuccess: '#00B894',
+    colorWarning: '#f59e0b',
     colorError: '#d93025',
-    colorInfo: '#ff5f2d',
+    colorInfo: '#1D4ED8',
     borderRadius: 8,
-    fontFamily: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     fontSize: 13,
-    colorBgContainer: isDark ? '#1c1c1e' : '#ffffff',
-    colorBgLayout: isDark ? '#1c1c1e' : '#ebebdc',
-    colorBorder: isDark ? '#424245' : '#dcdccc',
-    colorText: isDark ? '#ebebdc' : '#29292c',
+    colorBgContainer: isDark ? '#121d3a' : '#ffffff',
+    colorBgLayout: isDark ? '#0B132B' : '#f1f5f9',
+    colorBorder: isDark ? '#1f2d52' : '#e2e8f0',
+    colorText: isDark ? '#f1f5f9' : '#1F2937',
     colorTextSecondary: isDark ? '#a1a195' : '#6e6e73',
     colorTextPlaceholder: isDark ? '#57575b' : '#a1a195',
     boxShadow: '0 1px 3px rgba(110,110,115,0.12), 0 1px 2px rgba(110,110,115,0.08)',
@@ -170,9 +171,19 @@ export function CompanySwitcher() {
   }, []);
 
   const handleAddCompany = () => {
-    update({ companyName: '', bizType: '', industry: '', pan: '', address: '', city: '', size: '', website: '', subdomain: '' });
+    update({
+      companyName: '',
+      bizType: '',
+      industry: '',
+      pan: '',
+      address: '',
+      city: '',
+      size: '',
+      website: '',
+      subdomain: '',
+      showSetupModal: true
+    });
     setOpen(false);
-    navigate('/signup/company');
   };
 
   return (
@@ -309,7 +320,10 @@ function ERPApp({ collapsed, setCollapsed, tabs, activeTabId, setActiveTabId, cl
             onDarkMode={() => setDarkMode(d => !d)}
             onNavigate={openTab}
             onOpenBranding={() => setBrandingOpen(true)}
-            onLogout={() => navigate(`/login/workspace/${data?.subdomain || 'demo'}`)}
+            onLogout={() => {
+              useAuthStore.getState().logout();
+              navigate('/login');
+            }}
           />
 
           <Content style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--bg-layout)' }}>
@@ -401,24 +415,44 @@ const SETUP_BIZ_TYPES = ['Sole Proprietorship', 'Partnership', 'Pvt. Ltd.', 'Ltd
 const SETUP_SIZES = ['1–10', '11–50', '51–200', '201–500', '500+'];
 
 function OnboardingSetupModal() {
-  const { data, update, saveCompany } = useOnboarding();
+  const { data, update, saveCompany, companies } = useOnboarding();
   const [step, setStep] = useState(0); // 0: Company, 1: Domain, 2: Payment, 3: Success
 
   // Company Form State
   const [compForm, setCompForm] = useState({
-    companyName: data.companyName || '',
-    bizType: data.bizType || '',
-    industry: data.industry || '',
-    pan: data.pan || '',
-    address: data.address || '',
-    city: data.city || '',
-    size: data.size || '',
-    website: data.website || '',
+    companyName: '',
+    bizType: '',
+    industry: '',
+    pan: '',
+    address: '',
+    city: '',
+    size: '',
+    website: '',
   });
   const [logoPreview, setLogoPreview] = useState(null);
 
   // Domain Form State
   const [subdomain, setSubdomain] = useState('');
+  
+  // Reset form states when the modal is opened
+  useEffect(() => {
+    if (data.showSetupModal) {
+      setCompForm({
+        companyName: data.companyName || '',
+        bizType: data.bizType || '',
+        industry: data.industry || '',
+        pan: data.pan || '',
+        address: data.address || '',
+        city: data.city || '',
+        size: data.size || '',
+        website: data.website || '',
+      });
+      setSubdomain(data.subdomain || '');
+      setStep(0);
+      setPaid(false);
+      setProcessing(false);
+    }
+  }, [data.showSetupModal]);
   
   // Payment Form State
   const [selectedPlan, setSelectedPlan] = useState('growth');
@@ -494,35 +528,41 @@ function OnboardingSetupModal() {
   };
 
   return (
-    <div style={{
-      position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-      background: 'rgba(8,15,26,0.92)', backdropFilter: 'blur(10px)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-      zIndex: 9999, padding: 20, fontFamily: 'Montserrat, sans-serif'
-    }}>
-      <div style={{
-        width: '100%', maxWidth: step === 0 ? 760 : 540,
-        background: '#0f1d2e', border: '1px solid rgba(255,255,255,0.08)',
-        borderRadius: 20, padding: 32, boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
-        color: '#f0f6ff', overflowY: 'auto', maxHeight: '90vh'
-      }}>
+    <div className="onboarding-modal-overlay">
+      <div className="onboarding-modal-card" style={{ maxWidth: step === 0 ? 760 : 540 }}>
+
+        {/* Close button — only shown when adding an additional company */}
+        {companies.length > 0 && (
+          <button
+            onClick={() => update({ showSetupModal: false })}
+            title="Cancel"
+            style={{
+              position: 'absolute', top: 16, right: 16,
+              background: 'rgba(110,110,115,0.08)',
+              border: '1px solid #dcdccc',
+              borderRadius: '50%', width: 32, height: 32,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', color: '#6e6e73', fontSize: '1rem',
+              transition: 'all 0.2s', lineHeight: 1,
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(217,48,37,0.08)'; e.currentTarget.style.color = '#d93025'; e.currentTarget.style.borderColor = 'rgba(217,48,37,0.3)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(110,110,115,0.08)'; e.currentTarget.style.color = '#6e6e73'; e.currentTarget.style.borderColor = '#dcdccc'; }}
+          >
+            ✕
+          </button>
+        )}
         
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           <span style={{ fontSize: '1.8rem' }}>🎉</span>
-          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '8px 0 4px', color: '#fff' }}>Congratulations, {data.firstName}!</h2>
-          <p style={{ fontSize: '0.82rem', color: '#7e95ae', margin: 0 }}>Your admin account is created. Let's finish configuring your ERP.</p>
+          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, margin: '8px 0 4px', color: '#29292c' }}>Congratulations, {data.firstName}!</h2>
+          <p style={{ fontSize: '0.82rem', color: '#6e6e73', margin: 0 }}>Your admin account is created. Let's finish configuring your ERP.</p>
         </div>
 
         {/* Step progress */}
-        <div style={{ display: 'flex', gap: 6, marginBottom: 30, justifyContent: 'center' }}>
+        <div className="onboarding-modal-step-bar">
           {['Company Profile', 'Workspace URL', 'Payment / Activation'].map((label, i) => (
-            <div key={i} style={{
-              padding: '6px 12px', borderRadius: 8, fontSize: '0.72rem', fontWeight: 700,
-              background: step === i ? 'rgba(14,165,233,0.15)' : 'transparent',
-              border: step === i ? '1px solid #0ea5e9' : '1px solid transparent',
-              color: step === i ? '#fff' : '#7e95ae',
-            }}>
+            <div key={i} className={`step-pill${step === i ? ' active' : ''}`}>
               {label}
             </div>
           ))}
@@ -530,56 +570,56 @@ function OnboardingSetupModal() {
 
         {/* STEP 0: COMPANY SETUP */}
         {step === 0 && (
-          <div>
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 16, color: '#fff' }}>1. Register your company</h3>
+          <div style={{ fontFamily: 'Montserrat, Inter, sans-serif' }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 16, color: '#29292c' }}>1. Register your company</h3>
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 200px', gap: 24, alignItems: 'start' }}>
               {/* Form Fields */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 <div className="p-field" style={{ marginBottom: 0 }}>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: 6 }}>Company Name *</label>
+                  <label className="onboarding-modal-label">Company Name *</label>
                   <input 
-                    style={{ width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: '0.875rem', outline: 'none' }}
+                    className="onboarding-modal-input"
                     value={compForm.companyName} 
                     onChange={e => handleCompanyChange(e.target.value)} 
                     placeholder="E.g. Nepal Traders Pvt. Ltd." 
                   />
-                  {errors.companyName && <span className="p-field-error" style={{ color: '#ef4444', fontSize: '0.72rem', marginTop: 4, display: 'block' }}>{errors.companyName}</span>}
+                  {errors.companyName && <span className="p-field-error">{errors.companyName}</span>}
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
                   <div className="p-field" style={{ marginBottom: 0 }}>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: 6 }}>Business Type *</label>
+                    <label className="onboarding-modal-label">Business Type *</label>
                     <select 
-                      style={{ width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: '0.875rem', outline: 'none', height: 42 }}
+                      className="onboarding-modal-select"
                       value={compForm.bizType} 
                       onChange={e => setCompForm({ ...compForm, bizType: e.target.value })}
                     >
-                      <option value="" style={{ background: '#0f1d2e' }}>Select…</option>
-                      {SETUP_BIZ_TYPES.map(b => <option key={b} value={b} style={{ background: '#0f1d2e' }}>{b}</option>)}
+                      <option value="">Select…</option>
+                      {SETUP_BIZ_TYPES.map(b => <option key={b} value={b}>{b}</option>)}
                     </select>
-                    {errors.bizType && <span className="p-field-error" style={{ color: '#ef4444', fontSize: '0.72rem', marginTop: 4, display: 'block' }}>{errors.bizType}</span>}
+                    {errors.bizType && <span className="p-field-error">{errors.bizType}</span>}
                   </div>
 
                   <div className="p-field" style={{ marginBottom: 0 }}>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: 6 }}>Industry *</label>
+                    <label className="onboarding-modal-label">Industry *</label>
                     <select 
-                      style={{ width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: '0.875rem', outline: 'none', height: 42 }}
+                      className="onboarding-modal-select"
                       value={compForm.industry} 
                       onChange={e => setCompForm({ ...compForm, industry: e.target.value })}
                     >
-                      <option value="" style={{ background: '#0f1d2e' }}>Select…</option>
-                      {SETUP_INDUSTRIES.map(ind => <option key={ind} value={ind} style={{ background: '#0f1d2e' }}>{ind}</option>)}
+                      <option value="">Select…</option>
+                      {SETUP_INDUSTRIES.map(ind => <option key={ind} value={ind}>{ind}</option>)}
                     </select>
-                    {errors.industry && <span className="p-field-error" style={{ color: '#ef4444', fontSize: '0.72rem', marginTop: 4, display: 'block' }}>{errors.industry}</span>}
+                    {errors.industry && <span className="p-field-error">{errors.industry}</span>}
                   </div>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
                   <div className="p-field" style={{ marginBottom: 0 }}>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: 6 }}>PAN / VAT Number</label>
+                    <label className="onboarding-modal-label">PAN / VAT Number</label>
                     <input 
-                      style={{ width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: '0.875rem', outline: 'none' }}
+                      className="onboarding-modal-input"
                       value={compForm.pan} 
                       onChange={e => setCompForm({ ...compForm, pan: e.target.value })} 
                       placeholder="E.g. 123456789" 
@@ -587,22 +627,22 @@ function OnboardingSetupModal() {
                   </div>
 
                   <div className="p-field" style={{ marginBottom: 0 }}>
-                    <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: 6 }}>Company Size</label>
+                    <label className="onboarding-modal-label">Company Size</label>
                     <select 
-                      style={{ width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: '0.875rem', outline: 'none', height: 42 }}
+                      className="onboarding-modal-select"
                       value={compForm.size} 
                       onChange={e => setCompForm({ ...compForm, size: e.target.value })}
                     >
-                      <option value="" style={{ background: '#0f1d2e' }}>Employees</option>
-                      {SETUP_SIZES.map(s => <option key={s} value={s} style={{ background: '#0f1d2e' }}>{s}</option>)}
+                      <option value="">Employees</option>
+                      {SETUP_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                 </div>
 
                 <div className="p-field" style={{ marginBottom: 0 }}>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: '#94a3b8', marginBottom: 6 }}>Address</label>
+                  <label className="onboarding-modal-label">Address</label>
                   <input 
-                    style={{ width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff', fontSize: '0.875rem', outline: 'none' }}
+                    className="onboarding-modal-input"
                     value={compForm.address} 
                     onChange={e => setCompForm({ ...compForm, address: e.target.value })} 
                     placeholder="Street name, Ward" 
@@ -612,11 +652,11 @@ function OnboardingSetupModal() {
 
               {/* Logo Upload Card (Right Pane) */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14, height: '100%' }}>
-                <div style={{ padding: 16, background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 12, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 120 }}>
-                  <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, #0ea5e9, #10b981)', color: '#fff', fontWeight: 900, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10, fontSize: '1.2rem', boxShadow: '0 4px 12px rgba(14,165,233,0.3)' }}>
+                <div style={{ padding: 16, background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 120 }}>
+                  <div style={{ width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg, #00B894, #1D4ED8)', color: '#fff', fontWeight: 900, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10, fontSize: '1.2rem', boxShadow: '0 4px 12px rgba(0,184,148,0.25)' }}>
                     {logoPreview ? <img src={logoPreview} alt="logo" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} /> : (compForm.companyName ? compForm.companyName[0].toUpperCase() : '?')}
                   </div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#fff', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{compForm.companyName || 'My Company'}</div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#1F2937', maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{compForm.companyName || 'My Company'}</div>
                   <div style={{ fontSize: '0.68rem', color: '#64748b', marginTop: 2 }}>Workspace Identity</div>
                 </div>
 
@@ -629,7 +669,7 @@ function OnboardingSetupModal() {
               </div>
             </div>
 
-            <button className="p-btn-primary p-btn-full" onClick={handleCompanySubmit} style={{ marginTop: 24, height: 44, fontSize: '0.9rem', fontWeight: 700 }}>
+            <button className="onboarding-modal-btn-primary" onClick={handleCompanySubmit} style={{ marginTop: 24 }}>
               Continue to URL Setup <ArrowRight size={16} />
             </button>
           </div>
@@ -638,7 +678,7 @@ function OnboardingSetupModal() {
         {/* STEP 1: DOMAIN SETUP */}
         {step === 1 && (
           <div>
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 16, color: '#fff' }}>2. Choose your workspace URL</h3>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 16, color: '#29292c' }}>2. Choose your workspace URL</h3>
             <div className="domain-builder" style={{ margin: 0, padding: 18 }}>
               <div className="domain-builder-label">Custom Subdomain</div>
               <div className="domain-input-row">
@@ -657,8 +697,8 @@ function OnboardingSetupModal() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 12, marginTop: 24 }}>
-              <button className="p-btn-back" onClick={() => setStep(0)} style={{ flex: 1 }}>Back</button>
-              <button className="p-btn-primary" onClick={handleDomainSubmit} style={{ flex: 2 }}>
+              <button className="onboarding-modal-btn-back" onClick={() => setStep(0)}>Back</button>
+              <button className="onboarding-modal-btn-primary" onClick={handleDomainSubmit} style={{ flex: 2 }}>
                 Continue to Activation <ArrowRight size={16} />
               </button>
             </div>
@@ -668,7 +708,7 @@ function OnboardingSetupModal() {
         {/* STEP 2: PAYMENT METHOD */}
         {step === 2 && (
           <div>
-            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 16, color: '#fff' }}>3. Select Plan &amp; Activate</h3>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: 16, color: '#29292c' }}>3. Select Plan &amp; Activate</h3>
             
             {/* Plan selector */}
             <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
@@ -676,13 +716,8 @@ function OnboardingSetupModal() {
                 <button
                   key={key}
                   onClick={() => setSelectedPlan(key)}
-                  style={{
-                    flex: 1, padding: '8px 12px', border: '2px solid', borderRadius: 8, cursor: 'pointer',
-                    borderColor: selectedPlan === key ? '#0ea5e9' : 'rgba(255,255,255,0.08)',
-                    background: selectedPlan === key ? 'rgba(14,165,233,0.08)' : 'rgba(255,255,255,0.02)',
-                    color: selectedPlan === key ? '#0ea5e9' : '#7e95ae',
-                    fontWeight: 700, fontSize: '0.8rem',
-                  }}
+                  className={`onboarding-modal-plan-btn${selectedPlan === key ? ' selected' : ''}`}
+                  style={{ flex: 1, padding: '8px 12px' }}
                 >
                   {p.name} — NPR {p.price}/mo
                 </button>
@@ -695,53 +730,49 @@ function OnboardingSetupModal() {
                 <button
                   key={m.id}
                   onClick={() => setSelectedMethod(m.id)}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: 8, padding: '10px',
-                    border: '2px solid', borderRadius: 8, cursor: 'pointer',
-                    borderColor: selectedMethod === m.id ? '#0ea5e9' : 'rgba(255,255,255,0.08)',
-                    background: selectedMethod === m.id ? 'rgba(14,165,233,0.08)' : 'rgba(255,255,255,0.02)',
-                    color: '#fff', textAlign: 'left'
-                  }}
+                  className={`onboarding-modal-method-btn${selectedMethod === m.id ? ' selected' : ''}`}
                 >
                   <span style={{ fontSize: '1.1rem' }}>{m.icon}</span>
                   <div>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 700 }}>{m.label}</div>
-                    <div style={{ fontSize: '0.62rem', color: '#7e95ae' }}>{m.sub}</div>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#29292c' }}>{m.label}</div>
+                    <div style={{ fontSize: '0.62rem', color: '#6e6e73' }}>{m.sub}</div>
                   </div>
                 </button>
               ))}
             </div>
 
             {selectedMethod === 'connectips' && (
-              <div style={{ background: '#fff', borderRadius: 10, padding: 12, textAlign: 'center', marginBottom: 16, color: '#333' }}>
+              <div style={{ background: '#f6f6f2', border: '1px solid #dcdccc', borderRadius: 10, padding: 12, textAlign: 'center', marginBottom: 16, color: '#29292c' }}>
                 <div style={{ fontSize: '2.5rem', lineHeight: 1 }}>▉▉▉<br />█ ▉ █<br />▉▉▉</div>
                 <div style={{ fontSize: '0.75rem', marginTop: 6 }}>Scan QR with bank app to activate.</div>
               </div>
             )}
 
             <button
-              className="p-btn-primary p-btn-full"
+              className="onboarding-modal-btn-primary"
               onClick={handlePaymentSubmit}
               disabled={processing}
             >
               {processing ? 'Activating Workspace…' : 'Activate & Launch ERP'}
             </button>
 
-            <button
-              style={{ background: 'none', border: 'none', color: '#7e95ae', fontSize: '0.78rem', cursor: 'pointer', textDecoration: 'underline', width: '100%', textAlign: 'center', marginTop: 12 }}
-              onClick={() => {
-                const updatedCompany = {
-                  ...compForm,
-                  subdomain: cleanSub,
-                  plan: 'Free Trial',
-                  paymentMethod: 'trial',
-                };
-                saveCompany(updatedCompany);
-                update({ ...updatedCompany, showSetupModal: false });
-              }}
-            >
-              Skip payment — Start Free Trial
-            </button>
+            {companies.length === 0 && (
+              <button
+                style={{ background: 'none', border: 'none', color: '#6e6e73', fontSize: '0.78rem', cursor: 'pointer', textDecoration: 'underline', width: '100%', textAlign: 'center', marginTop: 12 }}
+                onClick={() => {
+                  const updatedCompany = {
+                    ...compForm,
+                    subdomain: cleanSub,
+                    plan: 'Free Trial',
+                    paymentMethod: 'trial',
+                  };
+                  saveCompany(updatedCompany);
+                  update({ ...updatedCompany, showSetupModal: false });
+                }}
+              >
+                Skip payment — Start Free Trial
+              </button>
+            )}
           </div>
         )}
 
@@ -884,17 +915,31 @@ export default function App() {
     { key: '6', action: 'Go to Dashboard', shortcut: 'Alt + Left cycle to start' }
   ];
 
+  const { resolvedMode, mode, setMode } = useThemeStore();
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', resolvedMode);
+    if (mode === 'system') {
+      const mq = window.matchMedia('(prefers-color-scheme: dark)');
+      const handler = () => setMode('system');
+      mq.addEventListener('change', handler);
+      return () => mq.removeEventListener('change', handler);
+    }
+  }, [resolvedMode, mode, setMode]);
+
   return (
     <Routes>
-      <Route path="/"               element={<LandingPage />} />
-      <Route path="/signup"         element={<Navigate to="/signup/account" replace />} />
-      <Route path="/signup/account" element={<Step1_AdminDetails />} />
-      <Route path="/signup/payment" element={<Step2_Payment />} />
-      <Route path="/signup/welcome" element={<Step3_Welcome />} />
-      <Route path="/signup/company" element={<Step4_CompanySetup />} />
-      <Route path="/signup/domain"  element={<Step5_DomainSetup />} />
-      <Route path="/login"          element={<WorkspaceLookup />} />
-      <Route path="/login/workspace/:subdomain" element={<CustomDomainLogin />} />
+      {/* Public Routes from Pivotal ERP */}
+      <Route path="/" element={<PublicLayout />}>
+        <Route index element={<LandingPage />} />
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignupPage />} />
+        <Route path="trial" element={<TrialPage />} />
+        <Route path="blog" element={<BlogPage />} />
+        <Route path="change-password" element={<ChangePasswordPage />} />
+      </Route>
+
+      <Route path="/erp"            element={<ERPApp collapsed={collapsed} setCollapsed={setCollapsed} tabs={tabs} activeTabId={activeTabId} setActiveTabId={setActiveTabId} closeTab={closeTab} activeTab={activeTab} openTab={openTab} toggleQuickAccess={toggleQuickAccess} quickAccessItems={quickAccessItems} spotlight={spotlight} setSpotlight={setSpotlight} brandingOpen={brandingOpen} setBrandingOpen={setBrandingOpen} activePaletteId={activePaletteId} setActivePaletteId={setActivePaletteId} activeFontId={activeFontId} setActiveFontId={setActiveFontId} quickCreate={quickCreate} setQuickCreate={setQuickCreate} shortcutsOpen={shortcutsOpen} setShortcutsOpen={setShortcutsOpen} shortcutColumns={shortcutColumns} shortcutData={shortcutData} darkMode={darkMode} setDarkMode={setDarkMode} />} />
       <Route path="/erp/*"          element={<ERPApp collapsed={collapsed} setCollapsed={setCollapsed} tabs={tabs} activeTabId={activeTabId} setActiveTabId={setActiveTabId} closeTab={closeTab} activeTab={activeTab} openTab={openTab} toggleQuickAccess={toggleQuickAccess} quickAccessItems={quickAccessItems} spotlight={spotlight} setSpotlight={setSpotlight} brandingOpen={brandingOpen} setBrandingOpen={setBrandingOpen} activePaletteId={activePaletteId} setActivePaletteId={setActivePaletteId} activeFontId={activeFontId} setActiveFontId={setActiveFontId} quickCreate={quickCreate} setQuickCreate={setQuickCreate} shortcutsOpen={shortcutsOpen} setShortcutsOpen={setShortcutsOpen} shortcutColumns={shortcutColumns} shortcutData={shortcutData} darkMode={darkMode} setDarkMode={setDarkMode} />} />
       <Route path="*"               element={<Navigate to="/" replace />} />
     </Routes>

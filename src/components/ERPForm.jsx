@@ -6,7 +6,8 @@ import {
   CheckCircleOutlined, WarningOutlined, PlusOutlined,
   BankOutlined, DollarOutlined, FileTextOutlined, TagsOutlined, FullscreenOutlined,
   DeleteOutlined, TeamOutlined, DatabaseOutlined, ProfileOutlined, SettingOutlined, MenuFoldOutlined,
-  EditOutlined, FullscreenExitOutlined, ArrowLeftOutlined, SearchOutlined
+  EditOutlined, FullscreenExitOutlined, ArrowLeftOutlined, SearchOutlined,
+  UnorderedListOutlined, InfoCircleOutlined
 } from '@ant-design/icons';
 import { AgGridReact } from 'ag-grid-react';
 
@@ -944,7 +945,7 @@ export default function ERPForm({ tab, darkMode }) {
             <Button
               size="small"
               type="default"
-              icon={productMode === 'directory' ? <ArrowLeftOutlined /> : <span style={{ fontSize: 14 }}>📋</span>}
+              icon={productMode === 'directory' ? <ArrowLeftOutlined /> : <UnorderedListOutlined />}
               onClick={() => {
                 setProductMode(productMode === 'directory' ? 'form' : 'directory');
               }}
@@ -1355,8 +1356,9 @@ export default function ERPForm({ tab, darkMode }) {
             />
           </div>
 
-          <div style={{ marginTop: 10, fontSize: 11.5, color: 'var(--text-muted)', textAlign: 'center' }}>
-            💡 Tip: Double-click any row to quickly load it into the edit form
+          <div style={{ marginTop: 10, fontSize: 11.5, color: 'var(--text-muted)', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+            <InfoCircleOutlined style={{ color: 'var(--accent-blue)' }} />
+            <span>Tip: Double-click any row to quickly load it into the edit form</span>
           </div>
         </div>
       )}
@@ -1737,7 +1739,7 @@ export default function ERPForm({ tab, darkMode }) {
             <Button
               size="small"
               type="default"
-              icon={vModeMode === 'directory' ? <ArrowLeftOutlined /> : <span style={{ fontSize: 14 }}>📋</span>}
+              icon={vModeMode === 'directory' ? <ArrowLeftOutlined /> : <UnorderedListOutlined />}
               onClick={() => {
                 setVModeMode(vModeMode === 'directory' ? 'form' : 'directory');
               }}
@@ -2298,8 +2300,9 @@ export default function ERPForm({ tab, darkMode }) {
               />
             </div>
 
-            <div style={{ marginTop: 10, fontSize: 11.5, color: 'var(--text-muted)', textAlign: 'center' }}>
-              💡 Tip: Double-click any row to quickly load it into the edit form
+            <div style={{ marginTop: 10, fontSize: 11.5, color: 'var(--text-muted)', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+              <InfoCircleOutlined style={{ color: 'var(--accent-blue)' }} />
+              <span>Tip: Double-click any row to quickly load it into the edit form</span>
             </div>
           </div>
         )}

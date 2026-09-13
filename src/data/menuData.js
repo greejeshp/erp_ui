@@ -391,7 +391,8 @@ export const menuData = [
           { "text": "Email Setup", "href": "/Setup/Security/EmailSetup" },
           { "text": "IRD Setup", "href": "/Setup/Security/IRDDetails" },
           { "text": "Entity Properties", "href": "/Setup/Security/EntityProperties" },
-          { "text": "Dynamic AI", "href": "/Setup/ReportWriter/DynamicAI" }
+          { "text": "Dynamic AI", "href": "/Setup/ReportWriter/DynamicAI" },
+          { "text": "Menu Groups", "href": "/Setup/MenuGroups" }
         ]
       },
       {

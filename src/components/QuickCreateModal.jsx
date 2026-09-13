@@ -95,7 +95,7 @@ export default function QuickCreateModal({
       notification.success({
         message: `${schema?.title || 'Record'} created!`,
         description: 'The record has been saved successfully.',
-        icon: <CheckCircleOutlined style={{ color: '#28694b' }} />,
+        icon: <CheckCircleOutlined style={{ color: '#00B894' }} />,
         placement: 'topRight',
         duration: 3,
       });

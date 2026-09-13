@@ -6,9 +6,11 @@ import {
   SettingOutlined, CalendarOutlined, DownloadOutlined, BgColorsOutlined,
 } from '@ant-design/icons';
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MegaMenu from './MegaMenu';
 import { CompanySwitcher } from '../App';
 import { menuData } from '../data/menuData';
+import Logo from './Logo';
 
 function flattenMenu(nodes, module = '') {
   let result = [];
@@ -130,6 +132,7 @@ export default function TopBar({
   collapsed, onToggleSidebar, onSpotlight, darkMode, onDarkMode,
   onNavigate, onOpenBranding, onLogout,
 }) {
+  const navigate = useNavigate();
   const [calMode, setCalMode] = useState('BS');
 
   const userMenuItems = [
@@ -174,9 +177,8 @@ export default function TopBar({
           onClick={onToggleSidebar}
           style={{ color: 'var(--text-muted)', fontSize: 15 }}
         />
-        <div className="erp-logo-brand">
-          <div className="erp-logo-icon">D</div>
-          <span>Dynamic ERP</span>
+        <div className="erp-logo-brand" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
+          <Logo variant={darkMode ? 'reversed' : 'full-color'} size={24} />
         </div>
       </div>
 

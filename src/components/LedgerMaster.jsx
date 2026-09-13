@@ -9,7 +9,9 @@ import {
   ArrowLeftOutlined, CheckCircleOutlined, BankOutlined,
   UserOutlined, MailOutlined, PhoneOutlined, EnvironmentOutlined,
   FileTextOutlined, DollarOutlined, SwapOutlined, TeamOutlined,
-  TagsOutlined, FileDoneOutlined, FullscreenOutlined, FullscreenExitOutlined, SettingOutlined, MenuFoldOutlined
+  TagsOutlined, FileDoneOutlined, FullscreenOutlined, FullscreenExitOutlined, SettingOutlined, MenuFoldOutlined,
+  UnorderedListOutlined, WalletOutlined, ArrowUpOutlined, ArrowDownOutlined,
+  RiseOutlined, FallOutlined, BuildOutlined, BookOutlined
 } from '@ant-design/icons';
 
 const { Option } = Select;
@@ -318,15 +320,15 @@ export default function LedgerMaster({ darkMode }) {
             background: GROUP_COLOR[r.group] + '18',
             border: `1px solid ${GROUP_COLOR[r.group]}30`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 13, color: GROUP_COLOR[r.group],
+            fontSize: 14, color: GROUP_COLOR[r.group],
           }}>
-            {r.group === 'Bank Accounts' ? '🏦' :
-             r.group === 'Cash-in-hand' ? '💵' :
-             r.group.includes('Debtors') ? '📤' :
-             r.group.includes('Creditors') ? '📥' :
-             r.group.includes('Expenses') ? '📉' :
-             r.group.includes('Income') ? '📈' :
-             r.group.includes('Assets') ? '🏗️' : '📒'}
+            {r.group === 'Bank Accounts' ? <BankOutlined /> :
+             r.group === 'Cash-in-hand' ? <WalletOutlined /> :
+             r.group.includes('Debtors') ? <ArrowUpOutlined /> :
+             r.group.includes('Creditors') ? <ArrowDownOutlined /> :
+             r.group.includes('Expenses') ? <FallOutlined /> :
+             r.group.includes('Income') ? <RiseOutlined /> :
+             r.group.includes('Assets') ? <BuildOutlined /> : <BookOutlined />}
           </div>
           <div style={{ minWidth: 0 }}>
             <div style={{ fontWeight: 600, fontSize: 13, color: 'var(--text-main)', lineHeight: 1.3,
@@ -506,7 +508,7 @@ export default function LedgerMaster({ darkMode }) {
           <Button
             size="small"
             type="default"
-            icon={mode === 'directory' ? <ArrowLeftOutlined /> : <span style={{ fontSize: 14 }}>📋</span>}
+            icon={mode === 'directory' ? <ArrowLeftOutlined /> : <UnorderedListOutlined />}
             onClick={() => {
               if (mode === 'directory') {
                 setMode('form');

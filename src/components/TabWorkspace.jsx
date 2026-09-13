@@ -12,10 +12,15 @@ import SalesInvoice from './SalesInvoice';
 import EntityProperties from './EntityProperties';
 import TrialBalance from './TrialBalance';
 import StockSummary from './StockSummary';
+import MenuGroupSettings from './MenuGroupSettings';
 
 function getComponent(tab, onQuickAccess, darkMode, quickAccessItems, onToggleQuickAccess) {
   if (!tab) return <Dashboard onQuickAccess={onQuickAccess} darkMode={darkMode} quickAccessItems={quickAccessItems} onToggleQuickAccess={onToggleQuickAccess} />;
   const { href } = tab;
+
+  if (href === '/Setup/MenuGroups') {
+    return <MenuGroupSettings darkMode={darkMode} />;
+  }
 
   if (href === '/Account/Creation/Ledger') {
     return <LedgerMaster darkMode={darkMode} />;

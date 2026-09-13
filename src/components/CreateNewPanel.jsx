@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { PlusOutlined, CloseOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import { QUICK_CREATE_CATEGORIES } from '../data/quickCreateSchema';
 
 /* ═══════════════════════════════════════════════════════
@@ -55,11 +56,13 @@ export default function CreateNewPanel({ open, onClose, onSelect, darkMode, anch
         {/* Header */}
         <div className="erp-create-panel-header">
           <span className="erp-create-panel-title">
-            <span className="erp-create-panel-title-icon">＋</span>
+            <span className="erp-create-panel-title-icon" style={{ display: 'inline-flex', alignItems: 'center' }}>
+              <PlusOutlined />
+            </span>
             Create New
           </span>
-          <button className="erp-create-panel-close" onClick={onClose} aria-label="Close">
-            ✕
+          <button className="erp-create-panel-close" onClick={onClose} aria-label="Close" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+            <CloseOutlined style={{ fontSize: 12 }} />
           </button>
         </div>
 
@@ -78,8 +81,7 @@ export default function CreateNewPanel({ open, onClose, onSelect, darkMode, anch
                       onClose();
                     }}
                   >
-                    <span className="erp-create-panel-item-plus">＋</span>
-                    <span className="erp-create-panel-item-icon">{item.icon}</span>
+                    <PlusOutlined style={{ fontSize: 10, color: 'var(--text-muted)', flexShrink: 0 }} />
                     <span className="erp-create-panel-item-label">{item.title}</span>
                   </button>
                 ))}
@@ -90,7 +92,10 @@ export default function CreateNewPanel({ open, onClose, onSelect, darkMode, anch
 
         {/* Footer hint */}
         <div className="erp-create-panel-footer">
-          <span>💡 Tip: Fill only required fields, then use <strong>Add More Details</strong> for complete setup</span>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <InfoCircleOutlined style={{ color: 'var(--accent-blue)', fontSize: 13 }} />
+            <span>Tip: Fill only required fields, then use <strong>Add More Details</strong> for complete setup</span>
+          </span>
         </div>
       </div>
     </>

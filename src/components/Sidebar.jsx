@@ -7,11 +7,17 @@ import {
   CheckCircleOutlined, ToolOutlined, ThunderboltOutlined, FileTextOutlined,
   PlusCircleOutlined, SwapOutlined, LineChartOutlined,
   ShoppingCartOutlined, TagsOutlined, DatabaseOutlined,
-  AuditOutlined, FundOutlined, DownOutlined, QuestionCircleOutlined, PlusOutlined
+  AuditOutlined, FundOutlined, DownOutlined, QuestionCircleOutlined, PlusOutlined,
+  ShopOutlined
 } from '@ant-design/icons';
 import CreateNewPanel from './CreateNewPanel';
 import { menuData } from '../data/menuData';
 import { CompanySwitcher } from '../App';
+import {
+  loadGroups, saveActiveGroupId, loadActiveGroupId,
+  getPinnedGroups, getContextGroups,
+} from '../data/menuGroupConfig';
+import { renderGroupIcon } from './MenuGroupSettings';
 
 const MODULE_ICONS = {
   'Quick Access':         <ThunderboltOutlined style={{ color: '#f59e0b' }} />,
@@ -40,28 +46,28 @@ function getIcon(text) {
   return MODULE_ICONS[text] || <FileTextOutlined />;
 }
 
-/* ── Emoji map for quick access icons ── */
-const EMOJI_MAP = {
-  '/Account/Creation/Ledger':                   '📒',
-  '/Account/Creation/Customer':                 '🏢',
-  '/Inventory/Creation/Product':                '📦',
-  '/Inventory/Transaction/PurchaseInvoice':     '🛒',
-  '/Inventory/Transaction/SalesInvoice':        '🏷️',
-  '/Account/Transaction/Receipt':               '💰',
-  '/Account/Transaction/Payment':              '💸',
-  '/Inventory/Reporting/StockSummary':          '📊',
-  '/Account/Creation/VoucherMode':              '📋',
-  '/Account/Creation/LedgerGroup':              '📁',
-  '/Account/Transaction/Journal':               '📝',
-  '/Account/Transaction/Contra':                '🔄',
-  '/Inventory/Transaction/SalesReturn':         '↩️',
-  '/Inventory/Transaction/CounterSales':        '🏪',
-  '/Account/Reporting/ledgerVoucher':           '📋',
-  '/Inventory/Reporting/ProductVoucher':        '🗂️',
+/* ── Ant Design icon map for quick access items ── */
+const QA_ICON_MAP = {
+  '/Account/Creation/Ledger':                   <AccountBookOutlined />,
+  '/Account/Creation/Customer':                 <BankOutlined />,
+  '/Inventory/Creation/Product':                <InboxOutlined />,
+  '/Inventory/Transaction/PurchaseInvoice':     <ShoppingCartOutlined />,
+  '/Inventory/Transaction/SalesInvoice':        <TagsOutlined />,
+  '/Account/Transaction/Receipt':               <DollarCircleOutlined />,
+  '/Account/Transaction/Payment':              <DollarCircleOutlined />,
+  '/Inventory/Reporting/StockSummary':          <BarChartOutlined />,
+  '/Account/Creation/VoucherMode':              <FileTextOutlined />,
+  '/Account/Creation/LedgerGroup':              <AuditOutlined />,
+  '/Account/Transaction/Journal':               <FileTextOutlined />,
+  '/Account/Transaction/Contra':                <SwapOutlined />,
+  '/Inventory/Transaction/SalesReturn':         <TagsOutlined />,
+  '/Inventory/Transaction/CounterSales':        <ShopOutlined />,
+  '/Account/Reporting/ledgerVoucher':           <FileTextOutlined />,
+  '/Inventory/Reporting/ProductVoucher':        <DatabaseOutlined />,
 };
 
-function getEmoji(href) {
-  return EMOJI_MAP[href] || '⚡';
+function getQaIcon(href) {
+  return QA_ICON_MAP[href] || <ThunderboltOutlined />;
 }
 
 function filterMenuNodes(nodes, query) {
@@ -139,17 +145,31 @@ function buildMenuItems(nodes, onItemClick, onToggleStar, quickAccessHrefs, dept
   });
 }
 
-const BRANCH_ITEMS = [
-  { key: 'accounting', label: 'Accounting' },
-  { key: 'inventory', label: 'Inventory' },
-  { key: 'operations', label: 'Operations' },
-];
-
 export default function Sidebar({ onItemClick, collapsed, darkMode, quickAccessItems, onToggleQuickAccess, onQuickCreate }) {
   const [search, setSearch] = useState('');
   const [openKeys, setOpenKeys] = useState([]);
   const [createPanelOpen, setCreatePanelOpen] = useState(false);
   const createBtnRef = useRef(null);
+
+  const [groups, setGroups] = useState(() => loadGroups());
+  const [activeGroupId, setActiveGroupId] = useState(() => loadActiveGroupId());
+
+  // Listen to menu group updates from Settings panel
+  React.useEffect(() => {
+    const handleGroupsUpdated = () => {
+      const g = loadGroups();
+      setGroups(g);
+      const active = loadActiveGroupId();
+      setActiveGroupId(active);
+    };
+    window.addEventListener('erp-menu-groups-updated', handleGroupsUpdated);
+    return () => window.removeEventListener('erp-menu-groups-updated', handleGroupsUpdated);
+  }, []);
+
+  const handleSelectGroup = useCallback((id) => {
+    setActiveGroupId(id);
+    saveActiveGroupId(id);
+  }, []);
 
   const quickAccessHrefs = useMemo(
     () => new Set((quickAccessItems || []).map(q => q.href)),
@@ -169,31 +189,79 @@ export default function Sidebar({ onItemClick, collapsed, darkMode, quickAccessI
     if (onToggleQuickAccess) onToggleQuickAccess(item);
   }, [onToggleQuickAccess]);
 
-  const categories = useMemo(() => {
-    /* Filter out the Quick Access node — it's now user-managed */
-    const nonQA = filteredNodes.filter(n => n.text !== 'Quick Access');
-    const core = [], inventory = [], operations = [], sys = [];
-    nonQA.forEach(node => {
-      const t = node.text;
-      if (['IRD Audit', 'MIS Reports'].includes(t)) core.push(node);
-      else if (['Accounting', 'Inventory'].includes(t)) inventory.push(node);
-      else if (['Expenses', 'Assets Management', 'Repair & maintaince'].includes(t)) operations.push(node);
-      else sys.push(node);
+  // Context groups and pinned groups
+  const contextGroups = useMemo(() => getContextGroups(groups), [groups]);
+  const pinnedGroups = useMemo(() => getPinnedGroups(groups), [groups]);
+
+  // Active context group
+  const activeGroup = useMemo(() => {
+    return contextGroups.find(g => g.id === activeGroupId) || contextGroups[0] || groups[0];
+  }, [contextGroups, activeGroupId, groups]);
+
+  // Dropdown menu items with Manage Groups link
+  const dropdownItems = useMemo(() => {
+    const items = contextGroups.map(g => ({
+      key: g.id,
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 0' }}>
+          <span style={{ fontSize: 14, color: g.id === activeGroup?.id ? '#0F766E' : 'inherit', display: 'flex', alignItems: 'center' }}>
+            {renderGroupIcon(g.icon, { fontSize: 14 })}
+          </span>
+          <span style={{ fontWeight: g.id === activeGroup?.id ? 700 : 500, color: g.id === activeGroup?.id ? '#0F766E' : 'inherit' }}>
+            {g.name}
+          </span>
+          {g.id === activeGroup?.id && (
+            <span style={{ marginLeft: 'auto', color: '#0F766E', fontSize: 11 }}>●</span>
+          )}
+        </div>
+      ),
+      onClick: () => handleSelectGroup(g.id),
+    }));
+
+    items.push({ type: 'divider' });
+    items.push({
+      key: 'manage-groups',
+      label: (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#0F766E', fontWeight: 600 }}>
+          <SettingOutlined />
+          <span>Configure Menu Groups</span>
+        </div>
+      ),
+      onClick: () => onItemClick({ text: 'Menu Groups', href: '/Setup/MenuGroups', module: 'Setup' }),
     });
+
+    return items;
+  }, [contextGroups, activeGroup, handleSelectGroup, onItemClick]);
+
+  // Build items for active group modules
+  const activeGroupSection = useMemo(() => {
+    if (!activeGroup) return null;
+    const nonQA = filteredNodes.filter(n => n.text !== 'Quick Access');
+    const nodes = nonQA.filter(n => activeGroup.modules.includes(n.text));
     return {
-      core:       buildMenuItems(core,       onItemClick, handleToggleStar, quickAccessHrefs),
-      inventory:  buildMenuItems(inventory,  onItemClick, handleToggleStar, quickAccessHrefs),
-      operations: buildMenuItems(operations, onItemClick, handleToggleStar, quickAccessHrefs),
-      sys:        buildMenuItems(sys,        onItemClick, handleToggleStar, quickAccessHrefs),
+      group: activeGroup,
+      items: buildMenuItems(nodes, onItemClick, handleToggleStar, quickAccessHrefs),
     };
-  }, [filteredNodes, onItemClick, handleToggleStar, quickAccessHrefs]);
+  }, [activeGroup, filteredNodes, onItemClick, handleToggleStar, quickAccessHrefs]);
+
+  // Build items for pinned groups
+  const pinnedGroupSections = useMemo(() => {
+    const nonQA = filteredNodes.filter(n => n.text !== 'Quick Access');
+    return pinnedGroups.map(pg => {
+      const nodes = nonQA.filter(n => pg.modules.includes(n.text));
+      return {
+        group: pg,
+        items: buildMenuItems(nodes, onItemClick, handleToggleStar, quickAccessHrefs),
+      };
+    });
+  }, [pinnedGroups, filteredNodes, onItemClick, handleToggleStar, quickAccessHrefs]);
 
   /* ── Quick Access items in sidebar ── */
   const qaMenuItems = useMemo(() => {
     if (!quickAccessItems?.length) return [];
     return quickAccessItems.map((item, i) => ({
       key: `qa-${item.href}-${i}`,
-      icon: <span style={{ fontSize: 14 }}>{getEmoji(item.href)}</span>,
+      icon: <span style={{ fontSize: 13, color: '#f59e0b', display: 'flex', alignItems: 'center' }}>{getQaIcon(item.href)}</span>,
       label: (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}
              className="erp-menu-leaf">
@@ -217,11 +285,15 @@ export default function Sidebar({ onItemClick, collapsed, darkMode, quickAccessI
     }));
   }, [quickAccessItems, onItemClick, handleToggleStar]);
 
-  const renderSection = (label, items) => {
-    if (!items.length) return null;
+  const renderSection = (label, items, color = null) => {
+    if (!items || !items.length) return null;
     return (
       <div>
-        {!collapsed && <div className="erp-sidebar-category-label">{label}</div>}
+        {!collapsed && (
+          <div className="erp-sidebar-category-label" style={{ color: color || 'var(--text-muted)' }}>
+            {label}
+          </div>
+        )}
         <Menu
           mode="inline"
           theme={darkMode ? 'dark' : 'light'}
@@ -246,15 +318,25 @@ export default function Sidebar({ onItemClick, collapsed, darkMode, quickAccessI
     }}>
 
 
-      {/* ── TOP SELECTOR CARD ── */}
+      {/* ── TOP SELECTOR CARD (Active Menu Group Switcher) ── */}
       {!collapsed ? (
-        <Dropdown menu={{ items: BRANCH_ITEMS }} trigger={['click']}>
+        <Dropdown menu={{ items: dropdownItems }} trigger={['click']}>
           <div className="erp-sidebar-selector">
-            <div className="erp-sidebar-selector-icon">
-              <AccountBookOutlined />
+            <div
+              className="erp-sidebar-selector-icon"
+              style={{
+                background: activeGroup?.color || 'var(--primary)',
+                fontSize: 15,
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {renderGroupIcon(activeGroup?.icon, { fontSize: 15, color: '#ffffff' })}
             </div>
             <div className="erp-sidebar-selector-info">
-              <div className="erp-sidebar-selector-title">Accounting</div>
+              <div className="erp-sidebar-selector-title">{activeGroup?.name || 'Accounting'}</div>
               <div className="erp-sidebar-selector-sub">FY 2080/81</div>
             </div>
             <DownOutlined style={{ fontSize: 9, color: 'var(--text-muted)' }} />
@@ -262,11 +344,24 @@ export default function Sidebar({ onItemClick, collapsed, darkMode, quickAccessI
         </Dropdown>
       ) : (
         <div style={{ padding: '12px 0', display: 'flex', justifyContent: 'center' }}>
-          <Tooltip title="Accounting — FY 2080/81" placement="right">
-            <div className="erp-sidebar-selector-icon" style={{ cursor: 'pointer' }}>
-              <AccountBookOutlined />
-            </div>
-          </Tooltip>
+          <Dropdown menu={{ items: dropdownItems }} trigger={['click']}>
+            <Tooltip title={`${activeGroup?.name || 'Menu Group'} — FY 2080/81`} placement="right">
+              <div
+                className="erp-sidebar-selector-icon"
+                style={{
+                  cursor: 'pointer',
+                  background: activeGroup?.color || 'var(--primary)',
+                  fontSize: 15,
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {renderGroupIcon(activeGroup?.icon, { fontSize: 15, color: '#ffffff' })}
+              </div>
+            </Tooltip>
+          </Dropdown>
         </div>
       )}
 
@@ -313,10 +408,21 @@ export default function Sidebar({ onItemClick, collapsed, darkMode, quickAccessI
           </div>
         )}
 
-        {renderSection('CORE MODULES', categories.core)}
-        {renderSection('INVENTORY', categories.inventory)}
-        {renderSection('OPERATIONS', categories.operations)}
-        {renderSection('SYSTEM CONTROL', categories.sys)}
+        {/* Active context group modules */}
+        {activeGroupSection && renderSection(
+          activeGroupSection.group.name.toUpperCase(),
+          activeGroupSection.items,
+          activeGroupSection.group.color
+        )}
+
+        {/* Pinned groups (always visible) */}
+        {pinnedGroupSections.map(ps => (
+          renderSection(
+            ps.group.name.toUpperCase(),
+            ps.items,
+            ps.group.color
+          )
+        ))}
       </div>
 
       {/* ── BOTTOM ACTIONS (Quick Create + Help Center) ── */}

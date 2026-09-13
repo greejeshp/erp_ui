@@ -9,6 +9,32 @@ import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
+// Patch Node.prototype.removeChild and insertBefore to protect against Chrome Translate / browser extensions
+// modifying text/nodes inside React-managed containers, causing NotFoundError.
+if (typeof Node === 'function' && Node.prototype) {
+  const originalRemoveChild = Node.prototype.removeChild;
+  Node.prototype.removeChild = function (child) {
+    if (child.parentNode !== this) {
+      if (console) {
+        console.warn('Cannot remove child from node because it is not a child of this node:', child, this);
+      }
+      return child;
+    }
+    return originalRemoveChild.apply(this, arguments);
+  };
+
+  const originalInsertBefore = Node.prototype.insertBefore;
+  Node.prototype.insertBefore = function (newNode, referenceNode) {
+    if (referenceNode && referenceNode.parentNode !== this) {
+      if (console) {
+        console.warn('Cannot insert before node because reference node is not a child of this node:', referenceNode, this);
+      }
+      return originalInsertBefore.call(this, newNode, null);
+    }
+    return originalInsertBefore.apply(this, arguments);
+  };
+}
+
 const theme = {
   token: {
     colorPrimary: '#4f46e5',
@@ -68,10 +94,53 @@ const theme = {
   },
 };
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null, errorInfo: null };
+  }
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error("ErrorBoundary caught:", error, errorInfo);
+    this.setState({ errorInfo });
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30, background: '#0B132B', color: '#fff', fontFamily: 'monospace' }}>
+          <div style={{ maxWidth: 800, background: 'rgba(239, 68, 68, 0.1)', border: '1px solid #ef4444', borderRadius: 12, padding: 24, width: '100%' }}>
+            <h2 style={{ color: '#ef4444', margin: '0 0 16px 0', fontSize: 20 }}>Application Error Detected</h2>
+            <div style={{ background: 'rgba(0,0,0,0.5)', padding: 16, borderRadius: 8, overflowX: 'auto', marginBottom: 16 }}>
+              <strong style={{ color: '#fca5a5' }}>{this.state.error?.toString()}</strong>
+              <pre style={{ color: '#94a3b8', fontSize: 12, marginTop: 10, whiteSpace: 'pre-wrap' }}>
+                {this.state.errorInfo?.componentStack || this.state.error?.stack}
+              </pre>
+            </div>
+            <button
+              onClick={() => {
+                localStorage.clear();
+                window.location.reload();
+              }}
+              style={{ padding: '10px 18px', background: '#ef4444', color: '#fff', border: 'none', borderRadius: 8, fontWeight: 'bold', cursor: 'pointer' }}
+            >
+              Clear Storage &amp; Reload
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <OnboardingProvider>
-    <HashRouter>
-      <App />
-    </HashRouter>
-  </OnboardingProvider>
+  <ErrorBoundary>
+    <OnboardingProvider>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </OnboardingProvider>
+  </ErrorBoundary>
 );

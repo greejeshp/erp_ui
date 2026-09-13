@@ -4,14 +4,15 @@ import {
   PlusOutlined, SwapOutlined, EditOutlined, SearchOutlined,
   AlertOutlined, InboxOutlined, DollarCircleOutlined, LineChartOutlined,
   FilterOutlined, DownloadOutlined, EllipsisOutlined, ArrowUpOutlined,
-  StarOutlined
+  StarOutlined, ThunderboltOutlined, AccountBookOutlined, BankOutlined,
+  ShoppingCartOutlined, TagsOutlined, BarChartOutlined, FileTextOutlined,
+  AuditOutlined, ShopOutlined, DatabaseOutlined
 } from '@ant-design/icons';
 
 /* ── Mock Product Data ── */
 const PRODUCTS = [
   {
     sku: 'IDB-2023-X90',
-    emoji: '🔩',
     name: 'Industrial Power Drill XT-90',
     desc: 'High-torque heavy duty',
     category: 'Power Tools',
@@ -22,7 +23,6 @@ const PRODUCTS = [
   },
   {
     sku: 'NET-GW-52',
-    emoji: '📡',
     name: 'Smart Gateway Hub Gen 2',
     desc: 'Wireless IoT Controller',
     category: 'Networking',
@@ -33,7 +33,6 @@ const PRODUCTS = [
   },
   {
     sku: 'VLV-004-PR',
-    emoji: '🔧',
     name: 'Precision Valve Model B-4',
     desc: 'Industrial Grade Brass',
     category: 'Plumbing',
@@ -44,7 +43,6 @@ const PRODUCTS = [
   },
   {
     sku: 'SKU-8821',
-    emoji: '🧱',
     name: 'Premium OPC Cement',
     desc: '50kg grade 53 packaging',
     category: 'Construction',
@@ -55,7 +53,6 @@ const PRODUCTS = [
   },
   {
     sku: 'SKU-9021',
-    emoji: '🚿',
     name: 'UPVC Pressure Pipe 4in',
     desc: 'High density pipe fitting',
     category: 'Plumbing',
@@ -66,7 +63,6 @@ const PRODUCTS = [
   },
   {
     sku: 'SKU-7721',
-    emoji: '💡',
     name: 'LED Floodlight 200W',
     desc: 'IP65 outdoor rated',
     category: 'Electrical',
@@ -83,27 +79,27 @@ const STATUS_CONFIG = {
   'LOW STOCK': { cls: 'low-stock', label: 'LOW STOCK' },
 };
 
-const EMOJI_MAP = {
-  '/Account/Creation/Ledger':                   '📒',
-  '/Account/Creation/Customer':                 '🏢',
-  '/Inventory/Creation/Product':                '📦',
-  '/Inventory/Transaction/PurchaseInvoice':     '🛒',
-  '/Inventory/Transaction/SalesInvoice':        '🏷️',
-  '/Account/Transaction/Receipt':               '💰',
-  '/Account/Transaction/Payment':              '💸',
-  '/Inventory/Reporting/StockSummary':          '📊',
-  '/Account/Creation/VoucherMode':              '📋',
-  '/Account/Creation/LedgerGroup':              '📁',
-  '/Account/Transaction/Journal':               '📝',
-  '/Account/Transaction/Contra':                '🔄',
-  '/Inventory/Transaction/SalesReturn':         '↩️',
-  '/Inventory/Transaction/CounterSales':        '🏪',
-  '/Account/Reporting/ledgerVoucher':           '📋',
-  '/Inventory/Reporting/ProductVoucher':        '🗂️',
+const QA_ICON_MAP = {
+  '/Account/Creation/Ledger':                   <AccountBookOutlined />,
+  '/Account/Creation/Customer':                 <BankOutlined />,
+  '/Inventory/Creation/Product':                <InboxOutlined />,
+  '/Inventory/Transaction/PurchaseInvoice':     <ShoppingCartOutlined />,
+  '/Inventory/Transaction/SalesInvoice':        <TagsOutlined />,
+  '/Account/Transaction/Receipt':               <DollarCircleOutlined />,
+  '/Account/Transaction/Payment':              <DollarCircleOutlined />,
+  '/Inventory/Reporting/StockSummary':          <BarChartOutlined />,
+  '/Account/Creation/VoucherMode':              <FileTextOutlined />,
+  '/Account/Creation/LedgerGroup':              <AuditOutlined />,
+  '/Account/Transaction/Journal':               <FileTextOutlined />,
+  '/Account/Transaction/Contra':                <SwapOutlined />,
+  '/Inventory/Transaction/SalesReturn':         <TagsOutlined />,
+  '/Inventory/Transaction/CounterSales':        <ShopOutlined />,
+  '/Account/Reporting/ledgerVoucher':           <FileTextOutlined />,
+  '/Inventory/Reporting/ProductVoucher':        <DatabaseOutlined />,
 };
 
-function getEmoji(href) {
-  return EMOJI_MAP[href] || '⚡';
+function getQaIcon(href) {
+  return QA_ICON_MAP[href] || <ThunderboltOutlined />;
 }
 
 export default function Dashboard({ onQuickAccess, darkMode, quickAccessItems = [], onToggleQuickAccess }) {
@@ -283,7 +279,6 @@ export default function Dashboard({ onQuickAccess, darkMode, quickAccessItems = 
               <tr key={p.sku}>
                 <td>
                   <div className="erp-prod-row">
-                    <div className="erp-prod-thumb">{p.emoji}</div>
                     <div style={{ minWidth: 0 }}>
                       <div className="erp-prod-name"
                         style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -336,7 +331,7 @@ export default function Dashboard({ onQuickAccess, darkMode, quickAccessItems = 
         boxShadow: 'var(--shadow-xs)',
       }}>
         <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 14, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: 8 }}>
-          ⚡ Quick Access
+          <ThunderboltOutlined style={{ color: '#f59e0b' }} /> Quick Access
           <span style={{ fontSize: 11, fontWeight: 400, color: 'var(--text-muted)' }}>
             — Star menu items in the sidebar to pin them here
           </span>
@@ -355,7 +350,7 @@ export default function Dashboard({ onQuickAccess, darkMode, quickAccessItems = 
               No shortcuts yet
             </div>
             <div style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>
-              Hover over any menu item and click <strong>★</strong> to pin it here
+              Hover over any menu item and click star icon to pin it here
             </div>
           </div>
         ) : (
@@ -394,7 +389,9 @@ export default function Dashboard({ onQuickAccess, darkMode, quickAccessItems = 
                   e.currentTarget.style.color = 'var(--text-secondary)';
                 }}
               >
-                <span style={{ fontSize: 16 }}>{getEmoji(q.href)}</span>
+                <span style={{ fontSize: 14, color: 'var(--primary)', display: 'flex', alignItems: 'center' }}>
+                  {getQaIcon(q.href)}
+                </span>
                 <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.text}</span>
               </div>
             ))}

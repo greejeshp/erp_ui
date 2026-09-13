@@ -1,0 +1,633 @@
+/* ============================================================
+   PIVOTAL ERP — Enterprise Design System
+   Constitution: Neutral-First | Restrained Geometry | High Information Density
+   Palette: App BG #F7F8FA | Surface #FFFFFF | Text #111827 / #667085 | Border #E4E7EC
+   Brand: #1D4ED8 (Primary) / #1E40AF (Hover)
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* ─── CSS Custom Properties ─────────────────────────────── */
+:root {
+  /* Brand Colors — Nordic Deep Teal Design System */
+  --deep-navy: #092825;
+  --finance-blue: #0F766E;
+  --finance-blue-light: #14B8A6;
+  --finance-blue-dark: #092825;
+  --teal: #0F766E;
+  --teal-light: #14B8A6;
+  --teal-dark: #092825;
+  --aqua: #14B8A6;
+  --aqua-light: #5EEAD4;
+
+  /* Neutral Scale (Enterprise Nordic Neutral) */
+  --slate-900: #0F172A;
+  --slate-800: #1E293B;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #64748B;
+  --slate-400: #94A3B8;
+  --slate-300: #CBD5E1;
+  --slate-200: #E2E8F0;
+  --slate-100: #F1F5F9;
+  --slate-50: #F8FAFC;
+  --white: #FFFFFF;
+
+  /* Semantic Colors (Operational & Low Glare) */
+  --color-primary: #0F766E;
+  --color-primary-hover: #115E59;
+  --color-secondary: #334155;
+  --color-accent: #14B8A6;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #0F766E;
+
+  /* Financial Transaction Semantics */
+  --color-debit: #0F766E;
+  --color-credit: #14B8A6;
+
+  /* Typography Colors */
+  --heading-color: #0F766E;
+
+  /* Sidebar Tokens (Dark Pine Linear Gradient) */
+  --sidebar-bg: linear-gradient(180deg, #092825 0%, #0F3D39 100%);
+  --sidebar-border: rgba(20, 184, 166, 0.15);
+  --sidebar-text: rgba(255, 255, 255, 0.85);
+  --sidebar-type: dark;
+
+  /* Light Mode Surface - Nordic Warm Gray & Crisp Surfaces */
+  --bg-primary: #F7F9F9;
+  --bg-secondary: #EDF2F2;
+  --bg-tertiary: #E1E8E8;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: #092825;
+  --bg-topbar: #FFFFFF;
+
+  /* Light Mode Text - High-Contrast Enterprise Typography */
+  --text-primary: #111827;
+  --text-secondary: #667085;
+  --text-tertiary: #98A2B3;
+  --text-inverse: #FFFFFF;
+  --text-on-primary: #FFFFFF;
+
+  /* Borders - Crisp 1px Structural Separation */
+  --border-color: #E4E7EC;
+  --border-strong: #D0D5DD;
+
+  /* Restrained Elevations (Prefer Borders over Shadows) */
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.04);
+  --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.08);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 8px 24px rgba(16, 24, 40, 0.1);
+  --shadow-xl: 0 12px 32px rgba(16, 24, 40, 0.12);
+  --shadow-glow-blue: none;
+  --shadow-glow-teal: none;
+
+  /* Restrained Geometry (No oversized 24px+ SaaS roundings) */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 14px;
+  --radius-full: 9999px;
+
+  /* Typography */
+  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-data: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.875rem;
+  --text-lg: 1rem;
+  --text-xl: 1.125rem;
+  --text-2xl: 1.25rem;
+  --text-3xl: 1.5rem;
+  --text-4xl: 1.875rem;
+  --text-5xl: 2.25rem;
+  --text-6xl: 3rem;
+
+  /* Consistent Spacing Scale (4, 8, 12, 16, 20, 24, 32, 40, 48, 64px) */
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Subtle Transitions (Operational, Fast) */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Layout */
+  --sidebar-width: 250px;
+  --sidebar-collapsed-width: 64px;
+  --topbar-height: 56px;
+  --content-max-width: 1440px;
+
+  /* Z-index */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+}
+
+/* ─── Dark Mode (Nordic Pine & Deep Teal) ─────────────────── */
+[data-theme="dark"] {
+  --bg-primary: #061715;
+  --bg-secondary: #09201E;
+  --bg-tertiary: #0D2B28;
+  --bg-card: #0A2421;
+  --bg-sidebar: #041210;
+  --bg-topbar: #09201E;
+
+  --text-primary: #F7F9F9;
+  --text-secondary: #99B2B0;
+  --text-tertiary: #60807D;
+
+  --border-color: rgba(20, 184, 166, 0.12);
+  --border-strong: rgba(20, 184, 166, 0.22);
+
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* ─── Reset & Base ───────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  line-height: 1.6;
+  transition: background var(--transition-base), color var(--transition-base);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--slate-300);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--slate-400);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--slate-700);
+}
+
+/* ─── Typography Defaults ───────────────────────────────── */
+h1, h2, h3, h4 {
+  color: var(--heading-color, var(--text-primary));
+  letter-spacing: -0.015em;
+  font-family: var(--font-primary);
+}
+
+/* ─── Ant Design Overrides ───────────────────────────────── */
+.ant-btn-primary {
+  background: var(--color-primary, var(--finance-blue)) !important;
+  border-color: var(--color-primary, var(--finance-blue)) !important;
+  font-family: var(--font-primary) !important;
+  font-weight: 500 !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: none !important;
+}
+.ant-btn-primary:hover {
+  filter: brightness(0.88) !important;
+  background: var(--color-primary, var(--finance-blue)) !important;
+  border-color: var(--color-primary, var(--finance-blue)) !important;
+}
+
+/* ─── Executive Brand Buttons ────────────────────────────── */
+.btn-brand-primary {
+  background: var(--color-primary, #185fa5);
+  color: #FFFFFF;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  font-family: var(--font-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+.btn-brand-primary:hover {
+  filter: brightness(0.88);
+  box-shadow: 0 2px 8px rgba(24, 95, 165, 0.25);
+}
+
+.btn-brand-accent {
+  background: var(--color-accent, #F1890B);
+  color: #FFFFFF;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-family: var(--font-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+.btn-brand-accent:hover {
+  filter: brightness(0.92);
+  box-shadow: 0 2px 8px rgba(241, 137, 11, 0.3);
+}
+
+.btn-brand-secondary {
+  background: var(--bg-card, #FFFFFF);
+  color: var(--color-success, #3b6d11);
+  border: 1px solid var(--border-strong, #CBD5E1);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  font-family: var(--font-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+}
+.btn-brand-secondary:hover {
+  background: rgba(59, 109, 17, 0.08);
+  border-color: var(--color-success, #3b6d11);
+}
+
+/* OpenEMR Standard Button Classes */
+.btn-p {
+  background: var(--color-primary, #185fa5) !important;
+  color: #FFFFFF !important;
+  border: 1px solid var(--color-primary, #185fa5) !important;
+  border-radius: var(--radius-sm) !important;
+}
+.btn-p:hover {
+  filter: brightness(0.88) !important;
+}
+.btn-s {
+  background: var(--bg-card, #FFFFFF) !important;
+  color: var(--text-secondary, #5c6478) !important;
+  border: 1px solid var(--border-color, rgba(26,31,54,0.12)) !important;
+}
+.btn-s:hover {
+  background: var(--bg-secondary, #f1f3f7) !important;
+}
+
+/* ─── Utility Classes ────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-xs);
+  transition: border-color var(--transition-fast);
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+}
+
+/* ─── Global AG Grid System Theme Binding ────────────────── */
+.ag-theme-quartz {
+  --ag-background-color: var(--bg-card) !important;
+  --ag-header-background-color: var(--bg-secondary) !important;
+  --ag-odd-row-background-color: var(--bg-card) !important;
+  --ag-row-hover-color: var(--bg-secondary) !important;
+  --ag-border-color: var(--border-color) !important;
+  --ag-header-foreground-color: var(--text-secondary) !important;
+  --ag-foreground-color: var(--text-primary) !important;
+  --ag-font-family: var(--font-primary) !important;
+  --ag-selected-row-background-color: rgba(24, 95, 165, 0.08) !important;
+}
+
+.ag-theme-quartz .ag-header-cell-label {
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+}
+
+.ag-theme-quartz .ag-row-selected {
+  border-left: 3px solid var(--color-primary, #185fa5) !important;
+}
+
+/* ─── Generic Table Overrides ────────────────────────────── */
+table {
+  border-color: var(--border-color);
+}
+table th {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+table td {
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+table tr:hover td {
+  background: var(--bg-secondary);
+}
+
+.section {
+  padding: var(--space-16) 0;
+}
+
+.container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+}
+
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 12px rgba(0, 139, 148, 0.4); }
+  50% { box-shadow: 0 0 28px rgba(0, 139, 148, 0.8); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* ─── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  :root {
+    --topbar-height: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 100%;
+    --topbar-height: 56px;
+  }
+  .container {
+    padding: 0 var(--space-3);
+  }
+}
+
+/* Mobile helper utilities */
+.hide-on-mobile {
+  display: flex !important;
+}
+
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+  .show-on-mobile-flex {
+    display: flex !important;
+  }
+  .show-on-mobile-block {
+    display: block !important;
+  }
+}
+
+/* Responsive grid helper */
+.responsive-grid-dashboard {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+  .responsive-grid-dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Responsive split panel for vouchers, forms */
+.responsive-split-panel {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+@media (max-width: 992px) {
+  .responsive-split-panel {
+    flex-direction: column;
+  }
+  .responsive-split-panel > div {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+}
+
+/* Touch-friendly scrolling containers */
+.table-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Landing Page Responsive Classes */
+.landing-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.5rem 3rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .landing-section {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 4.5rem 1rem 3rem !important;
+  }
+}
+
+.landing-features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .landing-features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .landing-features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.landing-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .landing-pricing-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+.landing-hero-section {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1rem 3rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .landing-hero-section {
+    min-height: auto !important;
+    height: auto !important;
+    padding: 6rem 1rem 3rem !important;
+  }
+}
+
+/* ─── 2026 Modern B2B SaaS Bento & Interaction Styles ─── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.25rem;
+}
+
+.bento-col-8 {
+  grid-column: span 8;
+}
+
+.bento-col-4 {
+  grid-column: span 4;
+}
+
+.bento-col-6 {
+  grid-column: span 6;
+}
+
+.bento-col-12 {
+  grid-column: span 12;
+}
+
+@media (max-width: 960px) {
+  .bento-col-8,
+  .bento-col-4,
+  .bento-col-6 {
+    grid-column: span 12 !important;
+  }
+}
+
+.interactive-card {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.25s ease;
+}
+
+.interactive-card:hover {
+  transform: translateY(-2px);
+}
+
+.subtle-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.subtle-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+}
+
+.subtle-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+

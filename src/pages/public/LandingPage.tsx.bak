@@ -1,0 +1,2762 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { mockDB, MOCK_PLANS } from "@/lib/mock/mockData";
+import { useThemeStore } from "@/lib/store/themeStore";
+import {
+  Sun,
+  Moon,
+  CheckCircle2,
+  TrendingUp,
+  ArrowRight,
+  ShieldCheck,
+  Zap,
+  Calendar,
+  Building2,
+  FileSpreadsheet,
+  Layers,
+  ChevronDown,
+  Sparkles,
+  Receipt,
+  ChevronRight,
+  BookOpen,
+  ShoppingCart,
+  Factory,
+  Hotel,
+  Stethoscope,
+  Ruler,
+  GraduationCap,
+} from "lucide-react";
+
+// ─── Top Navigation ──────────────────────────────────────────────────────────
+function LandingNav({ scrolled }: { scrolled: boolean }) {
+  const { mode, setMode } = useThemeStore();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isDark = mode === "dark";
+
+  return (
+    <>
+      <nav
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          padding: "0 1.5rem",
+          height: "74px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          background: scrolled || mobileMenuOpen
+            ? isDark
+              ? "rgba(10, 17, 40, 0.94)"
+              : "rgba(255, 255, 255, 0.95)"
+            : isDark
+            ? "rgba(10, 17, 40, 0.7)"
+            : "rgba(255, 255, 255, 0.7)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          borderBottom: scrolled
+            ? isDark
+              ? "1px solid rgba(255, 255, 255, 0.08)"
+              : "1px solid rgba(15, 23, 42, 0.08)"
+            : "1px solid transparent",
+          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+          <Link
+            to="/"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              textDecoration: "none",
+            }}
+          >
+            <img
+              src="/brand-logo.png"
+              alt="Pivotal ERP"
+              style={{
+                height: 44,
+                width: "auto",
+                objectFit: "contain",
+                display: "block",
+              }}
+            />
+          </Link>
+
+          <div
+            className="hide-on-mobile"
+            style={{ display: "flex", alignItems: "center", gap: "1.75rem" }}
+          >
+            <a
+              href="#features"
+              style={{
+                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+                textDecoration: "none",
+                fontSize: "0.925rem",
+                fontWeight: 500,
+                transition: "color 0.2s",
+              }}
+            >
+              Features
+            </a>
+            <a
+              href="#preview"
+              style={{
+                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+                textDecoration: "none",
+                fontSize: "0.925rem",
+                fontWeight: 500,
+                transition: "color 0.2s",
+              }}
+            >
+              Live Demo
+            </a>
+            <a
+              href="#industries"
+              style={{
+                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+                textDecoration: "none",
+                fontSize: "0.925rem",
+                fontWeight: 500,
+                transition: "color 0.2s",
+              }}
+            >
+              Industries
+            </a>
+            <a
+              href="#pricing"
+              style={{
+                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+                textDecoration: "none",
+                fontSize: "0.925rem",
+                fontWeight: 500,
+                transition: "color 0.2s",
+              }}
+            >
+              Pricing
+            </a>
+            <a
+              href="#faq"
+              style={{
+                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+                textDecoration: "none",
+                fontSize: "0.925rem",
+                fontWeight: 500,
+                transition: "color 0.2s",
+              }}
+            >
+              FAQ
+            </a>
+            <Link
+              to="/blog"
+              style={{
+                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+                textDecoration: "none",
+                fontSize: "0.925rem",
+                fontWeight: 500,
+                transition: "color 0.2s",
+              }}
+            >
+              Blog
+            </Link>
+          </div>
+        </div>
+
+        {/* Desktop actions */}
+        <div
+          className="hide-on-mobile"
+          style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+        >
+          {/* Theme switcher */}
+          <button
+            onClick={() => setMode(mode === "dark" ? "light" : "dark")}
+            style={{
+              background: isDark
+                ? "rgba(255,255,255,0.06)"
+                : "rgba(15,23,42,0.04)",
+              border: isDark
+                ? "1px solid rgba(255,255,255,0.12)"
+                : "1px solid rgba(15,23,42,0.12)",
+              color: isDark ? "#ffffff" : "#0f172a",
+              width: "56px",
+              height: "30px",
+              borderRadius: "100px",
+              cursor: "pointer",
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              padding: "2px 4px",
+              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              outline: "none",
+            }}
+            title={`Switch to ${isDark ? "light" : "dark"} mode`}
+          >
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+                padding: "0 4px",
+                color: isDark ? "rgba(255,255,255,0.3)" : "rgba(15,23,42,0.3)",
+              }}
+            >
+              <Sun size={12} />
+              <Moon size={12} />
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                top: "3px",
+                left: isDark ? "28px" : "3px",
+                width: "22px",
+                height: "22px",
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #0084E6, #48BB28)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 2px 6px rgba(0, 132, 230, 0.4)",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              }}
+            >
+              {isDark ? (
+                <Moon size={11} color="white" />
+              ) : (
+                <Sun size={11} color="white" />
+              )}
+            </div>
+          </button>
+
+          <Link
+            to="/login"
+            style={{
+              color: isDark ? "#E2E8F0" : "#1E293B",
+              textDecoration: "none",
+              fontSize: "0.925rem",
+              fontWeight: 600,
+              padding: "8px 16px",
+              borderRadius: "8px",
+              transition: "all 0.2s",
+            }}
+          >
+            Log In
+          </Link>
+
+          <Link
+            to="/signup"
+            style={{
+              background: "linear-gradient(135deg, #0084E6 0%, #0066cc 100%)",
+              color: "#FFFFFF",
+              textDecoration: "none",
+              fontSize: "0.925rem",
+              fontWeight: 600,
+              padding: "9px 20px",
+              borderRadius: "8px",
+              boxShadow: "0 4px 14px rgba(0, 132, 230, 0.35)",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              transition: "transform 0.15s, box-shadow 0.15s",
+            }}
+          >
+            Get Started <ArrowRight size={15} />
+          </Link>
+        </div>
+
+        {/* Mobile controls */}
+        <div
+          className="show-on-mobile-flex"
+          style={{ display: "none", alignItems: "center", gap: "10px" }}
+        >
+          <button
+            onClick={() => setMode(mode === "dark" ? "light" : "dark")}
+            style={{
+              background: isDark
+                ? "rgba(255,255,255,0.06)"
+                : "rgba(15,23,42,0.04)",
+              border: isDark
+                ? "1px solid rgba(255,255,255,0.12)"
+                : "1px solid rgba(15,23,42,0.12)",
+              color: isDark ? "white" : "#0f172a",
+              width: "36px",
+              height: "36px",
+              borderRadius: "8px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            style={{
+              background: isDark
+                ? "rgba(255,255,255,0.08)"
+                : "rgba(15,23,42,0.06)",
+              border: isDark
+                ? "1px solid rgba(255,255,255,0.15)"
+                : "1px solid rgba(15,23,42,0.15)",
+              color: isDark ? "white" : "#0f172a",
+              width: "36px",
+              height: "36px",
+              borderRadius: "8px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.2rem",
+            }}
+          >
+            {mobileMenuOpen ? "✕" : "☰"}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 74,
+            left: 0,
+            right: 0,
+            background: isDark ? "#0A1128" : "#ffffff",
+            borderBottom: isDark
+              ? "1px solid rgba(255,255,255,0.1)"
+              : "1px solid #e2e8f0",
+            padding: "1.5rem",
+            zIndex: 99,
+            display: "flex",
+            flexDirection: "column",
+            gap: "1.2rem",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+          }}
+        >
+          <a
+            href="#features"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              color: isDark ? "white" : "#0f172a",
+              textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: 500,
+            }}
+          >
+            Features
+          </a>
+          <a
+            href="#preview"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              color: isDark ? "white" : "#0f172a",
+              textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: 500,
+            }}
+          >
+            Live Demo
+          </a>
+          <a
+            href="#industries"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              color: isDark ? "white" : "#0f172a",
+              textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: 500,
+            }}
+          >
+            Industries
+          </a>
+          <a
+            href="#pricing"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              color: isDark ? "white" : "#0f172a",
+              textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: 500,
+            }}
+          >
+            Pricing
+          </a>
+          <a
+            href="#faq"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              color: isDark ? "white" : "#0f172a",
+              textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: 500,
+            }}
+          >
+            FAQ
+          </a>
+          <Link
+            to="/blog"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              color: isDark ? "white" : "#0f172a",
+              textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: 500,
+            }}
+          >
+            Blog
+          </Link>
+          <div
+            style={{
+              height: "1px",
+              background: isDark ? "rgba(255,255,255,0.1)" : "#e2e8f0",
+              margin: "4px 0",
+            }}
+          />
+          <Link
+            to="/login"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              color: isDark ? "white" : "#0f172a",
+              border: isDark
+                ? "1px solid rgba(255,255,255,0.2)"
+                : "1px solid #cbd5e1",
+              textDecoration: "none",
+              fontSize: "0.95rem",
+              textAlign: "center",
+              padding: "10px 16px",
+              borderRadius: 8,
+              fontWeight: 600,
+            }}
+          >
+            Log In
+          </Link>
+          <Link
+            to="/signup"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{
+              background: "linear-gradient(135deg, #0084E6, #48BB28)",
+              color: "white",
+              textDecoration: "none",
+              fontSize: "0.95rem",
+              textAlign: "center",
+              padding: "10px 20px",
+              borderRadius: 8,
+              fontWeight: 600,
+            }}
+          >
+            Get Started Free
+          </Link>
+        </div>
+      )}
+    </>
+  );
+}
+
+// ─── Hero Section with Interactive Live Preview Mockup ───────────────────────
+function HeroSection({
+  settings,
+}: {
+  settings: ReturnType<typeof mockDB.getSettings>;
+}) {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const { mode } = useThemeStore();
+  const isDark = mode === "dark";
+
+  const handleSignup = () => {
+    if (!email) {
+      setEmailErr("Please enter your work email.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setEmailErr("Please enter a valid work email.");
+      return;
+    }
+    if (mockDB.isEmailTaken(email)) {
+      setEmailErr("This email is already registered. Please log in.");
+      return;
+    }
+    navigate(`/signup?email=${encodeURIComponent(email)}&step=1`);
+  };
+
+  const handleTrial = () => {
+    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      localStorage.setItem("pivotal-signup-email", email);
+    }
+    navigate("/trial");
+  };
+
+  return (
+    <section
+      style={{
+        position: "relative",
+        overflow: "hidden",
+        paddingTop: "120px",
+        paddingBottom: "80px",
+        background: isDark
+          ? "linear-gradient(180deg, #0A1128 0%, #080D21 100%)"
+          : "linear-gradient(180deg, #F8FAFC 0%, #EFF6FF 100%)",
+        borderBottom: isDark
+          ? "1px solid rgba(255,255,255,0.06)"
+          : "1px solid #E2E8F0",
+      }}
+    >
+      {/* Background Decorative Glow Gradients */}
+      <div
+        style={{
+          position: "absolute",
+          top: "-150px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "900px",
+          height: "500px",
+          background: isDark
+            ? "radial-gradient(circle, rgba(0, 132, 230, 0.18) 0%, rgba(72, 187, 40, 0.08) 50%, transparent 80%)"
+            : "radial-gradient(circle, rgba(0, 132, 230, 0.12) 0%, rgba(72, 187, 40, 0.06) 50%, transparent 80%)",
+          filter: "blur(60px)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
+      {/* Grid Pattern Overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: isDark
+            ? "radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px)"
+            : "radial-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+          opacity: 0.7,
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
+      <div
+        style={{
+          maxWidth: "1240px",
+          margin: "0 auto",
+          padding: "0 1.5rem",
+          position: "relative",
+          zIndex: 1,
+        }}
+      >
+        {/* Main Hero Header */}
+        <div
+          style={{
+            textAlign: "center",
+            maxWidth: "880px",
+            margin: "0 auto 3.5rem",
+          }}
+        >
+          {/* Badge with pulse */}
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: isDark
+                ? "rgba(0, 132, 230, 0.12)"
+                : "rgba(0, 132, 230, 0.08)",
+              border: "1px solid rgba(0, 132, 230, 0.25)",
+              borderRadius: "100px",
+              padding: "6px 16px",
+              marginBottom: "1.5rem",
+              boxShadow: "0 2px 10px rgba(0, 132, 230, 0.12)",
+            }}
+          >
+            <span
+              style={{
+                display: "inline-block",
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: "#48BB28",
+                boxShadow: "0 0 10px #48BB28",
+              }}
+            />
+            <span
+              style={{
+                fontSize: "0.85rem",
+                fontWeight: 600,
+                color: isDark ? "#60A5FA" : "#0284C7",
+                letterSpacing: "0.02em",
+              }}
+            >
+              IRD Verified &nbsp;•&nbsp; Bikram Sambat 2081/82 &nbsp;•&nbsp; NFRS Compliant
+            </span>
+          </div>
+
+          <h1
+            style={{
+              fontSize: "clamp(2.4rem, 5.2vw, 3.85rem)",
+              fontWeight: 800,
+              letterSpacing: "-0.035em",
+              color: isDark ? "#FFFFFF" : "#0F172A",
+              lineHeight: 1.15,
+              marginBottom: "1.25rem",
+            }}
+          >
+            The Operating System for{" "}
+            <span
+              style={{
+                background:
+                  "linear-gradient(135deg, #0084E6 20%, #48BB28 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                display: "inline-block",
+              }}
+            >
+              Modern Nepalese Business
+            </span>
+          </h1>
+
+          <p
+            style={{
+              fontSize: "clamp(1.05rem, 2vw, 1.25rem)",
+              color: isDark ? "#94A3B8" : "#475569",
+              lineHeight: 1.6,
+              maxWidth: "720px",
+              margin: "0 auto 2.25rem",
+            }}
+          >
+            Consolidate your multi-branch bookkeeping, IRD Annexure tax filings,
+            inventory, and live audits in one unified, high-speed cloud platform.
+          </p>
+
+          {/* Email Capture & CTA Form */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "0.85rem",
+              width: "100%",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                width: "100%",
+                maxWidth: "540px",
+                flexWrap: "wrap",
+                background: isDark
+                  ? "rgba(15, 23, 42, 0.8)"
+                  : "rgba(255, 255, 255, 0.95)",
+                padding: "6px",
+                borderRadius: "12px",
+                border: emailErr
+                  ? "1px solid #EF4444"
+                  : isDark
+                  ? "1px solid rgba(255,255,255,0.15)"
+                  : "1px solid #CBD5E1",
+                boxShadow: isDark
+                  ? "0 10px 25px rgba(0,0,0,0.5)"
+                  : "0 10px 25px rgba(0,0,0,0.06)",
+              }}
+            >
+              <input
+                type="email"
+                placeholder="Enter your business email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setEmailErr("");
+                }}
+                style={{
+                  flex: "1 1 240px",
+                  padding: "12px 16px",
+                  borderRadius: "8px",
+                  border: "none",
+                  background: "transparent",
+                  color: isDark ? "#FFFFFF" : "#0F172A",
+                  fontSize: "0.95rem",
+                  outline: "none",
+                }}
+                onKeyDown={(e) => e.key === "Enter" && handleSignup()}
+              />
+              <button
+                onClick={handleSignup}
+                style={{
+                  flex: "0 0 auto",
+                  padding: "12px 24px",
+                  borderRadius: "8px",
+                  border: "none",
+                  cursor: "pointer",
+                  background: "linear-gradient(135deg, #0084E6, #0069cc)",
+                  color: "white",
+                  fontWeight: 600,
+                  fontSize: "0.95rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  boxShadow: "0 4px 12px rgba(0, 132, 230, 0.35)",
+                  transition: "all 0.2s",
+                }}
+              >
+                {settings.signupCtaText || "Get Started Free"}
+                <ArrowRight size={16} />
+              </button>
+            </div>
+
+            {emailErr && (
+              <p
+                style={{
+                  color: "#EF4444",
+                  fontSize: "0.85rem",
+                  margin: 0,
+                  fontWeight: 500,
+                }}
+              >
+                {emailErr}
+              </p>
+            )}
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1.25rem",
+                marginTop: "0.5rem",
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              <button
+                onClick={handleTrial}
+                style={{
+                  background: "transparent",
+                  border: "none",
+                  color: isDark ? "#38BDF8" : "#0084E6",
+                  cursor: "pointer",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "4px",
+                  textDecoration: "underline",
+                }}
+              >
+                Instant 14-Day Free Trial
+              </button>
+              <span style={{ color: isDark ? "#475569" : "#CBD5E1" }}>•</span>
+              <a
+                href="#preview"
+                style={{
+                  color: isDark ? "#94A3B8" : "#64748B",
+                  textDecoration: "none",
+                  fontSize: "0.875rem",
+                  fontWeight: 500,
+                }}
+              >
+                Explore Live Interactive Mockup ↓
+              </a>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "1.5rem",
+                marginTop: "1.5rem",
+                color: isDark ? "#94A3B8" : "#64748B",
+                fontSize: "0.825rem",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <CheckCircle2 size={16} color="#48BB28" /> No credit card required
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <CheckCircle2 size={16} color="#48BB28" /> 1-Click Excel/Tally migration
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                <CheckCircle2 size={16} color="#48BB28" /> 24/7 Kathmandu Support
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── Hero Live Dashboard Mockup ─── */}
+        <div
+          id="preview"
+          style={{
+            maxWidth: "1140px",
+            margin: "0 auto",
+            borderRadius: "16px",
+            background: isDark ? "#0F172A" : "#FFFFFF",
+            border: isDark
+              ? "1px solid rgba(255, 255, 255, 0.12)"
+              : "1px solid #E2E8F0",
+            boxShadow: isDark
+              ? "0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 132, 230, 0.15)"
+              : "0 25px 60px -15px rgba(15, 23, 42, 0.15), 0 0 30px rgba(0, 132, 230, 0.08)",
+            overflow: "hidden",
+            position: "relative",
+          }}
+        >
+          {/* Mock Window Top Bar */}
+          <div
+            style={{
+              padding: "12px 20px",
+              background: isDark ? "#090E1D" : "#F8FAFC",
+              borderBottom: isDark
+                ? "1px solid rgba(255,255,255,0.08)"
+                : "1px solid #E2E8F0",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span
+                style={{
+                  width: 11,
+                  height: 11,
+                  borderRadius: "50%",
+                  background: "#EF4444",
+                }}
+              />
+              <span
+                style={{
+                  width: 11,
+                  height: 11,
+                  borderRadius: "50%",
+                  background: "#F59E0B",
+                }}
+              />
+              <span
+                style={{
+                  width: 11,
+                  height: 11,
+                  borderRadius: "50%",
+                  background: "#10B981",
+                }}
+              />
+              <span
+                style={{
+                  marginLeft: 14,
+                  fontSize: "0.8rem",
+                  color: isDark ? "#64748B" : "#94A3B8",
+                  fontFamily: "monospace",
+                }}
+              >
+                https://app.pivotalerp.com/erp/dashboard
+              </span>
+            </div>
+
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <span
+                style={{
+                  background: "rgba(72, 187, 40, 0.15)",
+                  color: "#48BB28",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  padding: "3px 10px",
+                  borderRadius: 20,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                }}
+              >
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    background: "#48BB28",
+                  }}
+                />
+                IRD Gateway Live
+              </span>
+              <span
+                style={{
+                  background: isDark
+                    ? "rgba(255,255,255,0.08)"
+                    : "rgba(15,23,42,0.06)",
+                  color: isDark ? "#CBD5E1" : "#475569",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  padding: "3px 10px",
+                  borderRadius: 6,
+                }}
+              >
+                BS 2081-11-26
+              </span>
+            </div>
+          </div>
+
+          {/* Mock Dashboard Body */}
+          <div style={{ padding: "1.75rem" }}>
+            {/* Top Stat Cards */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                gap: "1.25rem",
+                marginBottom: "1.75rem",
+              }}
+            >
+              <div
+                style={{
+                  background: isDark ? "#131E3A" : "#F8FAFC",
+                  border: isDark
+                    ? "1px solid rgba(255,255,255,0.06)"
+                    : "1px solid #E2E8F0",
+                  borderRadius: 10,
+                  padding: "1.25rem",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 8,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      color: isDark ? "#94A3B8" : "#64748B",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Monthly Net Sales (NPR)
+                  </span>
+                  <div
+                    style={{
+                      background: "rgba(0, 132, 230, 0.12)",
+                      padding: "4px 8px",
+                      borderRadius: 6,
+                      color: "#0084E6",
+                    }}
+                  >
+                    <TrendingUp size={14} />
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "1.65rem",
+                    fontWeight: 700,
+                    color: isDark ? "#FFFFFF" : "#0F172A",
+                  }}
+                >
+                  रू 4,82,50,000
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "#48BB28",
+                    marginTop: 6,
+                    fontWeight: 600,
+                  }}
+                >
+                  +18.4% vs last Ashadh
+                </div>
+              </div>
+
+              <div
+                style={{
+                  background: isDark ? "#131E3A" : "#F8FAFC",
+                  border: isDark
+                    ? "1px solid rgba(255,255,255,0.06)"
+                    : "1px solid #E2E8F0",
+                  borderRadius: 10,
+                  padding: "1.25rem",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 8,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      color: isDark ? "#94A3B8" : "#64748B",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Input VAT Reconciled (13%)
+                  </span>
+                  <div
+                    style={{
+                      background: "rgba(72, 187, 40, 0.12)",
+                      padding: "4px 8px",
+                      borderRadius: 6,
+                      color: "#48BB28",
+                    }}
+                  >
+                    <Receipt size={14} />
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "1.65rem",
+                    fontWeight: 700,
+                    color: isDark ? "#FFFFFF" : "#0F172A",
+                  }}
+                >
+                  रू 62,72,500
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "#0084E6",
+                    marginTop: 6,
+                    fontWeight: 600,
+                  }}
+                >
+                  IRD Annexure 13 Auto-Matched
+                </div>
+              </div>
+
+              <div
+                style={{
+                  background: isDark ? "#131E3A" : "#F8FAFC",
+                  border: isDark
+                    ? "1px solid rgba(255,255,255,0.06)"
+                    : "1px solid #E2E8F0",
+                  borderRadius: 10,
+                  padding: "1.25rem",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 8,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      color: isDark ? "#94A3B8" : "#64748B",
+                      fontWeight: 500,
+                    }}
+                  >
+                    Pending Voucher Approvals
+                  </span>
+                  <div
+                    style={{
+                      background: "rgba(245, 158, 11, 0.12)",
+                      padding: "4px 8px",
+                      borderRadius: 6,
+                      color: "#F59E0B",
+                    }}
+                  >
+                    <FileSpreadsheet size={14} />
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "1.65rem",
+                    fontWeight: 700,
+                    color: isDark ? "#FFFFFF" : "#0F172A",
+                  }}
+                >
+                  3 Vouchers
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    color: isDark ? "#94A3B8" : "#64748B",
+                    marginTop: 6,
+                  }}
+                >
+                  Biratnagar & Pokhara Branches
+                </div>
+              </div>
+
+              <div
+                style={{
+                  background: isDark ? "#131E3A" : "#F8FAFC",
+                  border: isDark
+                    ? "1px solid rgba(255,255,255,0.06)"
+                    : "1px solid #E2E8F0",
+                  borderRadius: 10,
+                  padding: "1.25rem",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 8,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: "0.8rem",
+                      color: isDark ? "#94A3B8" : "#64748B",
+                      fontWeight: 500,
+                    }}
+                  >
+                    NFRS Balance Check
+                  </span>
+                  <div
+                    style={{
+                      background: "rgba(168, 85, 247, 0.12)",
+                      padding: "4px 8px",
+                      borderRadius: 6,
+                      color: "#A855F7",
+                    }}
+                  >
+                    <ShieldCheck size={14} />
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "1.65rem",
+                    fontWeight: 700,
+                    color: "#10B981",
+                  }}
+                >
+                  100% Balanced
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    color: isDark ? "#94A3B8" : "#64748B",
+                    marginTop: 6,
+                  }}
+                >
+                  Trial Balance Variance: रू 0.00
+                </div>
+              </div>
+            </div>
+
+            {/* Mock Table & Activity Preview */}
+            <div
+              style={{
+                borderRadius: 8,
+                border: isDark
+                  ? "1px solid rgba(255,255,255,0.08)"
+                  : "1px solid #E2E8F0",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  padding: "12px 16px",
+                  background: isDark ? "#162244" : "#F1F5F9",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: isDark ? "#E2E8F0" : "#334155",
+                }}
+              >
+                <span>Recent Tax Invoices & Vouchers (BS 2081)</span>
+                <span
+                  style={{
+                    color: "#0084E6",
+                    fontSize: "0.775rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  View Full AG-Grid Ledger →
+                </span>
+              </div>
+              <div
+                style={{
+                  background: isDark ? "#0D152D" : "#FFFFFF",
+                  padding: "8px 16px",
+                }}
+              >
+                {[
+                  {
+                    id: "INV-2081-0842",
+                    client: "Himalayan Imports Pvt Ltd",
+                    type: "Tax Invoice (Sales)",
+                    amount: "रू 12,40,000",
+                    vat: "रू 1,61,200",
+                    status: "IRD Verified",
+                  },
+                  {
+                    id: "VCH-2081-1209",
+                    client: "Nepal Electricity Authority",
+                    type: "Journal Voucher",
+                    amount: "रू 1,45,200",
+                    vat: "Exempt",
+                    status: "Posted",
+                  },
+                  {
+                    id: "INV-2081-0841",
+                    client: "Siddhartha Enterprises",
+                    type: "Purchase VAT Annexure",
+                    amount: "रू 8,50,000",
+                    vat: "रू 1,10,500",
+                    status: "IRD Verified",
+                  },
+                ].map((row, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "10px 0",
+                      borderBottom:
+                        idx < 2
+                          ? isDark
+                            ? "1px solid rgba(255,255,255,0.05)"
+                            : "1px solid #F1F5F9"
+                          : "none",
+                      fontSize: "0.825rem",
+                    }}
+                  >
+                    <div style={{ display: "flex", gap: 12, minWidth: 140 }}>
+                      <span
+                        style={{
+                          fontFamily: "monospace",
+                          color: "#0084E6",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {row.id}
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        flex: 1,
+                        color: isDark ? "#FFFFFF" : "#1E293B",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {row.client}
+                    </div>
+                    <div
+                      style={{
+                        width: 160,
+                        color: isDark ? "#94A3B8" : "#64748B",
+                      }}
+                    >
+                      {row.type}
+                    </div>
+                    <div
+                      style={{
+                        width: 120,
+                        fontWeight: 600,
+                        color: isDark ? "#FFFFFF" : "#0F172A",
+                        textAlign: "right",
+                      }}
+                    >
+                      {row.amount}
+                    </div>
+                    <div
+                      style={{
+                        width: 110,
+                        textAlign: "right",
+                        color: "#48BB28",
+                        fontWeight: 600,
+                      }}
+                    >
+                      {row.vat}
+                    </div>
+                    <div style={{ width: 110, textAlign: "right" }}>
+                      <span
+                        style={{
+                          background: "rgba(72, 187, 40, 0.15)",
+                          color: "#48BB28",
+                          padding: "2px 8px",
+                          borderRadius: 4,
+                          fontSize: "0.75rem",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {row.status}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Trust Badges Bar */}
+        <div
+          style={{
+            marginTop: "4rem",
+            paddingTop: "2.5rem",
+            borderTop: isDark
+              ? "1px solid rgba(255,255,255,0.08)"
+              : "1px solid #E2E8F0",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: "2rem",
+            textAlign: "center",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                fontSize: "2rem",
+                fontWeight: 800,
+                color: isDark ? "#FFFFFF" : "#0F172A",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              500+
+            </div>
+            <div
+              style={{
+                fontSize: "0.85rem",
+                color: isDark ? "#94A3B8" : "#64748B",
+                marginTop: 4,
+              }}
+            >
+              Enterprises Across 7 Provinces
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "2rem",
+                fontWeight: 800,
+                color: "#0084E6",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              रू 4.5+ Arba
+            </div>
+            <div
+              style={{
+                fontSize: "0.85rem",
+                color: isDark ? "#94A3B8" : "#64748B",
+                marginTop: 4,
+              }}
+            >
+              Annual Reconciled Volume
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "2rem",
+                fontWeight: 800,
+                color: "#48BB28",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              100%
+            </div>
+            <div
+              style={{
+                fontSize: "0.85rem",
+                color: isDark ? "#94A3B8" : "#64748B",
+                marginTop: 4,
+              }}
+            >
+              IRD Annexure 13 & 5 Compliance
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "2rem",
+                fontWeight: 800,
+                color: isDark ? "#FFFFFF" : "#0F172A",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              99.99%
+            </div>
+            <div
+              style={{
+                fontSize: "0.85rem",
+                color: isDark ? "#94A3B8" : "#64748B",
+                marginTop: 4,
+              }}
+            >
+              Zero-Downtime Cloud SLA
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Features Section ────────────────────────────────────────────────────────
+const FEATURE_PILLARS = [
+  {
+    icon: BookOpen,
+    title: "NFRS Double-Entry Accounting",
+    desc: "Strict compliance with Nepal Financial Reporting Standards. Balance sheets, P&L, Cash Flow, and automated closing vouchers.",
+    badge: "Core Ledger",
+  },
+  {
+    icon: Receipt,
+    title: "Automated VAT & TDS Filing",
+    desc: "Exact 13% VAT calculation with zero rounding drift. Generates IRD Annexure 13, Annexure 5, and e-TDS certificates with legal column accuracy.",
+    badge: "Tax Ready",
+  },
+  {
+    icon: Calendar,
+    title: "Dual Calendar (BS / AD)",
+    desc: "Every date field natively converts between Bikram Sambat and Gregorian. Automatically aligns with the Shrawan-Ashadh fiscal cycle.",
+    badge: "Nepal Native",
+  },
+  {
+    icon: Building2,
+    title: "Multi-Branch & Multi-Company",
+    desc: "Manage multiple legal entities and provincial branch stores under one parent company with separate permission rings and unified consolidation.",
+    badge: "Enterprise",
+  },
+  {
+    icon: Sparkles,
+    title: "AI Accounting Copilot",
+    desc: "Operational command bar powered by intelligent NLP. Query 'Trial balance for Kartik 2081' or 'New sales invoice' without clicking menus.",
+    badge: "Smart AI",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Granular Audit Trail & RBAC",
+    desc: "Every journal entry, invoice edit, and deletion is cryptographically tracked with user IDs, timestamps, and reason codes for seamless external audit.",
+    badge: "Security",
+  },
+];
+
+function FeaturesSection() {
+  const { mode } = useThemeStore();
+  const isDark = mode === "dark";
+
+  return (
+    <section
+      id="features"
+      style={{
+        padding: "5.5rem 1.5rem",
+        background: isDark ? "#0A1128" : "#FFFFFF",
+      }}
+    >
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <div
+          style={{
+            textAlign: "center",
+            maxWidth: "760px",
+            margin: "0 auto 3.5rem",
+          }}
+        >
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              color: "#0084E6",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+              marginBottom: "0.75rem",
+            }}
+          >
+            <Zap size={15} /> Engineered for Scale
+          </div>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
+              fontWeight: 800,
+              color: isDark ? "#FFFFFF" : "#0F172A",
+              lineHeight: 1.2,
+              letterSpacing: "-0.025em",
+            }}
+          >
+            Every tool required to run your enterprise with audit confidence
+          </h2>
+          <p
+            style={{
+              color: isDark ? "#94A3B8" : "#64748B",
+              fontSize: "1.05rem",
+              marginTop: "1rem",
+              lineHeight: 1.6,
+            }}
+          >
+            Designed alongside certified Chartered Accountants in Kathmandu to
+            replace legacy offline desktop software.
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+            gap: "1.75rem",
+          }}
+        >
+          {FEATURE_PILLARS.map((f, i) => (
+            <div
+              key={i}
+              style={{
+                background: isDark ? "#0F172A" : "#F8FAFC",
+                border: isDark
+                  ? "1px solid rgba(255, 255, 255, 0.08)"
+                  : "1px solid #E2E8F0",
+                borderRadius: "14px",
+                padding: "2rem",
+                display: "flex",
+                flexDirection: "column",
+                position: "relative",
+                transition: "transform 0.2s, border-color 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.transform = "translateY(-4px)";
+                el.style.borderColor = "#0084E6";
+                el.style.boxShadow = isDark
+                  ? "0 14px 30px rgba(0, 132, 230, 0.15)"
+                  : "0 14px 30px rgba(0, 132, 230, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.transform = "none";
+                el.style.borderColor = isDark
+                  ? "rgba(255, 255, 255, 0.08)"
+                  : "#E2E8F0";
+                el.style.boxShadow = "none";
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  marginBottom: "1.25rem",
+                }}
+              >
+                <div
+                  style={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: "12px",
+                    background: "linear-gradient(135deg, rgba(0,132,230,0.15), rgba(72,187,40,0.15))",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#0084E6",
+                  }}
+                >
+                  <f.icon size={24} />
+                </div>
+                <span
+                  style={{
+                    background: isDark
+                      ? "rgba(255,255,255,0.06)"
+                      : "rgba(15,23,42,0.05)",
+                    color: isDark ? "#94A3B8" : "#64748B",
+                    fontSize: "0.75rem",
+                    fontWeight: 600,
+                    padding: "4px 10px",
+                    borderRadius: 20,
+                  }}
+                >
+                  {f.badge}
+                </span>
+              </div>
+
+              <h3
+                style={{
+                  fontSize: "1.2rem",
+                  fontWeight: 700,
+                  color: isDark ? "#FFFFFF" : "#0F172A",
+                  marginBottom: "0.6rem",
+                }}
+              >
+                {f.title}
+              </h3>
+
+              <p
+                style={{
+                  fontSize: "0.925rem",
+                  color: isDark ? "#94A3B8" : "#64748B",
+                  lineHeight: 1.6,
+                  margin: 0,
+                  flex: 1,
+                }}
+              >
+                {f.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Industry Segment Switcher ───────────────────────────────────────────────
+const INDUSTRY_DETAILS = [
+  {
+    id: "trading",
+    name: "Trading & Wholesale",
+    icon: ShoppingCart,
+    tagline: "Batch tracking, multi-warehouse inventory & margin control",
+    features: [
+      "Purchase Orders with automated landed cost calculation",
+      "Multi-godown stock transfer with transit tracking",
+      "Customer credit limits & aging receivables alerts",
+      "Instant barcode scanning & thermal invoice printing",
+    ],
+  },
+  {
+    id: "manufacturing",
+    name: "Manufacturing",
+    icon: Factory,
+    tagline: "Bill of Materials (BOM), WIP costing & assembly tracking",
+    features: [
+      "Multi-stage BOM with raw material auto-deduction",
+      "Machine & labor overhead allocation per batch",
+      "Scrap and shrinkage accounting",
+      "Finished goods quality check & serial numbers",
+    ],
+  },
+  {
+    id: "hospitality",
+    name: "Hospitality & Hotels",
+    icon: Hotel,
+    tagline: "Room folio billing, F&B restaurant POS & kitchen tokens",
+    features: [
+      "Front desk guest check-in & consolidated room folio",
+      "Restaurant Table POS with KOT kitchen routing",
+      "Service charge and luxury tax auto-breakdown",
+      "Multi-outlet beverage & inventory stock controls",
+    ],
+  },
+  {
+    id: "healthcare",
+    name: "Healthcare & Clinics",
+    icon: Stethoscope,
+    tagline: "OPD/IPD patient ledger, pharmacy billing & doctor cuts",
+    features: [
+      "Doctor consultation fees & commission splitting",
+      "Expiry date alert & batch control for pharmacy",
+      "Laboratory test receipts with auto sample tokens",
+      "Health insurance credit billing & claim reconciliation",
+    ],
+  },
+  {
+    id: "construction",
+    name: "Construction & Projects",
+    icon: Ruler,
+    tagline: "BOQ milestone billing, retention money & contractor advances",
+    features: [
+      "Bill of Quantities (BOQ) with subcontractor ledger",
+      "Running bill calculation with VAT & TDS retention",
+      "Site-wise material consumption logs",
+      "Machinery rental & diesel logbook accounting",
+    ],
+  },
+  {
+    id: "education",
+    name: "Education & Institutes",
+    icon: GraduationCap,
+    tagline: "Student tuition fee billing, payroll & scholarship vouchers",
+    features: [
+      "Term fee invoicing with fine & discount logic",
+      "Online fee receipt portal with QR code payment",
+      "Teacher & staff payroll with SSF deduction",
+      "Hostel and transport billing integration",
+    ],
+  },
+];
+
+function IndustriesSection() {
+  const [selectedInd, setSelectedInd] = useState(INDUSTRY_DETAILS[0].id);
+  const { mode } = useThemeStore();
+  const isDark = mode === "dark";
+
+  const activeData =
+    INDUSTRY_DETAILS.find((i) => i.id === selectedInd) || INDUSTRY_DETAILS[0];
+
+  return (
+    <section
+      id="industries"
+      style={{
+        padding: "5.5rem 1.5rem",
+        background: isDark ? "#080D21" : "#F8FAFC",
+        borderTop: isDark
+          ? "1px solid rgba(255,255,255,0.06)"
+          : "1px solid #E2E8F0",
+        borderBottom: isDark
+          ? "1px solid rgba(255,255,255,0.06)"
+          : "1px solid #E2E8F0",
+      }}
+    >
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <div
+          style={{
+            textAlign: "center",
+            maxWidth: "760px",
+            margin: "0 auto 3rem",
+          }}
+        >
+          <div
+            style={{
+              color: "#48BB28",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+              marginBottom: "0.75rem",
+            }}
+          >
+            Configured for your exact niche
+          </div>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
+              fontWeight: 800,
+              color: isDark ? "#FFFFFF" : "#0F172A",
+              lineHeight: 1.2,
+              letterSpacing: "-0.025em",
+            }}
+          >
+            Sector-Specific Modules Pre-Loaded
+          </h2>
+          <p
+            style={{
+              color: isDark ? "#94A3B8" : "#64748B",
+              fontSize: "1.05rem",
+              marginTop: "0.75rem",
+            }}
+          >
+            No need to pay for custom software development. Select your industry
+            to unlock tailored workflows out of the box.
+          </p>
+        </div>
+
+        {/* Category Pills */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "0.75rem",
+            flexWrap: "wrap",
+            marginBottom: "2.5rem",
+          }}
+        >
+          {INDUSTRY_DETAILS.map((ind) => {
+            const isSelected = ind.id === selectedInd;
+            return (
+              <button
+                key={ind.id}
+                onClick={() => setSelectedInd(ind.id)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "10px 18px",
+                  borderRadius: "100px",
+                  fontSize: "0.9rem",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  border: isSelected
+                    ? "1px solid #0084E6"
+                    : isDark
+                    ? "1px solid rgba(255,255,255,0.1)"
+                    : "1px solid #CBD5E1",
+                  background: isSelected
+                    ? "linear-gradient(135deg, #0084E6, #0066cc)"
+                    : isDark
+                    ? "#0F172A"
+                    : "#FFFFFF",
+                  color: isSelected
+                    ? "#FFFFFF"
+                    : isDark
+                    ? "#E2E8F0"
+                    : "#334155",
+                  boxShadow: isSelected
+                    ? "0 4px 14px rgba(0, 132, 230, 0.3)"
+                    : "none",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                <ind.icon size={16} />
+                {ind.name}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active Industry Showcase Card */}
+        <div
+          style={{
+            maxWidth: "960px",
+            margin: "0 auto",
+            background: isDark ? "#0F172A" : "#FFFFFF",
+            borderRadius: "16px",
+            padding: "2.5rem",
+            border: isDark
+              ? "1px solid rgba(255,255,255,0.1)"
+              : "1px solid #E2E8F0",
+            boxShadow: isDark
+              ? "0 20px 40px rgba(0,0,0,0.5)"
+              : "0 20px 40px rgba(0,0,0,0.06)",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1rem",
+              marginBottom: "1rem",
+            }}
+          >
+            <div
+              style={{
+                width: 52,
+                height: 52,
+                borderRadius: "12px",
+                background: "linear-gradient(135deg, #0084E6, #48BB28)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <activeData.icon size={26} />
+            </div>
+            <div>
+              <h3
+                style={{
+                  fontSize: "1.45rem",
+                  fontWeight: 800,
+                  color: isDark ? "#FFFFFF" : "#0F172A",
+                  margin: 0,
+                }}
+              >
+                {activeData.name} Solution
+              </h3>
+              <p
+                style={{
+                  color: isDark ? "#94A3B8" : "#64748B",
+                  fontSize: "0.95rem",
+                  margin: "4px 0 0",
+                }}
+              >
+                {activeData.tagline}
+              </p>
+            </div>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gap: "1.25rem",
+              marginTop: "2rem",
+            }}
+          >
+            {activeData.features.map((feat, idx) => (
+              <div
+                key={idx}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "12px",
+                  padding: "14px",
+                  borderRadius: "8px",
+                  background: isDark ? "#162244" : "#F8FAFC",
+                  border: isDark
+                    ? "1px solid rgba(255,255,255,0.05)"
+                    : "1px solid #EEF2F6",
+                }}
+              >
+                <CheckCircle2
+                  size={18}
+                  color="#48BB28"
+                  style={{ flexShrink: 0, marginTop: 2 }}
+                />
+                <span
+                  style={{
+                    fontSize: "0.925rem",
+                    color: isDark ? "#E2E8F0" : "#334155",
+                    fontWeight: 500,
+                  }}
+                >
+                  {feat}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div
+            style={{
+              marginTop: "2rem",
+              paddingTop: "1.5rem",
+              borderTop: isDark
+                ? "1px solid rgba(255,255,255,0.08)"
+                : "1px solid #E2E8F0",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "1rem",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "0.9rem",
+                color: isDark ? "#94A3B8" : "#64748B",
+              }}
+            >
+              Need a custom workflow for {activeData.name}?
+            </span>
+            <Link
+              to={`/signup?industry=${activeData.id}`}
+              style={{
+                color: "#0084E6",
+                textDecoration: "none",
+                fontWeight: 600,
+                fontSize: "0.925rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+              }}
+            >
+              Launch {activeData.name} Workspace <ChevronRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Pricing Section with Monthly/Annual Toggle ──────────────────────────────
+function PricingSection() {
+  const [annualBilling, setAnnualBilling] = useState(true);
+  const plans = MOCK_PLANS;
+  const { mode } = useThemeStore();
+  const isDark = mode === "dark";
+
+  return (
+    <section
+      id="pricing"
+      style={{
+        padding: "5.5rem 1.5rem",
+        background: isDark ? "#0A1128" : "#FFFFFF",
+      }}
+    >
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <div
+          style={{
+            textAlign: "center",
+            maxWidth: "760px",
+            margin: "0 auto 3rem",
+          }}
+        >
+          <div
+            style={{
+              color: "#0084E6",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+              marginBottom: "0.75rem",
+            }}
+          >
+            Simple, Transparent Pricing
+          </div>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
+              fontWeight: 800,
+              color: isDark ? "#FFFFFF" : "#0F172A",
+              lineHeight: 1.2,
+              letterSpacing: "-0.025em",
+            }}
+          >
+            Invest in clarity. Scale without surprises.
+          </h2>
+          <p
+            style={{
+              color: isDark ? "#94A3B8" : "#64748B",
+              fontSize: "1.05rem",
+              marginTop: "0.75rem",
+            }}
+          >
+            All plans include continuous IRD tax law compliance updates and
+            daily cloud backups.
+          </p>
+
+          {/* Billing Toggle */}
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "12px",
+              marginTop: "2rem",
+              background: isDark ? "#0F172A" : "#F1F5F9",
+              padding: "6px 14px",
+              borderRadius: "100px",
+              border: isDark
+                ? "1px solid rgba(255,255,255,0.1)"
+                : "1px solid #CBD5E1",
+            }}
+          >
+            <span
+              onClick={() => setAnnualBilling(false)}
+              style={{
+                fontSize: "0.9rem",
+                fontWeight: !annualBilling ? 700 : 500,
+                color: !annualBilling
+                  ? isDark
+                    ? "#FFFFFF"
+                    : "#0F172A"
+                  : isDark
+                  ? "#94A3B8"
+                  : "#64748B",
+                cursor: "pointer",
+              }}
+            >
+              Monthly Billing
+            </span>
+
+            <button
+              onClick={() => setAnnualBilling(!annualBilling)}
+              style={{
+                width: 44,
+                height: 24,
+                borderRadius: 100,
+                background: annualBilling ? "#48BB28" : "#94A3B8",
+                border: "none",
+                cursor: "pointer",
+                position: "relative",
+                transition: "background 0.2s",
+                padding: 0,
+              }}
+            >
+              <div
+                style={{
+                  width: 18,
+                  height: 18,
+                  borderRadius: "50%",
+                  background: "white",
+                  position: "absolute",
+                  top: 3,
+                  left: annualBilling ? 23 : 3,
+                  transition: "left 0.2s",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
+                }}
+              />
+            </button>
+
+            <span
+              onClick={() => setAnnualBilling(true)}
+              style={{
+                fontSize: "0.9rem",
+                fontWeight: annualBilling ? 700 : 500,
+                color: annualBilling
+                  ? isDark
+                    ? "#FFFFFF"
+                    : "#0F172A"
+                  : isDark
+                  ? "#94A3B8"
+                  : "#64748B",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              Annual Billing
+              <span
+                style={{
+                  background: "rgba(72, 187, 40, 0.15)",
+                  color: "#48BB28",
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  padding: "2px 8px",
+                  borderRadius: 10,
+                }}
+              >
+                Save 20%
+              </span>
+            </span>
+          </div>
+        </div>
+
+        {/* Pricing Cards Grid */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: "2rem",
+            alignItems: "stretch",
+          }}
+        >
+          {plans.map((plan) => {
+            const rawPrice = plan.price;
+            const effectivePrice = annualBilling
+              ? Math.round(rawPrice * 0.8)
+              : rawPrice;
+
+            return (
+              <div
+                key={plan.id}
+                style={{
+                  background: isDark ? "#0F172A" : "#FFFFFF",
+                  border: plan.isPopular
+                    ? "2px solid #0084E6"
+                    : isDark
+                    ? "1px solid rgba(255, 255, 255, 0.08)"
+                    : "1px solid #E2E8F0",
+                  borderRadius: "16px",
+                  padding: "2.25rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  position: "relative",
+                  boxShadow: plan.isPopular
+                    ? isDark
+                      ? "0 20px 40px rgba(0, 132, 230, 0.25)"
+                      : "0 20px 40px rgba(0, 132, 230, 0.12)"
+                    : isDark
+                    ? "0 10px 30px rgba(0,0,0,0.3)"
+                    : "0 10px 30px rgba(0,0,0,0.04)",
+                  transform: plan.isPopular ? "scale(1.02)" : "none",
+                }}
+              >
+                {plan.isPopular && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: -14,
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      background: "linear-gradient(135deg, #0084E6, #48BB28)",
+                      color: "white",
+                      padding: "4px 14px",
+                      borderRadius: 20,
+                      fontSize: "0.75rem",
+                      fontWeight: 700,
+                      letterSpacing: "0.06em",
+                      boxShadow: "0 4px 10px rgba(0, 132, 230, 0.3)",
+                    }}
+                  >
+                    MOST POPULAR FOR ENTERPRISES
+                  </div>
+                )}
+
+                <div>
+                  <div style={{ marginBottom: "1.25rem" }}>
+                    <h3
+                      style={{
+                        fontSize: "1.35rem",
+                        fontWeight: 800,
+                        color: isDark ? "#FFFFFF" : "#0F172A",
+                        margin: "0 0 6px",
+                      }}
+                    >
+                      {plan.name}
+                    </h3>
+                    <p
+                      style={{
+                        fontSize: "0.875rem",
+                        color: isDark ? "#94A3B8" : "#64748B",
+                        margin: 0,
+                      }}
+                    >
+                      Designed for up to {plan.maxUsers} active users
+                    </p>
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      gap: 6,
+                      marginBottom: "1.75rem",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontSize: "2.4rem",
+                        fontWeight: 800,
+                        color: isDark ? "#FFFFFF" : "#0F172A",
+                        letterSpacing: "-0.03em",
+                      }}
+                    >
+                      रू {effectivePrice.toLocaleString("ne-NP")}
+                    </span>
+                    <span
+                      style={{
+                        color: isDark ? "#94A3B8" : "#64748B",
+                        fontSize: "0.9rem",
+                      }}
+                    >
+                      / month
+                    </span>
+                  </div>
+
+                  <div
+                    style={{
+                      borderTop: isDark
+                        ? "1px solid rgba(255,255,255,0.08)"
+                        : "1px solid #F1F5F9",
+                      paddingTop: "1.5rem",
+                      marginBottom: "2rem",
+                    }}
+                  >
+                    <ul
+                      style={{
+                        listStyle: "none",
+                        margin: 0,
+                        padding: 0,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.85rem",
+                      }}
+                    >
+                      {plan.features.map((feat, i) => (
+                        <li
+                          key={i}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 10,
+                            fontSize: "0.9rem",
+                            color: isDark ? "#E2E8F0" : "#334155",
+                          }}
+                        >
+                          <CheckCircle2
+                            size={16}
+                            color={plan.isPopular ? "#0084E6" : "#48BB28"}
+                          />
+                          {feat}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <Link
+                  to={`/signup?plan=${plan.id}&billing=${
+                    annualBilling ? "annual" : "monthly"
+                  }`}
+                  style={{
+                    display: "block",
+                    textAlign: "center",
+                    padding: "12px 18px",
+                    borderRadius: "10px",
+                    textDecoration: "none",
+                    fontWeight: 700,
+                    fontSize: "0.95rem",
+                    background: plan.isPopular
+                      ? "linear-gradient(135deg, #0084E6, #0066cc)"
+                      : isDark
+                      ? "#1E293B"
+                      : "#F1F5F9",
+                    color: plan.isPopular
+                      ? "white"
+                      : isDark
+                      ? "#FFFFFF"
+                      : "#0F172A",
+                    border: plan.isPopular
+                      ? "none"
+                      : isDark
+                      ? "1px solid rgba(255,255,255,0.15)"
+                      : "1px solid #CBD5E1",
+                    boxShadow: plan.isPopular
+                      ? "0 4px 14px rgba(0, 132, 230, 0.35)"
+                      : "none",
+                    transition: "transform 0.15s",
+                  }}
+                >
+                  Start with {plan.name} →
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Interactive FAQ Section ────────────────────────────────────────────────
+const FAQS = [
+  {
+    q: "Is Pivotal ERP fully certified and compliant with Nepal IRD?",
+    a: "Yes. Pivotal ERP formats invoices, Annexure 13, and Purchase Annexure 5 strictly according to Inland Revenue Department (IRD) Nepal specifications. Every tax invoice follows the legal numbering standard and includes all mandated audit fields.",
+  },
+  {
+    q: "Can we migrate from our existing Tally or Excel spreadsheets?",
+    a: "Absolutely. We offer 1-click import templates for Ledgers, Opening Balances, Customers, Vendors, and Inventory items. Our customer onboarding team in Kathmandu assists your accounting staff through the initial setup at zero extra charge.",
+  },
+  {
+    q: "How does the Bikram Sambat (BS) calendar work in the system?",
+    a: "Every transaction date, report interval, and voucher supports seamless BS and AD conversion. The Nepalese fiscal cycle (Shrawan 1 to Ashadh end) is natively programmed, enabling automatic year-end closing and financial statements without date misalignments.",
+  },
+  {
+    q: "Where is our business data stored, and is it secure?",
+    a: "All data is hosted in Tier-4 enterprise cloud facilities with automated daily encrypted backups. Role-Based Access Control (RBAC) guarantees that branch accountants only access their assigned vouchers, while CFOs maintain full consolidated visibility.",
+  },
+  {
+    q: "Can we use Pivotal ERP on tablets and mobile phones?",
+    a: "Yes. Pivotal ERP is completely responsive and cloud-based. Field sales representatives can generate estimates or invoices on their phones, while warehouse managers use tablets for real-time godown transfers.",
+  },
+];
+
+function FAQSection() {
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
+  const { mode } = useThemeStore();
+  const isDark = mode === "dark";
+
+  return (
+    <section
+      id="faq"
+      style={{
+        padding: "5.5rem 1.5rem",
+        background: isDark ? "#080D21" : "#F8FAFC",
+        borderTop: isDark
+          ? "1px solid rgba(255,255,255,0.06)"
+          : "1px solid #E2E8F0",
+      }}
+    >
+      <div style={{ maxWidth: "860px", margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+          <div
+            style={{
+              color: "#0084E6",
+              fontSize: "0.85rem",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+              marginBottom: "0.75rem",
+            }}
+          >
+            Got Questions?
+          </div>
+          <h2
+            style={{
+              fontSize: "clamp(2rem, 3.8vw, 2.5rem)",
+              fontWeight: 800,
+              color: isDark ? "#FFFFFF" : "#0F172A",
+              lineHeight: 1.2,
+              letterSpacing: "-0.025em",
+            }}
+          >
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          {FAQS.map((faq, i) => {
+            const isOpen = openIdx === i;
+            return (
+              <div
+                key={i}
+                style={{
+                  background: isDark ? "#0F172A" : "#FFFFFF",
+                  borderRadius: "12px",
+                  border: isOpen
+                    ? "1px solid #0084E6"
+                    : isDark
+                    ? "1px solid rgba(255,255,255,0.08)"
+                    : "1px solid #E2E8F0",
+                  overflow: "hidden",
+                  transition: "border-color 0.2s",
+                }}
+              >
+                <button
+                  onClick={() => setOpenIdx(isOpen ? null : i)}
+                  style={{
+                    width: "100%",
+                    padding: "1.25rem 1.5rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    color: isDark ? "#FFFFFF" : "#0F172A",
+                    fontSize: "1.05rem",
+                    fontWeight: 600,
+                  }}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown
+                    size={20}
+                    style={{
+                      transform: isOpen ? "rotate(180deg)" : "none",
+                      transition: "transform 0.2s",
+                      color: isOpen ? "#0084E6" : "#94A3B8",
+                      flexShrink: 0,
+                    }}
+                  />
+                </button>
+                {isOpen && (
+                  <div
+                    style={{
+                      padding: "0 1.5rem 1.5rem",
+                      color: isDark ? "#94A3B8" : "#64748B",
+                      fontSize: "0.95rem",
+                      lineHeight: 1.6,
+                      borderTop: isDark
+                        ? "1px solid rgba(255,255,255,0.05)"
+                        : "1px solid #F1F5F9",
+                      paddingTop: "1rem",
+                    }}
+                  >
+                    {faq.a}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── CTA Banner ─────────────────────────────────────────────────────────────
+function CtaBanner() {
+  const navigate = useNavigate();
+  const { mode } = useThemeStore();
+  const isDark = mode === "dark";
+
+  return (
+    <section style={{ padding: "4rem 1.5rem", background: isDark ? "#0A1128" : "#FFFFFF" }}>
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          borderRadius: "20px",
+          background: "linear-gradient(135deg, #0084E6 0%, #0052a3 50%, #003366 100%)",
+          padding: "4rem 2rem",
+          textAlign: "center",
+          color: "white",
+          boxShadow: "0 20px 50px rgba(0, 132, 230, 0.3)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: -100,
+            right: -100,
+            width: 300,
+            height: 300,
+            borderRadius: "50%",
+            background: "rgba(72, 187, 40, 0.2)",
+            filter: "blur(50px)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <div style={{ maxWidth: "700px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <h2
+            style={{
+              fontSize: "clamp(2.1rem, 4vw, 3rem)",
+              fontWeight: 800,
+              lineHeight: 1.2,
+              marginBottom: "1rem",
+            }}
+          >
+            Ready to upgrade your enterprise accounting?
+          </h2>
+          <p
+            style={{
+              fontSize: "1.1rem",
+              color: "rgba(255, 255, 255, 0.85)",
+              marginBottom: "2.25rem",
+              lineHeight: 1.6,
+            }}
+          >
+            Join 500+ Nepalese enterprises who streamlined their VAT filing,
+            financial statements, and branch audits with Pivotal ERP.
+          </p>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "1rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              onClick={() => navigate("/trial")}
+              style={{
+                background: "#FFFFFF",
+                color: "#0084E6",
+                fontWeight: 700,
+                fontSize: "1rem",
+                padding: "14px 28px",
+                borderRadius: "10px",
+                border: "none",
+                cursor: "pointer",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              Start 14-Day Free Trial <ArrowRight size={18} />
+            </button>
+            <button
+              onClick={() => navigate("/login")}
+              style={{
+                background: "rgba(255, 255, 255, 0.15)",
+                color: "white",
+                fontWeight: 600,
+                fontSize: "1rem",
+                padding: "14px 28px",
+                borderRadius: "10px",
+                border: "1px solid rgba(255, 255, 255, 0.3)",
+                cursor: "pointer",
+                backdropFilter: "blur(10px)",
+              }}
+            >
+              Sign In to Existing Tenant
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Modern Footer ──────────────────────────────────────────────────────────
+function Footer() {
+  return (
+    <footer
+      style={{
+        background: "#080D21",
+        color: "rgba(255,255,255,0.7)",
+        padding: "4rem 1.5rem 2rem",
+        borderTop: "1px solid rgba(255,255,255,0.08)",
+      }}
+    >
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "2.5rem",
+            marginBottom: "3.5rem",
+          }}
+        >
+          <div>
+            <div style={{ marginBottom: "1.25rem" }}>
+              <img
+                src="/brand-logo.png"
+                alt="Pivotal ERP"
+                style={{
+                  height: 46,
+                  width: "auto",
+                  objectFit: "contain",
+                  background: "rgba(255,255,255,0.06)",
+                  padding: "4px 8px",
+                  borderRadius: "8px",
+                }}
+              />
+            </div>
+            <p
+              style={{
+                fontSize: "0.875rem",
+                lineHeight: 1.7,
+                color: "rgba(255,255,255,0.6)",
+                maxWidth: 280,
+              }}
+            >
+              Nepal&apos;s premier cloud ERP for enterprise accounting, IRD tax
+              filings, inventory, and multi-branch management.
+            </p>
+            <div
+              style={{
+                marginTop: "1.25rem",
+                fontSize: "0.8rem",
+                color: "#48BB28",
+                fontWeight: 600,
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+              }}
+            >
+              <CheckCircle2 size={15} /> Verified with IRD Annexure 13
+            </div>
+          </div>
+
+          {[
+            {
+              title: "Product",
+              links: [
+                { label: "Double-Entry Accounting", href: "#features" },
+                { label: "VAT & TDS Filing", href: "#features" },
+                { label: "Bikram Sambat Calendar", href: "#features" },
+                { label: "Multi-Company Consolidation", href: "#features" },
+                { label: "Pricing Plans", href: "#pricing" },
+              ],
+            },
+            {
+              title: "Solutions",
+              links: [
+                { label: "Wholesale & Trading", href: "#industries" },
+                { label: "Manufacturing & BOM", href: "#industries" },
+                { label: "Hospitality & Restaurant POS", href: "#industries" },
+                { label: "Healthcare & Pharmacy", href: "#industries" },
+                { label: "Construction & BOQ", href: "#industries" },
+              ],
+            },
+            {
+              title: "Company",
+              links: [
+                { label: "Sign In", href: "/login" },
+                { label: "Free Trial", href: "/trial" },
+                { label: "Official Blog", href: "/blog" },
+                { label: "Privacy Policy", href: "#" },
+                { label: "Terms of Service", href: "#" },
+              ],
+            },
+          ].map((col) => (
+            <div key={col.title}>
+              <h4
+                style={{
+                  color: "#FFFFFF",
+                  fontWeight: 700,
+                  marginBottom: "1.25rem",
+                  fontSize: "0.95rem",
+                }}
+              >
+                {col.title}
+              </h4>
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                }}
+              >
+                {col.links.map((link) => (
+                  <li key={link.label}>
+                    {link.href.startsWith("/") ? (
+                      <Link
+                        to={link.href}
+                        style={{
+                          color: "rgba(255,255,255,0.6)",
+                          textDecoration: "none",
+                          fontSize: "0.875rem",
+                          transition: "color 0.2s",
+                        }}
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        style={{
+                          color: "rgba(255,255,255,0.6)",
+                          textDecoration: "none",
+                          fontSize: "0.875rem",
+                          transition: "color 0.2s",
+                        }}
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            borderTop: "1px solid rgba(255,255,255,0.08)",
+            paddingTop: "2rem",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "1rem",
+            fontSize: "0.825rem",
+            color: "rgba(255,255,255,0.45)",
+          }}
+        >
+          <p style={{ margin: 0 }}>
+            © {new Date().getFullYear()} Pivotal ERP Pvt. Ltd. Kathmandu, Nepal.
+            All rights reserved.
+          </p>
+          <div style={{ display: "flex", gap: "1.5rem" }}>
+            <Link
+              to="/login"
+              style={{ color: "#38BDF8", textDecoration: "none" }}
+            >
+              Staff Portal
+            </Link>
+            <Link
+              to="/trial"
+              style={{ color: "#48BB28", textDecoration: "none" }}
+            >
+              Free Trial
+            </Link>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ─── Root Landing Page ───────────────────────────────────────────────────────
+export default function LandingPage() {
+  const [scrolled, setScrolled] = useState(false);
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    setSettings(mockDB.getSettings());
+    const handler = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  if (!settings) {
+    return <div style={{ background: "#0A1128", minHeight: "100vh" }} />;
+  }
+
+  return (
+    <main
+      style={{
+        background: "var(--bg-primary)",
+        color: "var(--text-primary)",
+        minHeight: "100vh",
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      }}
+    >
+      <LandingNav scrolled={scrolled} />
+      <HeroSection settings={settings} />
+      {settings.landingPageSections?.features !== false && <FeaturesSection />}
+      {settings.landingPageSections?.industries !== false && (
+        <IndustriesSection />
+      )}
+      {settings.landingPageSections?.pricing !== false && <PricingSection />}
+      <FAQSection />
+      <CtaBanner />
+      <Footer />
+    </main>
+  );
+}

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap');
 @import 'ag-grid-community/styles/ag-grid.css';
 @import 'ag-grid-community/styles/ag-theme-alpine.css';
 
@@ -6,60 +6,60 @@
    STITCH DESIGN SYSTEM — DESIGN TOKENS
 ══════════════════════════════════════════════ */
 :root {
-  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'Fira Code', 'Courier New', monospace;
 
-  /* Brand - Emerald Tangerine Morning Palette */
-  --primary: #28694b;
-  --primary-mid: #1f543c;
-  --primary-light: #e5efe9;
-  --primary-hover: #1b4733;
-  --accent-blue: #ff5f2d; /* Tangerine Orange */
-  --accent: #ff5f2d;
+  /* Brand - PivotalERP Palette */
+  --primary: #00B894;       /* Growth Teal */
+  --primary-mid: #029d7e;
+  --primary-light: #e6f8f4;
+  --primary-hover: #00a383;
+  --accent-blue: #1D4ED8;   /* Finance Blue */
+  --accent: #1D4ED8;
 
   /* Semantic */
-  --success: #0f9d58;
-  --success-bg: #e6f4ea;
-  --warning: #f29900;
+  --success: #00B894;
+  --success-bg: #e6f8f4;
+  --warning: #f59e0b;
   --warning-bg: #fef7e0;
   --error: #d93025;
   --error-bg: #fce8e6;
   --error-light: #fef2f2;
 
-  /* Neutral palette - infused with the palette's Grey #6e6e73 */
-  --gray-50:  #f6f6f2;
-  --gray-100: #ebebdc; /* Beige */
-  --gray-200: #dcdccc;
-  --gray-300: #c1c1b3;
-  --gray-400: #a1a195;
-  --gray-500: #6e6e73; /* Grey from palette */
-  --gray-600: #57575b;
-  --gray-700: #424245;
-  --gray-800: #29292c;
-  --gray-900: #1c1c1e;
+  /* Neutral palette - infused with Slate Gray (#1F2937) and Light Gray (#F1F5F9) */
+  --gray-50:  #f8fafc;
+  --gray-100: #f1f5f9; /* Light Gray */
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1f2937; /* Slate Gray */
+  --gray-900: #0f172a;
 
   /* Surfaces */
-  --bg-layout:  #ebebdc; /* Beige Background */
-  --bg-app:     #ebebdc;
+  --bg-layout:  #f1f5f9; /* Light Gray Background */
+  --bg-app:     #f1f5f9;
   --bg-card:    #ffffff;
-  --bg-sidebar: #ffffff;
-  --border-color: #dcdccc;
-  --border-input: #c1c1b3;
+  --bg-sidebar: #0B132B; /* Deep Navy Sidebar */
+  --border-color: #e2e8f0;
+  --border-input: #cbd5e1;
 
   /* Text */
-  --text-main:   #29292c;
-  --text-secondary: #6e6e73; /* Grey from palette */
-  --text-muted:  #a1a195;
-  --text-sidebar: #424245;
-  --text-sidebar-hover: #28694b; /* Emerald Green */
-  --text-logo: #28694b;
-  --bg-sidebar-hover: #e5efe9;
+  --text-main:   #1F2937; /* Slate Gray */
+  --text-secondary: #64748b;
+  --text-muted:  #94a3b8;
+  --text-sidebar: #94a3b8;
+  --text-sidebar-hover: #ffffff;
+  --text-logo: #ffffff;
+  --bg-sidebar-hover: rgba(255,255,255,0.06);
 
   /* Shadows */
-  --shadow-xs: 0 1px 2px rgba(110, 110, 115, 0.1);
-  --shadow-sm: 0 1px 3px rgba(110, 110, 115, 0.12), 0 1px 2px rgba(110, 110, 115, 0.08);
-  --shadow-md: 0 4px 12px rgba(110, 110, 115, 0.12), 0 2px 6px rgba(110, 110, 115, 0.06);
-  --shadow-lg: 0 12px 32px rgba(110, 110, 115, 0.15), 0 4px 12px rgba(110, 110, 115, 0.08);
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12), 0 4px 12px rgba(15, 23, 42, 0.06);
 
   /* Topbar */
   --topbar-height: 50px;
@@ -68,25 +68,25 @@
 
 /* ── DARK MODE ── */
 .dark {
-  --primary: #818cf8;
-  --primary-mid: #6366f1;
-  --primary-light: #1e1b4b;
-  --primary-hover: #a5b4fc;
-  --accent-blue: #60a5fa;
+  --primary: #00B894;
+  --primary-mid: #029d7e;
+  --primary-light: #0f241f;
+  --primary-hover: #00a383;
+  --accent-blue: #22D3EE;
 
-  --bg-layout:  #0f1117;
-  --bg-card:    #1a1d27;
-  --bg-sidebar: #111318;
-  --border-color: #2d3142;
-  --border-input: #3d4155;
+  --bg-layout:  #0B132B; /* Deep Navy */
+  --bg-card:    #121d3a;
+  --bg-sidebar: #070d1e;
+  --border-color: #1f2d52;
+  --border-input: #2b3d6c;
 
-  --text-main:   #e2e8f0;
+  --text-main:   #f1f5f9;
   --text-secondary: #94a3b8;
   --text-muted:  #64748b;
   --text-sidebar: #94a3b8;
-  --text-sidebar-hover: #e2e8f0;
-  --text-logo: #e2e8f0;
-  --bg-sidebar-hover: rgba(255,255,255,0.05);
+  --text-sidebar-hover: #ffffff;
+  --text-logo: #ffffff;
+  --bg-sidebar-hover: rgba(255,255,255,0.08);
 
   --shadow-xs: 0 1px 2px rgba(0,0,0,0.3);
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.2);
@@ -103,7 +103,9 @@
    BASE RESET
 ══════════════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html, body, #root { height: 100%; }
+html { height: 100%; overflow-y: auto; overscroll-behavior: none; }
+body { min-height: 100%; overscroll-behavior: none; }
+#root { min-height: 100%; }
 
 body {
   font-family: var(--font-sans);
