@@ -44,9 +44,8 @@ import {
 
 // ─── Top Navigation ──────────────────────────────────────────────────────────
 function LandingNav({ scrolled }: { scrolled: boolean }) {
-  const { mode, setMode, palette, setPalette } = useThemeStore();
+  const { mode, setMode, palette } = useThemeStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [paletteMenuOpen, setPaletteMenuOpen] = useState(false);
   const isDark = mode === "dark";
   const brandLogo = useBrandLogo();
 
@@ -81,7 +80,8 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
           transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+        {/* Left: Brand Logo Lockup */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: "260px" }}>
           <Link
             to="/"
             style={{
@@ -94,7 +94,7 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
               src={brandLogo}
               alt="Pivotal ERP"
               style={{
-                height: 44,
+                height: 42,
                 width: "auto",
                 objectFit: "contain",
                 display: "block",
@@ -102,107 +102,117 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
             />
           </Link>
 
+          {/* Parent company endorsement lockup (like Busy | an indiamart company) */}
           <div
-            className="hide-on-mobile"
-            style={{ display: "flex", alignItems: "center", gap: "1.75rem" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              borderLeft: isDark
+                ? "1px solid rgba(255, 255, 255, 0.18)"
+                : "1px solid #E2E8F0",
+              paddingLeft: "9px",
+              marginLeft: "1px",
+            }}
           >
-            <a
-              href="#features"
+            <span
               style={{
-                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
-                textDecoration: "none",
-                fontSize: "0.925rem",
+                fontSize: "0.62rem",
+                color: isDark ? "rgba(255,255,255,0.55)" : "#64748B",
                 fontWeight: 500,
-                transition: "color 0.2s",
+                letterSpacing: "0.02em",
+                whiteSpace: "nowrap",
               }}
             >
-              Features
-            </a>
-            <a
-              href="#preview"
+              a product of
+            </span>
+            <img
+              src="/erp_ui/dynamic-technosoft-logo.png"
+              alt="Dynamic Technosoft"
+              title="Dynamic Technosoft"
               style={{
-                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
-                textDecoration: "none",
-                fontSize: "0.925rem",
-                fontWeight: 500,
-                transition: "color 0.2s",
+                height: 17,
+                width: "auto",
+                objectFit: "contain",
+                display: "block",
+                opacity: isDark ? 0.9 : 0.95,
+                filter: isDark ? "drop-shadow(0 0 3px rgba(255,255,255,0.12))" : "none",
               }}
-            >
-              Live Demo
-            </a>
-            <a
-              href="#comparison"
-              style={{
-                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
-                textDecoration: "none",
-                fontSize: "0.925rem",
-                fontWeight: 500,
-                transition: "color 0.2s",
-              }}
-            >
-              Tally Comparison
-            </a>
-            <a
-              href="#roi"
-              style={{
-                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
-                textDecoration: "none",
-                fontSize: "0.925rem",
-                fontWeight: 500,
-                transition: "color 0.2s",
-              }}
-            >
-              ROI Calculator
-            </a>
-            <a
-              href="#industries"
-              style={{
-                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
-                textDecoration: "none",
-                fontSize: "0.925rem",
-                fontWeight: 500,
-                transition: "color 0.2s",
-              }}
-            >
-              Industries
-            </a>
-            <a
-              href="#pricing"
-              style={{
-                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
-                textDecoration: "none",
-                fontSize: "0.925rem",
-                fontWeight: 500,
-                transition: "color 0.2s",
-              }}
-            >
-              Pricing
-            </a>
-            <a
-              href="#faq"
-              style={{
-                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
-                textDecoration: "none",
-                fontSize: "0.925rem",
-                fontWeight: 500,
-                transition: "color 0.2s",
-              }}
-            >
-              FAQ
-            </a>
-            <Link
-              to="/blog"
-              style={{
-                color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
-                textDecoration: "none",
-                fontSize: "0.925rem",
-                fontWeight: 500,
-                transition: "color 0.2s",
-              }}
-            >
-              Blog
-            </Link>
+            />
           </div>
+        </div>
+
+        {/* Center: Main Landing Page Navigation Menu */}
+        <div
+          className="hide-on-mobile"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "2rem",
+            flex: 1,
+          }}
+        >
+          <a
+            href="#features"
+            style={{
+              color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+              textDecoration: "none",
+              fontSize: "0.925rem",
+              fontWeight: 500,
+              transition: "color 0.2s",
+            }}
+          >
+            Features
+          </a>
+          <a
+            href="#industries"
+            style={{
+              color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+              textDecoration: "none",
+              fontSize: "0.925rem",
+              fontWeight: 500,
+              transition: "color 0.2s",
+            }}
+          >
+            Industries
+          </a>
+          <a
+            href="#pricing"
+            style={{
+              color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+              textDecoration: "none",
+              fontSize: "0.925rem",
+              fontWeight: 500,
+              transition: "color 0.2s",
+            }}
+          >
+            Pricing
+          </a>
+          <a
+            href="#faq"
+            style={{
+              color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+              textDecoration: "none",
+              fontSize: "0.925rem",
+              fontWeight: 500,
+              transition: "color 0.2s",
+            }}
+          >
+            FAQ
+          </a>
+          <Link
+            to="/blog"
+            style={{
+              color: isDark ? "rgba(255,255,255,0.75)" : "#475569",
+              textDecoration: "none",
+              fontSize: "0.925rem",
+              fontWeight: 500,
+              transition: "color 0.2s",
+            }}
+          >
+            Blog
+          </Link>
         </div>
 
         {/* Desktop actions */}
@@ -210,216 +220,6 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
           className="hide-on-mobile"
           style={{ display: "flex", alignItems: "center", gap: "1rem" }}
         >
-          {/* Brand Palette Template Switcher Dropdown */}
-          <div style={{ position: "relative" }}>
-            <button
-              onClick={() => setPaletteMenuOpen(!paletteMenuOpen)}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                padding: "6px 12px",
-                borderRadius: "8px",
-                background: isDark ? "rgba(255,255,255,0.06)" : "rgba(15,23,42,0.04)",
-                border: isDark ? "1px solid rgba(255,255,255,0.14)" : "1px solid rgba(15,23,42,0.12)",
-                color: isDark ? "#FFFFFF" : "#0F172A",
-                cursor: "pointer",
-                fontSize: "0.825rem",
-                fontWeight: 600,
-                transition: "all 0.2s ease",
-              }}
-              title="Switch Brand Theme Palette"
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
-                <span style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: "50%",
-                  background: palette.primary,
-                  display: "inline-block",
-                  boxShadow: "0 0 4px rgba(0,0,0,0.2)"
-                }} />
-                <span style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  background: palette.secondary,
-                  display: "inline-block"
-                }} />
-              </div>
-              <span style={{ maxWidth: 130, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                {palette.id === "pivotal-cloud-growth"
-                  ? "Sky & Meadow"
-                  : palette.id === "pivotal-cobalt-slate"
-                  ? "Cobalt & Slate"
-                  : "Brand Theme"}
-              </span>
-              <ChevronDown size={14} style={{ opacity: 0.6, transform: paletteMenuOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
-            </button>
-
-            {paletteMenuOpen && (
-              <>
-                <div
-                  style={{ position: "fixed", inset: 0, zIndex: 110 }}
-                  onClick={() => setPaletteMenuOpen(false)}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "calc(100% + 8px)",
-                    right: 0,
-                    width: "300px",
-                    background: isDark ? "#0F172A" : "#FFFFFF",
-                    border: isDark ? "1px solid rgba(255,255,255,0.12)" : "1px solid #E2E8F0",
-                    borderRadius: "12px",
-                    boxShadow: isDark
-                      ? "0 10px 30px rgba(0,0,0,0.6)"
-                      : "0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1)",
-                    padding: "10px",
-                    zIndex: 120,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "6px",
-                  }}
-                >
-                  <div style={{
-                    padding: "4px 8px 8px",
-                    borderBottom: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid #E2E8F0",
-                    marginBottom: "4px"
-                  }}>
-                    <div style={{
-                      fontSize: "0.72rem",
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                      color: isDark ? "#94A3B8" : "#64748B",
-                    }}>
-                      Brand Palette Templates
-                    </div>
-                    <div style={{ fontSize: "0.76rem", color: isDark ? "#E2E8F0" : "#334155", marginTop: 2 }}>
-                      Choose official logo &amp; UI theme:
-                    </div>
-                  </div>
-
-                  {/* 2 Official Logo-Derived Palettes */}
-                  {[
-                    {
-                      id: "pivotal-cloud-growth",
-                      title: "1. Sky & Meadow (Cloud Growth)",
-                      desc: "Matches Cloud-Growth logo (Azure + Fresh Green)",
-                      primary: "#0083CA",
-                      secondary: "#62B237",
-                      accent: "#00B4D8",
-                      badge: "Cloud Logo",
-                    },
-                    {
-                      id: "pivotal-cobalt-slate",
-                      title: "2. Cobalt & Deep Slate (Modern)",
-                      desc: "Matches Geometric P logo (Royal Blue + Slate)",
-                      primary: "#1A56DB",
-                      secondary: "#0F1E36",
-                      accent: "#3B82F6",
-                      badge: "Modern Logo",
-                    },
-                    {
-                      id: "brand-opt1-deep-teal",
-                      title: "3. Deep Teal & Emerald (Default)",
-                      desc: "Corporate accounting deep teal gradient",
-                      primary: "#0F766E",
-                      secondary: "#115E59",
-                      accent: "#14B8A6",
-                      badge: "Teal Classic",
-                    },
-                  ].map((p) => {
-                    const isSelected = palette.id === p.id;
-                    const matchedPalette = BUILTIN_PALETTES.find((item) => item.id === p.id);
-
-                    return (
-                      <button
-                        key={p.id}
-                        type="button"
-                        onClick={() => {
-                          if (matchedPalette) {
-                            setPalette(matchedPalette);
-                          }
-                          setPaletteMenuOpen(false);
-                        }}
-                        style={{
-                          width: "100%",
-                          padding: "8px 10px",
-                          borderRadius: "8px",
-                          border: isSelected
-                            ? "1.5px solid #0083CA"
-                            : isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #F1F5F9",
-                          background: isSelected
-                            ? (isDark ? "rgba(0,131,202,0.14)" : "#F0F9FF")
-                            : (isDark ? "transparent" : "#FFFFFF"),
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          cursor: "pointer",
-                          textAlign: "left",
-                          transition: "all 0.15s ease",
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!isSelected) {
-                            e.currentTarget.style.background = isDark ? "rgba(255,255,255,0.04)" : "#F8FAFC";
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isSelected) {
-                            e.currentTarget.style.background = isDark ? "transparent" : "#FFFFFF";
-                          }
-                        }}
-                      >
-                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                          <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                            <div style={{ display: "flex", gap: 3 }}>
-                              <span style={{ width: 14, height: 14, borderRadius: 3, background: p.primary }} />
-                              <span style={{ width: 14, height: 14, borderRadius: 3, background: p.secondary }} />
-                            </div>
-                            <span style={{ width: 31, height: 4, borderRadius: 2, background: p.accent }} />
-                          </div>
-
-                          <div>
-                            <div style={{
-                              fontSize: "0.8125rem",
-                              fontWeight: 700,
-                              color: isDark ? "#F8FAFC" : "#0F172A",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 6
-                            }}>
-                              {p.title}
-                            </div>
-                            <div style={{ fontSize: "0.7rem", color: isDark ? "#94A3B8" : "#64748B", marginTop: 2 }}>
-                              {p.desc}
-                            </div>
-                          </div>
-                        </div>
-
-                        {isSelected && (
-                          <div style={{
-                            width: 18,
-                            height: 18,
-                            borderRadius: "50%",
-                            background: "#0083CA",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            color: "white"
-                          }}>
-                            <Check size={11} strokeWidth={3} />
-                          </div>
-                        )}
-                      </button>
-                    );
-                  })}
-                </div>
-              </>
-            )}
-          </div>
-
           {/* Theme switcher */}
           <button
             onClick={() => setMode(mode === "dark" ? "light" : "dark")}
@@ -600,18 +400,6 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
             Features
           </a>
           <a
-            href="#preview"
-            onClick={() => setMobileMenuOpen(false)}
-            style={{
-              color: isDark ? "white" : "#0D2B28",
-              textDecoration: "none",
-              fontSize: "1rem",
-              fontWeight: 500,
-            }}
-          >
-            Live Demo
-          </a>
-          <a
             href="#industries"
             onClick={() => setMobileMenuOpen(false)}
             style={{
@@ -688,7 +476,7 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
             to="/signup"
             onClick={() => setMobileMenuOpen(false)}
             style={{
-              background: "linear-gradient(135deg, #0F766E, #48BB28)",
+              background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
               color: "white",
               textDecoration: "none",
               fontSize: "0.95rem",
@@ -729,15 +517,15 @@ function HeroSection({
       setIsQuerying(false);
       if (q.toLowerCase().includes("debtor") || q.toLowerCase().includes("overdue")) {
         setCopilotResponse(
-          "Found 3 overdue accounts in Biratnagar branch totaling रू 18,45,000. Top account: Surya Traders (48 days overdue, रू 9,20,000). Automated payment reminder generated via SMS & Email."
+          "Found 3 overdue accounts in Biratnagar branch totaling Rs. 18,45,000. Top account: Surya Traders (48 days overdue, Rs. 9,20,000). Automated payment reminder generated via SMS & Email."
         );
       } else if (q.toLowerCase().includes("vat") || q.toLowerCase().includes("annexure")) {
         setCopilotResponse(
-          "Fiscal Year 2081/82 VAT Annexure 13 analysis complete: 1,482 vouchers reconciled. Unclaimed purchase VAT credits identified: रू 42,300 across 2 supplier invoices."
+          "Fiscal Year 2081/82 VAT Annexure 13 analysis complete: 1,482 vouchers reconciled. Unclaimed purchase VAT credits identified: Rs. 42,300 across 2 supplier invoices."
         );
       } else {
         setCopilotResponse(
-          `Analysis complete for "${q}": All ledgers balanced with zero suspense account discrepancy. Real-time cash position: रू 84,20,150 across Nabil and Global IME bank accounts.`
+          `Analysis complete for "${q}": All ledgers balanced with zero suspense account discrepancy. Real-time cash position: Rs. 84,20,150 across Nabil and Global IME bank accounts.`
         );
       }
     }, 400);
@@ -844,11 +632,13 @@ function HeroSection({
           >
             The Operating System for{" "}
             <span
+              className="pivotal-gradient-text"
               style={{
-                background:
-                  "linear-gradient(135deg, #0F766E 20%, #48BB28 100%)",
+                backgroundImage: `linear-gradient(135deg, ${palette.primary} 20%, ${palette.secondary} 100%)`,
+                backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
+                color: "transparent",
                 display: "inline-block",
               }}
             >
@@ -912,8 +702,8 @@ function HeroSection({
                 style={{
                   flex: "1 1 240px",
                   padding: "12px 16px",
-                  borderRadius: "8px",
                   border: "none",
+                  borderRadius: "8px",
                   background: "transparent",
                   color: isDark ? "#FFFFFF" : "#0D2B28",
                   fontSize: "0.95rem",
@@ -924,15 +714,14 @@ function HeroSection({
               <button
                 onClick={handleSignup}
                 style={{
-                  flex: "0 0 auto",
-                  padding: "12px 24px",
-                  borderRadius: "8px",
+                  background: `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`,
+                  color: "#FFFFFF",
                   border: "none",
-                  cursor: "pointer",
-                  background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
-                  color: "white",
+                  borderRadius: "8px",
+                  padding: "12px 24px",
                   fontWeight: 600,
                   fontSize: "0.95rem",
+                  cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   gap: "8px",
@@ -973,7 +762,7 @@ function HeroSection({
                 style={{
                   background: "transparent",
                   border: "none",
-                  color: isDark ? "#14B8A6" : "#0F766E",
+                  color: isDark ? palette.accent : palette.primary,
                   cursor: "pointer",
                   fontSize: "0.875rem",
                   fontWeight: 600,
@@ -997,113 +786,6 @@ function HeroSection({
               >
                 Explore Live Interactive Mockup ↓
               </a>
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "1rem",
-                marginTop: "1.75rem",
-                flexWrap: "wrap",
-              }}
-            >
-              {/* Feature 1: OCR Bill Scanner */}
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "7px",
-                  padding: "6px 14px",
-                  borderRadius: "100px",
-                  background: isDark ? "rgba(34, 211, 238, 0.08)" : "rgba(15, 118, 110, 0.06)",
-                  border: isDark ? "1px solid rgba(34, 211, 238, 0.22)" : "1px solid rgba(15, 118, 110, 0.16)",
-                  color: isDark ? "#E2E8F0" : "#1E293B",
-                  fontSize: "0.8125rem",
-                  fontWeight: 600,
-                  boxShadow: isDark ? "0 2px 8px rgba(0,0,0,0.2)" : "0 1px 4px rgba(15,118,110,0.06)",
-                  transition: "transform 0.15s ease",
-                }}
-              >
-                <div style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: "50%",
-                  background: isDark ? "rgba(34, 211, 238, 0.2)" : "rgba(15, 118, 110, 0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: isDark ? "#22D3EE" : "#0F766E",
-                }}>
-                  <ScanLine size={12} />
-                </div>
-                <span>Smart OCR Bill-to-Voucher</span>
-              </div>
-
-              {/* Feature 2: Nepali AI Financial Copilot */}
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "7px",
-                  padding: "6px 14px",
-                  borderRadius: "100px",
-                  background: isDark ? "rgba(168, 85, 247, 0.1)" : "rgba(147, 51, 234, 0.06)",
-                  border: isDark ? "1px solid rgba(168, 85, 247, 0.25)" : "1px solid rgba(147, 51, 234, 0.18)",
-                  color: isDark ? "#E2E8F0" : "#1E293B",
-                  fontSize: "0.8125rem",
-                  fontWeight: 600,
-                  boxShadow: isDark ? "0 2px 8px rgba(0,0,0,0.2)" : "0 1px 4px rgba(147,51,234,0.06)",
-                  transition: "transform 0.15s ease",
-                }}
-              >
-                <div style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: "50%",
-                  background: isDark ? "rgba(168, 85, 247, 0.25)" : "rgba(147, 51, 234, 0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: isDark ? "#C084FC" : "#7E22CE",
-                }}>
-                  <Sparkles size={12} />
-                </div>
-                <span>Nepali AI Financial Copilot</span>
-              </div>
-
-              {/* Feature 3: Dynamic QR & Auto Bank Reconciliation */}
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "7px",
-                  padding: "6px 14px",
-                  borderRadius: "100px",
-                  background: isDark ? "rgba(16, 185, 129, 0.08)" : "rgba(16, 185, 129, 0.06)",
-                  border: isDark ? "1px solid rgba(16, 185, 129, 0.22)" : "1px solid rgba(16, 185, 129, 0.18)",
-                  color: isDark ? "#E2E8F0" : "#1E293B",
-                  fontSize: "0.8125rem",
-                  fontWeight: 600,
-                  boxShadow: isDark ? "0 2px 8px rgba(0,0,0,0.2)" : "0 1px 4px rgba(16,185,129,0.06)",
-                  transition: "transform 0.15s ease",
-                }}
-              >
-                <div style={{
-                  width: 20,
-                  height: 20,
-                  borderRadius: "50%",
-                  background: isDark ? "rgba(16, 185, 129, 0.2)" : "rgba(16, 185, 129, 0.12)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: isDark ? "#34D399" : "#059669",
-                }}>
-                  <QrCode size={12} />
-                </div>
-                <span>Dynamic QR &amp; Auto-Bank Reconcile</span>
-              </div>
             </div>
           </div>
         </div>
@@ -1246,7 +928,7 @@ function HeroSection({
                     padding: "10px 18px",
                     background: "transparent",
                     border: "none",
-                    borderBottom: isActive ? "2px solid #0F766E" : "2px solid transparent",
+                    borderBottom: isActive ? `2px solid ${palette.primary}` : "2px solid transparent",
                     color: isActive
                       ? (isDark ? "#FFFFFF" : "#0D2B28")
                       : (isDark ? "#94A3B8" : "#64748B"),
@@ -1257,7 +939,7 @@ function HeroSection({
                     transition: "all 0.15s ease",
                   }}
                 >
-                  <Icon size={15} color={isActive ? "#0F766E" : "currentColor"} />
+                  <Icon size={15} color={isActive ? palette.primary : "currentColor"} />
                   {tab.label}
                   <span
                     style={{
@@ -1265,9 +947,9 @@ function HeroSection({
                       padding: "2px 6px",
                       borderRadius: "4px",
                       background: isActive
-                        ? (isDark ? "rgba(0,132,230,0.2)" : "rgba(0,132,230,0.1)")
+                        ? `${palette.primary}22`
                         : (isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"),
-                      color: isActive ? "#0F766E" : (isDark ? "#94A3B8" : "#64748B"),
+                      color: isActive ? palette.primary : (isDark ? "#94A3B8" : "#64748B"),
                       fontWeight: 600,
                     }}
                   >
@@ -1294,18 +976,18 @@ function HeroSection({
                 >
                   <div style={{ background: isDark ? "#0B2623" : "#F8FAFC", border: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #E2E8F0", borderRadius: 8, padding: "1rem" }}>
                     <div style={{ fontSize: "0.78rem", color: isDark ? "#94A3B8" : "#64748B" }}>Total Debits (BS 2081)</div>
-                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: isDark ? "#FFFFFF" : "#0D2B28", marginTop: 4 }}>रू 4,82,50,000</div>
-                    <div style={{ fontSize: "0.72rem", color: "#48BB28", marginTop: 4 }}>✓ Matched Credits exactly</div>
+                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: isDark ? "#FFFFFF" : "#0D2B28", marginTop: 4 }}>Rs. 4,82,50,000</div>
+                    <div style={{ fontSize: "0.72rem", color: palette.secondary, marginTop: 4 }}>✓ Matched Credits exactly</div>
                   </div>
                   <div style={{ background: isDark ? "#0B2623" : "#F8FAFC", border: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #E2E8F0", borderRadius: 8, padding: "1rem" }}>
                     <div style={{ fontSize: "0.78rem", color: isDark ? "#94A3B8" : "#64748B" }}>Vouchers Cleared</div>
-                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "#0F766E", marginTop: 4 }}>1,482 Vouchers</div>
+                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: palette.primary, marginTop: 4 }}>1,482 Vouchers</div>
                     <div style={{ fontSize: "0.72rem", color: isDark ? "#94A3B8" : "#64748B", marginTop: 4 }}>0 Unbalanced journals</div>
                   </div>
                   <div style={{ background: isDark ? "#0B2623" : "#F8FAFC", border: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #E2E8F0", borderRadius: 8, padding: "1rem" }}>
                     <div style={{ fontSize: "0.78rem", color: isDark ? "#94A3B8" : "#64748B" }}>Suspense Account</div>
-                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "#10B981", marginTop: 4 }}>रू 0.00</div>
-                    <div style={{ fontSize: "0.72rem", color: "#10B981", marginTop: 4 }}>Zero audit discrepancies</div>
+                    <div style={{ fontSize: "1.4rem", fontWeight: 700, color: palette.primary, marginTop: 4 }}>Rs. 0.00</div>
+                    <div style={{ fontSize: "0.72rem", color: palette.secondary, marginTop: 4 }}>Zero audit discrepancies</div>
                   </div>
                 </div>
 
@@ -1313,16 +995,16 @@ function HeroSection({
                 <div style={{ borderRadius: 8, border: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid #E2E8F0", overflow: "hidden" }}>
                   <div style={{ padding: "10px 16px", background: isDark ? "#0F332F" : "#F1F5F9", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "0.82rem", fontWeight: 600, color: isDark ? "#E2E8F0" : "#334155" }}>
                     <span>Live NFRS Double-Entry Journal (Dual Calendar BS 2081 / AD 2025)</span>
-                    <span style={{ color: "#0F766E", fontSize: "0.75rem", cursor: "pointer" }}>Export Excel / PDF →</span>
+                    <span style={{ color: palette.primary, fontSize: "0.75rem", cursor: "pointer" }}>Export Excel / PDF →</span>
                   </div>
                   <div style={{ background: isDark ? "#081F1D" : "#FFFFFF", padding: "8px 16px" }}>
                     {[
-                      { id: "JV-2081-0491", date: "2081-11-26", debit: "Nabil Bank Ltd (A/c 012)", credit: "Sales Revenue (Domestic)", amount: "रू 12,40,000", status: "Posted & Locked" },
-                      { id: "PV-2081-0812", date: "2081-11-25", debit: "Inventory - Raw Materials", credit: "Sundry Creditors (Kathmandu Steels)", amount: "रू 8,50,000", status: "Posted & Locked" },
-                      { id: "RV-2081-0304", date: "2081-11-24", debit: "Office Rent Expenses", credit: "TDS Payable (10% Sec 88)", amount: "रू 1,45,200", status: "Posted & Locked" },
+                      { id: "JV-2081-0491", date: "2081-11-26", debit: "Nabil Bank Ltd (A/c 012)", credit: "Sales Revenue (Domestic)", amount: "Rs. 12,40,000", status: "Posted & Locked" },
+                      { id: "PV-2081-0812", date: "2081-11-25", debit: "Inventory - Raw Materials", credit: "Sundry Creditors (Kathmandu Steels)", amount: "Rs. 8,50,000", status: "Posted & Locked" },
+                      { id: "RV-2081-0304", date: "2081-11-24", debit: "Office Rent Expenses", credit: "TDS Payable (10% Sec 88)", amount: "Rs. 1,45,200", status: "Posted & Locked" },
                     ].map((row, idx) => (
                       <div key={idx} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 0", borderBottom: idx < 2 ? (isDark ? "1px solid rgba(255,255,255,0.05)" : "1px solid #F1F5F9") : "none", fontSize: "0.82rem" }}>
-                        <div style={{ width: "130px", fontFamily: "monospace", color: "#0F766E", fontWeight: 600 }}>{row.id}</div>
+                        <div style={{ width: "130px", fontFamily: "monospace", color: palette.primary, fontWeight: 600 }}>{row.id}</div>
                         <div style={{ width: "100px", color: isDark ? "#94A3B8" : "#64748B" }}>{row.date}</div>
                         <div style={{ flex: 1, color: isDark ? "#FFFFFF" : "#1E293B", fontWeight: 500 }}>
                           <div><strong>Dr:</strong> {row.debit}</div>
@@ -1344,7 +1026,7 @@ function HeroSection({
             {/* TAB 2: IRD Annexure 13 & 5 Compliance */}
             {activeTab === "annexure13" && (
               <div>
-                <div style={{ background: isDark ? "rgba(0,132,230,0.08)" : "rgba(0,132,230,0.05)", border: "1px solid rgba(0,132,230,0.2)", borderRadius: 8, padding: "1rem", marginBottom: "1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div style={{ background: `${palette.primary}12`, border: `1px solid ${palette.primary}33`, borderRadius: 8, padding: "1rem", marginBottom: "1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <div>
                     <div style={{ fontSize: "0.9rem", fontWeight: 700, color: isDark ? "#FFFFFF" : "#0D2B28" }}>
                       Inland Revenue Department (IRD) Nepal Integrated Tax Module
@@ -1365,12 +1047,12 @@ function HeroSection({
                   </div>
                   <div style={{ background: isDark ? "#081F1D" : "#FFFFFF", padding: "8px 16px" }}>
                     {[
-                      { inv: "TI-81-0021", pan: "601928374", buyer: "Himalayan Wholesale Mart", taxable: "रू 10,00,000", vat: "रू 1,30,000", total: "रू 11,30,000" },
-                      { inv: "TI-81-0022", pan: "302819475", buyer: "Pokhara Tech Distributors", taxable: "रू 6,50,000", vat: "रू 84,500", total: "रू 7,34,500" },
-                      { inv: "TI-81-0023", pan: "602938471", buyer: "Butwal Agro Supplies", taxable: "रू 4,20,000", vat: "रू 54,600", total: "रू 4,74,600" },
+                      { inv: "TI-81-0021", pan: "601928374", buyer: "Himalayan Wholesale Mart", taxable: "Rs. 10,00,000", vat: "Rs. 1,30,000", total: "Rs. 11,30,000" },
+                      { inv: "TI-81-0022", pan: "302819475", buyer: "Pokhara Tech Distributors", taxable: "Rs. 6,50,000", vat: "Rs. 84,500", total: "Rs. 7,34,500" },
+                      { inv: "TI-81-0023", pan: "602938471", buyer: "Butwal Agro Supplies", taxable: "Rs. 4,20,000", vat: "Rs. 54,600", total: "Rs. 4,74,600" },
                     ].map((item, idx) => (
                       <div key={idx} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 0", borderBottom: idx < 2 ? (isDark ? "1px solid rgba(255,255,255,0.05)" : "1px solid #F1F5F9") : "none", fontSize: "0.82rem" }}>
-                        <div style={{ width: "110px", fontFamily: "monospace", color: "#0F766E", fontWeight: 600 }}>{item.inv}</div>
+                        <div style={{ width: "110px", fontFamily: "monospace", color: palette.primary, fontWeight: 600 }}>{item.inv}</div>
                         <div style={{ width: "110px", color: isDark ? "#94A3B8" : "#64748B", fontFamily: "monospace" }}>PAN: {item.pan}</div>
                         <div style={{ flex: 1, color: isDark ? "#FFFFFF" : "#1E293B", fontWeight: 500 }}>{item.buyer}</div>
                         <div style={{ width: "110px", textAlign: "right", color: isDark ? "#94A3B8" : "#64748B" }}>{item.taxable}</div>
@@ -1388,16 +1070,16 @@ function HeroSection({
               <div>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "1rem", marginBottom: "1.25rem" }}>
                   {[
-                    { branch: "Kathmandu Central (HQ)", sales: "रू 2,45,00,000", vouchers: "840 Txns", sync: "Real-time sync", status: "Healthy" },
-                    { branch: "Biratnagar Industrial Area", sales: "रू 1,32,50,000", vouchers: "420 Txns", sync: "Real-time sync", status: "Healthy" },
-                    { branch: "Pokhara Lakeside Branch", sales: "रू 1,05,00,000", vouchers: "222 Txns", sync: "Real-time sync", status: "Healthy" },
+                    { branch: "Kathmandu Central (HQ)", sales: "Rs. 2,45,00,000", vouchers: "840 Txns", sync: "Real-time sync", status: "Healthy" },
+                    { branch: "Biratnagar Industrial Area", sales: "Rs. 1,32,50,000", vouchers: "420 Txns", sync: "Real-time sync", status: "Healthy" },
+                    { branch: "Pokhara Lakeside Branch", sales: "Rs. 1,05,00,000", vouchers: "222 Txns", sync: "Real-time sync", status: "Healthy" },
                   ].map((b, idx) => (
                     <div key={idx} style={{ background: isDark ? "#0B2623" : "#F8FAFC", border: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #E2E8F0", borderRadius: 8, padding: "1.25rem" }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <span style={{ fontSize: "0.85rem", fontWeight: 700, color: isDark ? "#FFFFFF" : "#0D2B28" }}>{b.branch}</span>
                         <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#48BB28" }} />
                       </div>
-                      <div style={{ fontSize: "1.3rem", fontWeight: 800, color: "#0F766E", marginTop: 8 }}>{b.sales}</div>
+                      <div style={{ fontSize: "1.3rem", fontWeight: 800, color: palette.primary, marginTop: 8 }}>{b.sales}</div>
                       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: "0.75rem", color: isDark ? "#94A3B8" : "#64748B" }}>
                         <span>{b.vouchers}</span>
                         <span style={{ color: "#48BB28", fontWeight: 600 }}>{b.sync}</span>
@@ -1407,7 +1089,7 @@ function HeroSection({
                 </div>
                 <div style={{ padding: "12px 16px", borderRadius: 8, background: isDark ? "#092825" : "#EEF2F6", border: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #CBD5E1", fontSize: "0.82rem", color: isDark ? "#94A3B8" : "#475569", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <span>Consolidated Balance Sheet reflects inter-branch transfers instantaneously without manual reconciliation files.</span>
-                  <span style={{ fontWeight: 600, color: "#0F766E" }}>Instant Consolidation</span>
+                  <span style={{ fontWeight: 600, color: palette.primary }}>Instant Consolidation</span>
                 </div>
               </div>
             )}
@@ -1417,7 +1099,7 @@ function HeroSection({
               <div>
                 <div style={{ background: isDark ? "#0A1022" : "#F8FAFC", border: isDark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E2E8F0", borderRadius: 8, padding: "1.25rem" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "0.75rem" }}>
-                    <Sparkles size={16} color="#0F766E" />
+                    <Sparkles size={16} color={palette.primary} />
                     <span style={{ fontSize: "0.85rem", fontWeight: 700, color: isDark ? "#FFFFFF" : "#0D2B28" }}>
                       Ask Pivotal AI Copilot (Natural Language ERP Queries)
                     </span>
@@ -1448,7 +1130,7 @@ function HeroSection({
                         padding: "10px 18px",
                         borderRadius: 6,
                         border: "none",
-                        background: "linear-gradient(135deg, #0F766E, #0D5E58)",
+                        background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
                         color: "white",
                         fontWeight: 600,
                         fontSize: "0.85rem",
@@ -1491,7 +1173,7 @@ function HeroSection({
                   </div>
 
                   {copilotResponse ? (
-                    <div style={{ padding: "12px 14px", borderRadius: 6, background: isDark ? "rgba(72,187,40,0.1)" : "rgba(72,187,40,0.08)", border: "1px solid rgba(72,187,40,0.2)", fontSize: "0.82rem", color: isDark ? "#86EFAC" : "#166534", lineHeight: 1.5 }}>
+                    <div style={{ padding: "12px 14px", borderRadius: 6, background: `${palette.primary}18`, border: `1px solid ${palette.primary}33`, fontSize: "0.82rem", color: isDark ? "#FFFFFF" : palette.primary, lineHeight: 1.5 }}>
                       <strong>Copilot Intelligence:</strong> {copilotResponse}
                     </div>
                   ) : (
@@ -1524,7 +1206,7 @@ function HeroSection({
               style={{
                 fontSize: "2rem",
                 fontWeight: 800,
-                color: isDark ? "#FFFFFF" : "#0D2B28",
+                color: palette.primary,
                 letterSpacing: "-0.02em",
               }}
             >
@@ -1545,11 +1227,11 @@ function HeroSection({
               style={{
                 fontSize: "2rem",
                 fontWeight: 800,
-                color: "#0F766E",
+                color: palette.primary,
                 letterSpacing: "-0.02em",
               }}
             >
-              रू 4.5+ Arba
+              Rs. 4.5+ Arba
             </div>
             <div
               style={{
@@ -1566,7 +1248,7 @@ function HeroSection({
               style={{
                 fontSize: "2rem",
                 fontWeight: 800,
-                color: "#48BB28",
+                color: palette.primary,
                 letterSpacing: "-0.02em",
               }}
             >
@@ -1587,7 +1269,7 @@ function HeroSection({
               style={{
                 fontSize: "2rem",
                 fontWeight: 800,
-                color: isDark ? "#FFFFFF" : "#0D2B28",
+                color: palette.primary,
                 letterSpacing: "-0.02em",
               }}
             >
@@ -1611,7 +1293,7 @@ function HeroSection({
 
 // ─── 2026 Bento Grid Capabilities Section ──────────────────────────────────
 function BentoCapabilities() {
-  const { mode } = useThemeStore();
+  const { mode, palette } = useThemeStore();
   const isDark = mode === "dark";
 
   return (
@@ -1629,7 +1311,7 @@ function BentoCapabilities() {
               display: "inline-flex",
               alignItems: "center",
               gap: 6,
-              color: "#0F766E",
+              color: palette.primary,
               fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -1637,7 +1319,7 @@ function BentoCapabilities() {
               marginBottom: "0.75rem",
             }}
           >
-            <Zap size={15} /> Engineered Architecture
+            <Zap size={15} /> Platform Features &amp; Architecture
           </div>
           <h2
             style={{
@@ -1648,10 +1330,10 @@ function BentoCapabilities() {
               letterSpacing: "-0.025em",
             }}
           >
-            Purpose-built for Nepal&apos;s fiscal rigor and high volume
+            Purpose-built for Nepal&apos;s fiscal rigor, speed &amp; enterprise volume
           </h2>
           <p style={{ color: isDark ? "#94A3B8" : "#64748B", fontSize: "1.05rem", marginTop: "1rem" }}>
-            Engineered alongside certified chartered accountants to replace desktop accounting software with high-precision cloud workflows.
+            Explore our cloud ledger capabilities, compare against legacy desktop setups, and calculate direct quantifiable hours saved for your organization.
           </p>
         </div>
 
@@ -1676,8 +1358,8 @@ function BentoCapabilities() {
                   width: 44,
                   height: 44,
                   borderRadius: "10px",
-                  background: "rgba(0,132,230,0.12)",
-                  color: "#0F766E",
+                  background: `${palette.primary}18`,
+                  color: palette.primary,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1710,7 +1392,7 @@ function BentoCapabilities() {
             >
               <div>
                 <span style={{ fontSize: "0.75rem", color: isDark ? "#94A3B8" : "#64748B", textTransform: "uppercase", fontWeight: 600 }}>Active Fiscal Year</span>
-                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: "#0F766E" }}>2081/82 (Shrawan 1 – Ashadh 32)</div>
+                <div style={{ fontSize: "1.2rem", fontWeight: 700, color: palette.primary }}>2081/82 (Shrawan 1 – Ashadh 32)</div>
               </div>
               <div style={{ display: "flex", gap: "10px" }}>
                 <div style={{ background: isDark ? "#1E293B" : "#F1F5F9", padding: "6px 12px", borderRadius: "6px", fontSize: "0.8rem", color: isDark ? "#FFFFFF" : "#0D2B28", fontWeight: 600 }}>
@@ -1742,8 +1424,8 @@ function BentoCapabilities() {
                   width: 44,
                   height: 44,
                   borderRadius: "10px",
-                  background: "rgba(72,187,40,0.12)",
-                  color: "#48BB28",
+                  background: `${palette.secondary}18`,
+                  color: palette.secondary,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1771,11 +1453,11 @@ function BentoCapabilities() {
             >
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", color: isDark ? "#94A3B8" : "#64748B" }}>
                 <span>Mandatory Rate:</span>
-                <strong style={{ color: "#48BB28" }}>13.00% Fixed</strong>
+                <strong style={{ color: palette.secondary }}>13.00% Fixed</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.8rem", color: isDark ? "#94A3B8" : "#64748B", marginTop: 6 }}>
                 <span>Rounding Drift:</span>
-                <strong style={{ color: isDark ? "#FFFFFF" : "#0D2B28" }}>रू 0.00 (Zero Drift)</strong>
+                <strong style={{ color: isDark ? "#FFFFFF" : "#0D2B28" }}>Rs. 0.00 (Zero Drift)</strong>
               </div>
             </div>
           </div>
@@ -1799,8 +1481,8 @@ function BentoCapabilities() {
                   width: 44,
                   height: 44,
                   borderRadius: "10px",
-                  background: "rgba(168,85,247,0.12)",
-                  color: "#A855F7",
+                  background: `${palette.accent}18`,
+                  color: palette.accent,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1852,8 +1534,8 @@ function BentoCapabilities() {
                   width: 44,
                   height: 44,
                   borderRadius: "10px",
-                  background: "rgba(0,132,230,0.12)",
-                  color: "#0F766E",
+                  background: `${palette.primary}18`,
+                  color: palette.primary,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1879,11 +1561,11 @@ function BentoCapabilities() {
               }}
             >
               <div style={{ background: isDark ? "#101935" : "#FFFFFF", padding: "12px", borderRadius: "8px", border: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #E2E8F0" }}>
-                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#0F766E" }}>&lt; 16ms</div>
+                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: palette.primary }}>&lt; 16ms</div>
                 <div style={{ fontSize: "0.75rem", color: isDark ? "#94A3B8" : "#64748B" }}>Row Virtualization</div>
               </div>
               <div style={{ background: isDark ? "#101935" : "#FFFFFF", padding: "12px", borderRadius: "8px", border: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #E2E8F0" }}>
-                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: "#48BB28" }}>1-Click</div>
+                <div style={{ fontSize: "1.1rem", fontWeight: 700, color: palette.secondary }}>1-Click</div>
                 <div style={{ fontSize: "0.75rem", color: isDark ? "#94A3B8" : "#64748B" }}>Excel / CSV / PDF</div>
               </div>
               <div style={{ background: isDark ? "#101935" : "#FFFFFF", padding: "12px", borderRadius: "8px", border: isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid #E2E8F0" }}>
@@ -1900,7 +1582,7 @@ function BentoCapabilities() {
 
 // ─── Tally / Legacy vs Pivotal Comparison Section ────────────────────────────
 function ComparisonSection() {
-  const { mode } = useThemeStore();
+  const { mode, palette } = useThemeStore();
   const isDark = mode === "dark";
 
   const COMPARISON_ROWS = [
@@ -1950,7 +1632,7 @@ function ComparisonSection() {
         <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 3rem" }}>
           <div
             style={{
-              color: "#0F766E",
+              color: palette.primary,
               fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -1999,11 +1681,11 @@ function ComparisonSection() {
                   style={{
                     padding: "16px 20px",
                     fontSize: "0.95rem",
-                    color: "#0F766E",
+                    color: palette.primary,
                     fontWeight: 700,
                     width: "35%",
-                    background: isDark ? "rgba(0,132,230,0.08)" : "#F0F9FF",
-                    borderLeft: "2px solid #0F766E",
+                    background: isDark ? `${palette.primary}18` : "#F0F9FF",
+                    borderLeft: `2px solid ${palette.primary}`,
                   }}
                 >
                   Pivotal Cloud ERP 🇳🇵
@@ -2034,12 +1716,12 @@ function ComparisonSection() {
                       color: isDark ? "#E2E8F0" : "#1E293B",
                       fontSize: "0.875rem",
                       fontWeight: 600,
-                      background: isDark ? "rgba(0,132,230,0.04)" : "#F0F9FF",
-                      borderLeft: "2px solid #0F766E",
+                      background: isDark ? `${palette.primary}10` : "#F0F9FF",
+                      borderLeft: `2px solid ${palette.primary}`,
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                      <Check size={16} color="#48BB28" style={{ flexShrink: 0, marginTop: 2 }} />
+                      <Check size={16} color={palette.secondary} style={{ flexShrink: 0, marginTop: 2 }} />
                       <span>{row.pivotal}</span>
                     </div>
                   </td>
@@ -2071,7 +1753,7 @@ function ComparisonSection() {
             <Link
               to="/trial"
               style={{
-                background: "linear-gradient(135deg, #0F766E, #0D5E58)",
+                background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
                 color: "white",
                 textDecoration: "none",
                 fontWeight: 600,
@@ -2096,7 +1778,7 @@ function ComparisonSection() {
 function RoiCalculator() {
   const [teamSize, setTeamSize] = useState(4);
   const [monthlyVouchers, setMonthlyVouchers] = useState(1200);
-  const { mode } = useThemeStore();
+  const { mode, palette } = useThemeStore();
   const isDark = mode === "dark";
 
   const hoursSavedPerMonth = Math.round((monthlyVouchers * 12) / 60);
@@ -2118,7 +1800,7 @@ function RoiCalculator() {
               display: "inline-flex",
               alignItems: "center",
               gap: 6,
-              color: "#48BB28",
+              color: palette.secondary,
               fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -2164,7 +1846,7 @@ function RoiCalculator() {
                 <label style={{ fontSize: "0.95rem", fontWeight: 600, color: isDark ? "#FFFFFF" : "#0D2B28" }}>
                   Finance & Accounting Staff
                 </label>
-                <span style={{ fontSize: "1.1rem", fontWeight: 800, color: "#0F766E" }}>
+                <span style={{ fontSize: "1.1rem", fontWeight: 800, color: palette.primary }}>
                   {teamSize} People
                 </span>
               </div>
@@ -2174,7 +1856,7 @@ function RoiCalculator() {
                 max="30"
                 value={teamSize}
                 onChange={(e) => setTeamSize(Number(e.target.value))}
-                style={{ width: "100%", accentColor: "#0F766E", cursor: "pointer" }}
+                style={{ width: "100%", accentColor: palette.primary, cursor: "pointer" }}
               />
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: isDark ? "#64748B" : "#94A3B8", marginTop: 4 }}>
                 <span>1 user</span>
@@ -2188,7 +1870,7 @@ function RoiCalculator() {
                 <label style={{ fontSize: "0.95rem", fontWeight: 600, color: isDark ? "#FFFFFF" : "#0D2B28" }}>
                   Monthly Tax Invoices & Vouchers
                 </label>
-                <span style={{ fontSize: "1.1rem", fontWeight: 800, color: "#48BB28" }}>
+                <span style={{ fontSize: "1.1rem", fontWeight: 800, color: palette.secondary }}>
                   {monthlyVouchers.toLocaleString()} Vouchers
                 </span>
               </div>
@@ -2199,7 +1881,7 @@ function RoiCalculator() {
                 step="100"
                 value={monthlyVouchers}
                 onChange={(e) => setMonthlyVouchers(Number(e.target.value))}
-                style={{ width: "100%", accentColor: "#48BB28", cursor: "pointer" }}
+                style={{ width: "100%", accentColor: palette.secondary, cursor: "pointer" }}
               />
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.75rem", color: isDark ? "#64748B" : "#94A3B8", marginTop: 4 }}>
                 <span>100</span>
@@ -2212,10 +1894,10 @@ function RoiCalculator() {
               style={{
                 padding: "12px 16px",
                 borderRadius: "8px",
-                background: isDark ? "rgba(72,187,40,0.08)" : "rgba(72,187,40,0.06)",
-                border: "1px solid rgba(72,187,40,0.2)",
+                background: `${palette.secondary}14`,
+                border: `1px solid ${palette.secondary}33`,
                 fontSize: "0.85rem",
-                color: isDark ? "#86EFAC" : "#166534",
+                color: isDark ? "#FFFFFF" : palette.primary,
                 lineHeight: 1.5,
               }}
             >
@@ -2238,17 +1920,17 @@ function RoiCalculator() {
               <span style={{ fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.05em", color: isDark ? "#94A3B8" : "#64748B", fontWeight: 600 }}>
                 Estimated Monthly Savings
               </span>
-              <div style={{ fontSize: "2.5rem", fontWeight: 800, color: "#0F766E", letterSpacing: "-0.03em", margin: "6px 0 12px" }}>
-                रू {costSavingsNPR.toLocaleString()}
+              <div style={{ fontSize: "2.5rem", fontWeight: 800, color: palette.primary, letterSpacing: "-0.03em", margin: "6px 0 12px" }}>
+                Rs. {costSavingsNPR.toLocaleString()}
               </div>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "12px", borderTop: isDark ? "1px solid rgba(255,255,255,0.08)" : "1px solid #E2E8F0", paddingTop: "1rem" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "0.9rem", color: isDark ? "#E2E8F0" : "#334155" }}>
-                  <Clock size={16} color="#48BB28" />
+                  <Clock size={16} color={palette.secondary} />
                   <strong>{hoursSavedPerMonth} hours/month</strong> saved on data entry & VAT matching
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "0.9rem", color: isDark ? "#E2E8F0" : "#334155" }}>
-                  <TrendingUp size={16} color="#0F766E" />
+                  <TrendingUp size={16} color={palette.primary} />
                   <strong>{auditHoursSaved} audit prep hours</strong> saved during Ashadh year-end closing
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "0.9rem", color: isDark ? "#E2E8F0" : "#334155" }}>
@@ -2264,14 +1946,14 @@ function RoiCalculator() {
                 style={{
                   display: "block",
                   textAlign: "center",
-                  background: "linear-gradient(135deg, #0F766E, #0D5E58)",
+                  background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
                   color: "#FFFFFF",
                   textDecoration: "none",
                   fontWeight: 700,
                   fontSize: "0.95rem",
                   padding: "12px 20px",
                   borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0,132,230,0.3)",
+                  boxShadow: `0 4px 12px ${palette.primary}44`,
                 }}
               >
                 Choose a Plan to Capture These Savings →
@@ -2363,7 +2045,7 @@ const INDUSTRY_DETAILS = [
 
 function IndustriesSection() {
   const [selectedInd, setSelectedInd] = useState(INDUSTRY_DETAILS[0].id);
-  const { mode } = useThemeStore();
+  const { mode, palette } = useThemeStore();
   const isDark = mode === "dark";
 
   const activeData =
@@ -2393,7 +2075,7 @@ function IndustriesSection() {
         >
           <div
             style={{
-              color: "#48BB28",
+              color: palette.secondary,
               fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -2452,12 +2134,12 @@ function IndustriesSection() {
                   fontWeight: 600,
                   cursor: "pointer",
                   border: isSelected
-                    ? "1px solid #0F766E"
+                    ? `1px solid ${palette.primary}`
                     : isDark
                     ? "1px solid rgba(255,255,255,0.1)"
                     : "1px solid #CBD5E1",
                   background: isSelected
-                    ? "linear-gradient(135deg, #0F766E, #0D5E58)"
+                    ? `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`
                     : isDark
                     ? "#0D2B28"
                     : "#FFFFFF",
@@ -2467,7 +2149,7 @@ function IndustriesSection() {
                     ? "#E2E8F0"
                     : "#334155",
                   boxShadow: isSelected
-                    ? "0 4px 14px rgba(0, 132, 230, 0.3)"
+                    ? `0 4px 14px ${palette.primary}44`
                     : "none",
                   transition: "all 0.2s ease",
                 }}
@@ -2508,7 +2190,7 @@ function IndustriesSection() {
                 width: 52,
                 height: 52,
                 borderRadius: "12px",
-                background: "linear-gradient(135deg, #0F766E, #48BB28)",
+                background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -2565,7 +2247,7 @@ function IndustriesSection() {
               >
                 <CheckCircle2
                   size={18}
-                  color="#48BB28"
+                  color={palette.secondary}
                   style={{ flexShrink: 0, marginTop: 2 }}
                 />
                 <span
@@ -2606,7 +2288,7 @@ function IndustriesSection() {
             <Link
               to={`/signup?industry=${activeData.id}`}
               style={{
-                color: "#0F766E",
+                color: palette.primary,
                 textDecoration: "none",
                 fontWeight: 600,
                 fontSize: "0.925rem",
@@ -2626,9 +2308,8 @@ function IndustriesSection() {
 
 // ─── Pricing Section with Monthly/Annual Toggle ──────────────────────────────
 function PricingSection() {
-  const [annualBilling, setAnnualBilling] = useState(true);
   const plans = MOCK_PLANS;
-  const { mode } = useThemeStore();
+  const { mode, palette } = useThemeStore();
   const isDark = mode === "dark";
 
   return (
@@ -2644,12 +2325,12 @@ function PricingSection() {
           style={{
             textAlign: "center",
             maxWidth: "760px",
-            margin: "0 auto 3rem",
+            margin: "0 auto 3.5rem",
           }}
         >
           <div
             style={{
-              color: "#0F766E",
+              color: palette.primary,
               fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -2657,7 +2338,7 @@ function PricingSection() {
               marginBottom: "0.75rem",
             }}
           >
-            Simple, Transparent Pricing
+            Annual Enterprise Pricing
           </div>
           <h2
             style={{
@@ -2675,107 +2356,12 @@ function PricingSection() {
               color: isDark ? "#94A3B8" : "#64748B",
               fontSize: "1.05rem",
               marginTop: "0.75rem",
+              lineHeight: 1.6,
             }}
           >
-            All plans include continuous IRD tax law compliance updates and
-            daily cloud backups.
+            All plans are billed annually and include continuous IRD tax compliance updates, 
+            instant Annexure filings, and guaranteed SLA cloud backups.
           </p>
-
-          {/* Billing Toggle */}
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "12px",
-              marginTop: "2rem",
-              background: isDark ? "#0D2B28" : "#F1F5F9",
-              padding: "6px 14px",
-              borderRadius: "100px",
-              border: isDark
-                ? "1px solid rgba(255,255,255,0.1)"
-                : "1px solid #CBD5E1",
-            }}
-          >
-            <span
-              onClick={() => setAnnualBilling(false)}
-              style={{
-                fontSize: "0.9rem",
-                fontWeight: !annualBilling ? 700 : 500,
-                color: !annualBilling
-                  ? isDark
-                    ? "#FFFFFF"
-                    : "#0D2B28"
-                  : isDark
-                  ? "#94A3B8"
-                  : "#64748B",
-                cursor: "pointer",
-              }}
-            >
-              Monthly Billing
-            </span>
-
-            <button
-              onClick={() => setAnnualBilling(!annualBilling)}
-              style={{
-                width: 44,
-                height: 24,
-                borderRadius: 100,
-                background: annualBilling ? "#48BB28" : "#94A3B8",
-                border: "none",
-                cursor: "pointer",
-                position: "relative",
-                transition: "background 0.2s",
-                padding: 0,
-              }}
-            >
-              <div
-                style={{
-                  width: 18,
-                  height: 18,
-                  borderRadius: "50%",
-                  background: "white",
-                  position: "absolute",
-                  top: 3,
-                  left: annualBilling ? 23 : 3,
-                  transition: "left 0.2s",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
-                }}
-              />
-            </button>
-
-            <span
-              onClick={() => setAnnualBilling(true)}
-              style={{
-                fontSize: "0.9rem",
-                fontWeight: annualBilling ? 700 : 500,
-                color: annualBilling
-                  ? isDark
-                    ? "#FFFFFF"
-                    : "#0D2B28"
-                  : isDark
-                  ? "#94A3B8"
-                  : "#64748B",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
-              Annual Billing
-              <span
-                style={{
-                  background: "rgba(72, 187, 40, 0.15)",
-                  color: "#48BB28",
-                  fontSize: "0.75rem",
-                  fontWeight: 700,
-                  padding: "2px 8px",
-                  borderRadius: 10,
-                }}
-              >
-                Save 20%
-              </span>
-            </span>
-          </div>
         </div>
 
         {/* Pricing Cards Grid */}
@@ -2788,10 +2374,8 @@ function PricingSection() {
           }}
         >
           {plans.map((plan) => {
-            const rawPrice = plan.price;
-            const effectivePrice = annualBilling
-              ? Math.round(rawPrice * 0.8)
-              : rawPrice;
+            const annualPrice = plan.annualPrice || (plan.price * 10);
+            const monthlyEquivalent = Math.round(annualPrice / 12);
 
             return (
               <div
@@ -2799,7 +2383,7 @@ function PricingSection() {
                 style={{
                   background: isDark ? "#0D2B28" : "#FFFFFF",
                   border: plan.isPopular
-                    ? "2px solid #0F766E"
+                    ? `2px solid ${palette.primary}`
                     : isDark
                     ? "1px solid rgba(255, 255, 255, 0.08)"
                     : "1px solid #E2E8F0",
@@ -2811,8 +2395,8 @@ function PricingSection() {
                   position: "relative",
                   boxShadow: plan.isPopular
                     ? isDark
-                      ? "0 20px 40px rgba(0, 132, 230, 0.25)"
-                      : "0 20px 40px rgba(0, 132, 230, 0.12)"
+                      ? `0 20px 40px ${palette.primary}44`
+                      : `0 20px 40px ${palette.primary}25`
                     : isDark
                     ? "0 10px 30px rgba(0,0,0,0.3)"
                     : "0 10px 30px rgba(0,0,0,0.04)",
@@ -2826,14 +2410,14 @@ function PricingSection() {
                       top: -14,
                       left: "50%",
                       transform: "translateX(-50%)",
-                      background: "linear-gradient(135deg, #0F766E, #48BB28)",
+                      background: `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`,
                       color: "white",
                       padding: "4px 14px",
                       borderRadius: 20,
                       fontSize: "0.75rem",
                       fontWeight: 700,
                       letterSpacing: "0.06em",
-                      boxShadow: "0 4px 10px rgba(0, 132, 230, 0.3)",
+                      boxShadow: `0 4px 10px ${palette.primary}44`,
                     }}
                   >
                     MOST POPULAR FOR ENTERPRISES
@@ -2866,29 +2450,47 @@ function PricingSection() {
                   <div
                     style={{
                       display: "flex",
-                      alignItems: "baseline",
-                      gap: 6,
+                      flexDirection: "column",
+                      gap: 4,
                       marginBottom: "1.75rem",
                     }}
                   >
-                    <span
+                    <div
                       style={{
-                        fontSize: "2.4rem",
-                        fontWeight: 800,
-                        color: isDark ? "#FFFFFF" : "#0D2B28",
-                        letterSpacing: "-0.03em",
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: 6,
                       }}
                     >
-                      रू {effectivePrice.toLocaleString("ne-NP")}
-                    </span>
-                    <span
+                      <span
+                        style={{
+                          fontSize: "2.35rem",
+                          fontWeight: 800,
+                          color: isDark ? "#FFFFFF" : "#0D2B28",
+                          letterSpacing: "-0.03em",
+                        }}
+                      >
+                        Rs. {annualPrice.toLocaleString("ne-NP")}
+                      </span>
+                      <span
+                        style={{
+                          color: isDark ? "#94A3B8" : "#64748B",
+                          fontSize: "0.9rem",
+                          fontWeight: 600,
+                        }}
+                      >
+                        / year
+                      </span>
+                    </div>
+                    <div
                       style={{
+                        fontSize: "0.82rem",
                         color: isDark ? "#94A3B8" : "#64748B",
-                        fontSize: "0.9rem",
+                        fontWeight: 500,
                       }}
                     >
-                      / month
-                    </span>
+                      (Equivalent to Rs. {monthlyEquivalent.toLocaleString("ne-NP")}/mo billed annually)
+                    </div>
                   </div>
 
                   <div
@@ -2923,7 +2525,7 @@ function PricingSection() {
                         >
                           <CheckCircle2
                             size={16}
-                            color={plan.isPopular ? "#0F766E" : "#48BB28"}
+                            color={plan.isPopular ? palette.primary : palette.secondary}
                           />
                           {feat}
                         </li>
@@ -2933,9 +2535,7 @@ function PricingSection() {
                 </div>
 
                 <Link
-                  to={`/signup?plan=${plan.id}&billing=${
-                    annualBilling ? "annual" : "monthly"
-                  }`}
+                  to={`/signup?plan=${plan.id}&billing=annual`}
                   style={{
                     display: "block",
                     textAlign: "center",
@@ -2945,7 +2545,7 @@ function PricingSection() {
                     fontWeight: 700,
                     fontSize: "0.95rem",
                     background: plan.isPopular
-                      ? "linear-gradient(135deg, #0F766E, #0D5E58)"
+                      ? `linear-gradient(135deg, ${palette.primary}, ${palette.secondary})`
                       : isDark
                       ? "#1E293B"
                       : "#F1F5F9",
@@ -2960,7 +2560,7 @@ function PricingSection() {
                       ? "1px solid rgba(255,255,255,0.15)"
                       : "1px solid #CBD5E1",
                     boxShadow: plan.isPopular
-                      ? "0 4px 14px rgba(0, 132, 230, 0.35)"
+                      ? `0 4px 14px ${palette.primary}44`
                       : "none",
                     transition: "transform 0.15s",
                   }}
@@ -3002,7 +2602,7 @@ const FAQS = [
 
 function FAQSection() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
-  const { mode } = useThemeStore();
+  const { mode, palette } = useThemeStore();
   const isDark = mode === "dark";
 
   return (
@@ -3020,7 +2620,7 @@ function FAQSection() {
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <div
             style={{
-              color: "#0F766E",
+              color: palette.primary,
               fontSize: "0.85rem",
               fontWeight: 700,
               textTransform: "uppercase",
@@ -3053,7 +2653,7 @@ function FAQSection() {
                   background: isDark ? "#0D2B28" : "#FFFFFF",
                   borderRadius: "12px",
                   border: isOpen
-                    ? "1px solid #0F766E"
+                    ? `1px solid ${palette.primary}`
                     : isDark
                     ? "1px solid rgba(255,255,255,0.08)"
                     : "1px solid #E2E8F0",
@@ -3084,7 +2684,7 @@ function FAQSection() {
                     style={{
                       transform: isOpen ? "rotate(180deg)" : "none",
                       transition: "transform 0.2s",
-                      color: isOpen ? "#0F766E" : "#94A3B8",
+                      color: isOpen ? palette.primary : "#94A3B8",
                       flexShrink: 0,
                     }}
                   />
@@ -3117,7 +2717,7 @@ function FAQSection() {
 // ─── CTA Banner ─────────────────────────────────────────────────────────────
 function CtaBanner() {
   const navigate = useNavigate();
-  const { mode } = useThemeStore();
+  const { mode, palette } = useThemeStore();
   const isDark = mode === "dark";
 
   return (
@@ -3127,11 +2727,11 @@ function CtaBanner() {
           maxWidth: "1200px",
           margin: "0 auto",
           borderRadius: "20px",
-          background: "linear-gradient(135deg, #0F766E 0%, #0052a3 50%, #003366 100%)",
+          background: `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`,
           padding: "4rem 2rem",
           textAlign: "center",
           color: "white",
-          boxShadow: "0 20px 50px rgba(0, 132, 230, 0.3)",
+          boxShadow: `0 20px 50px ${palette.primary}44`,
           position: "relative",
           overflow: "hidden",
         }}
@@ -3144,7 +2744,7 @@ function CtaBanner() {
             width: 300,
             height: 300,
             borderRadius: "50%",
-            background: "rgba(72, 187, 40, 0.2)",
+            background: `${palette.accent || palette.secondary}33`,
             filter: "blur(50px)",
             pointerEvents: "none",
           }}
@@ -3185,7 +2785,7 @@ function CtaBanner() {
               onClick={() => navigate("/trial")}
               style={{
                 background: "#FFFFFF",
-                color: "#0F766E",
+                color: palette.primary,
                 fontWeight: 700,
                 fontSize: "1rem",
                 padding: "14px 28px",
@@ -3226,6 +2826,7 @@ function CtaBanner() {
 // ─── Modern Footer ──────────────────────────────────────────────────────────
 function Footer() {
   const brandLogo = useBrandLogo();
+  const { palette } = useThemeStore();
 
   return (
     <footer
@@ -3247,18 +2848,42 @@ function Footer() {
         >
           <div>
             <div style={{ marginBottom: "1.25rem" }}>
-              <img
-                src={brandLogo}
-                alt="Pivotal ERP"
-                style={{
-                  height: 46,
-                  width: "auto",
-                  objectFit: "contain",
-                  background: "rgba(255,255,255,0.06)",
-                  padding: "4px 8px",
-                  borderRadius: "8px",
-                }}
-              />
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", background: "rgba(255,255,255,0.06)", padding: "8px 14px", borderRadius: "10px" }}>
+                <img
+                  src={brandLogo}
+                  alt="Pivotal ERP"
+                  style={{
+                    height: 38,
+                    width: "auto",
+                    objectFit: "contain",
+                  }}
+                />
+                <div
+                  style={{
+                    borderLeft: "1px solid rgba(255,255,255,0.2)",
+                    paddingLeft: "9px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "7px",
+                  }}
+                >
+                  <span style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.55)", fontWeight: 500 }}>
+                    a product of
+                  </span>
+                  <img
+                    src="/erp_ui/dynamic-technosoft-logo.png"
+                    alt="Dynamic Technosoft"
+                    title="Dynamic Technosoft"
+                    style={{
+                      height: 18,
+                      width: "auto",
+                      objectFit: "contain",
+                      filter: "brightness(0) invert(1)",
+                      opacity: 0.9,
+                    }}
+                  />
+                </div>
+              </div>
             </div>
             <p
               style={{
@@ -3275,7 +2900,7 @@ function Footer() {
               style={{
                 marginTop: "1.25rem",
                 fontSize: "0.8rem",
-                color: "#48BB28",
+                color: palette.secondary,
                 fontWeight: 600,
                 display: "flex",
                 alignItems: "center",
@@ -3293,38 +2918,38 @@ function Footer() {
                 { label: "Double-Entry Accounting", href: "#features" },
                 { label: "VAT & TDS Filing", href: "#features" },
                 { label: "Bikram Sambat Calendar", href: "#features" },
-                { label: "Multi-Company Consolidation", href: "#features" },
-                { label: "Pricing Plans", href: "#pricing" },
+                { label: "Multi-Branch Ledger", href: "#features" },
+                { label: "Pricing", href: "#pricing" },
               ],
             },
             {
-              title: "Solutions",
+              title: "Industries",
               links: [
                 { label: "Wholesale & Trading", href: "#industries" },
                 { label: "Manufacturing & BOM", href: "#industries" },
-                { label: "Hospitality & Restaurant POS", href: "#industries" },
-                { label: "Healthcare & Pharmacy", href: "#industries" },
-                { label: "Construction & BOQ", href: "#industries" },
+                { label: "Hotels & Restaurants", href: "#industries" },
+                { label: "Healthcare & Clinics", href: "#industries" },
+                { label: "Contracting & Projects", href: "#industries" },
               ],
             },
             {
-              title: "Company",
+              title: "Resources & Legal",
               links: [
-                { label: "Sign In", href: "/login" },
-                { label: "Free Trial", href: "/trial" },
-                { label: "Official Blog", href: "/blog" },
+                { label: "Documentation", href: "#" },
+                { label: "API Reference", href: "#" },
+                { label: "IRD XML Standards", href: "#" },
                 { label: "Privacy Policy", href: "#" },
                 { label: "Terms of Service", href: "#" },
               ],
             },
-          ].map((col) => (
-            <div key={col.title}>
+          ].map((col, idx) => (
+            <div key={idx}>
               <h4
                 style={{
                   color: "#FFFFFF",
-                  fontWeight: 700,
-                  marginBottom: "1.25rem",
                   fontSize: "0.95rem",
+                  fontWeight: 700,
+                  margin: "0 0 1.25rem",
                 }}
               >
                 {col.title}
@@ -3339,33 +2964,19 @@ function Footer() {
                   gap: "0.75rem",
                 }}
               >
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    {link.href.startsWith("/") ? (
-                      <Link
-                        to={link.href}
-                        style={{
-                          color: "rgba(255,255,255,0.6)",
-                          textDecoration: "none",
-                          fontSize: "0.875rem",
-                          transition: "color 0.2s",
-                        }}
-                      >
-                        {link.label}
-                      </Link>
-                    ) : (
-                      <a
-                        href={link.href}
-                        style={{
-                          color: "rgba(255,255,255,0.6)",
-                          textDecoration: "none",
-                          fontSize: "0.875rem",
-                          transition: "color 0.2s",
-                        }}
-                      >
-                        {link.label}
-                      </a>
-                    )}
+                {col.links.map((link, lIdx) => (
+                  <li key={lIdx}>
+                    <a
+                      href={link.href}
+                      style={{
+                        color: "rgba(255,255,255,0.65)",
+                        textDecoration: "none",
+                        fontSize: "0.875rem",
+                        transition: "color 0.2s",
+                      }}
+                    >
+                      {link.label}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -3393,13 +3004,13 @@ function Footer() {
           <div style={{ display: "flex", gap: "1.5rem" }}>
             <Link
               to="/login"
-              style={{ color: "#14B8A6", textDecoration: "none" }}
+              style={{ color: palette.accent || palette.primary, textDecoration: "none" }}
             >
               Staff Portal
             </Link>
             <Link
               to="/trial"
-              style={{ color: "#48BB28", textDecoration: "none" }}
+              style={{ color: palette.secondary, textDecoration: "none" }}
             >
               Free Trial
             </Link>
@@ -3435,7 +3046,8 @@ export default function LandingPage() {
         width: "100%",
         overflowX: "hidden",
         fontFamily:
-          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          'var(--font-primary, "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)',
+        fontFeatureSettings: '"tnum" 1, "cv05" 1',
       }}
     >
       <LandingNav scrolled={scrolled} />

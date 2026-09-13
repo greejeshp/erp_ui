@@ -8,6 +8,7 @@ import {
   COLOR_PALETTES, FONT_OPTIONS, DEFAULT_PALETTE_ID,
   applyPalette, applyFont, resetToDefault, saveBranding, loadBranding,
 } from '../data/brandingConfig';
+import { useThemeStore } from '../lib/store/themeStore';
 
 /* ═══════════════════════════════════════════════════════════════
    BrandingModal.jsx
@@ -44,8 +45,16 @@ function SwatchStrip({ swatches }) {
 }
 
 export default function BrandingModal({ open, onClose, darkMode, activePaletteId, activeFontId, onApply }) {
-  const [selectedPaletteId, setSelectedPaletteId] = useState(activePaletteId || DEFAULT_PALETTE_ID);
-  const [selectedFontId, setSelectedFontId]       = useState(activeFontId || 'montserrat');
+  const currentTheme = useThemeStore();
+  const getEffectivePaletteId = () => currentTheme?.palette?.id || activePaletteId || DEFAULT_PALETTE_ID;
+  const getEffectiveFontId = () => {
+    const storeFont = currentTheme?.font;
+    const match = FONT_OPTIONS.find(f => f.name === storeFont || f.id === storeFont);
+    return match?.id || activeFontId || 'plus-jakarta-sans';
+  };
+
+  const [selectedPaletteId, setSelectedPaletteId] = useState(getEffectivePaletteId);
+  const [selectedFontId, setSelectedFontId]       = useState(getEffectiveFontId);
   const [previewPaletteId, setPreviewPaletteId]   = useState(null);
   
   // Track per-palette sidebar mode preference: { [paletteId]: 'dark' | 'light' }
@@ -53,24 +62,29 @@ export default function BrandingModal({ open, onClose, darkMode, activePaletteId
     const saved = loadBranding();
     return {
       [DEFAULT_PALETTE_ID]: saved.sidebarMode || 'dark',
-      'fintech-precision': 'dark',
-      'institutional-cobalt': 'dark',
+      'pivotal-cloud-growth': 'dark',
+      'pivotal-cobalt-slate': 'dark',
     };
   });
 
-  /* Sync incoming props when modal opens */
+  /* Sync incoming props & themeStore when modal opens */
   useEffect(() => {
     if (open) {
       const saved = loadBranding();
-      setSelectedPaletteId(activePaletteId || DEFAULT_PALETTE_ID);
-      setSelectedFontId(activeFontId || 'montserrat');
+      const effPalId = currentTheme?.palette?.id || activePaletteId || saved.paletteId || DEFAULT_PALETTE_ID;
+      const storeFont = currentTheme?.font;
+      const match = FONT_OPTIONS.find(f => f.name === storeFont || f.id === storeFont);
+      const effFontId = match?.id || activeFontId || saved.fontId || 'plus-jakarta-sans';
+
+      setSelectedPaletteId(effPalId);
+      setSelectedFontId(effFontId);
       setPreviewPaletteId(null);
       setPaletteSidebarModes(prev => ({
         ...prev,
-        [activePaletteId || DEFAULT_PALETTE_ID]: saved.sidebarMode || 'dark',
+        [effPalId]: currentTheme?.palette?.sidebarType === 'white' ? 'light' : saved.sidebarMode || 'dark',
       }));
     }
-  }, [open, activePaletteId, activeFontId]);
+  }, [open, activePaletteId, activeFontId, currentTheme?.palette?.id, currentTheme?.font]);
 
   const getSidebarModeFor = (paletteId) => {
     return paletteSidebarModes[paletteId] || 'dark';
@@ -138,13 +152,13 @@ export default function BrandingModal({ open, onClose, darkMode, activePaletteId
   const handleReset = () => {
     resetToDefault();
     setSelectedPaletteId(DEFAULT_PALETTE_ID);
-    setSelectedFontId('montserrat');
+    setSelectedFontId('plus-jakarta-sans');
     setPaletteSidebarModes({ [DEFAULT_PALETTE_ID]: 'dark' });
-    saveBranding(DEFAULT_PALETTE_ID, 'montserrat', 'dark');
-    if (onApply) onApply(DEFAULT_PALETTE_ID, 'montserrat', 'dark');
+    saveBranding(DEFAULT_PALETTE_ID, 'plus-jakarta-sans', 'dark');
+    if (onApply) onApply(DEFAULT_PALETTE_ID, 'plus-jakarta-sans', 'dark');
     notification.info({
       message: 'Reset to default',
-      description: 'Nordic Deep Teal theme restored.',
+      description: 'Nordic Deep Teal theme & Plus Jakarta Sans typography restored.',
       placement: 'topRight',
       duration: 3,
     });
@@ -376,7 +390,7 @@ export default function BrandingModal({ open, onClose, darkMode, activePaletteId
                       <span>{palette.previewItem?.title || 'Ledger Annexure 13'}</span>
                     </div>
                     <div style={{ fontSize: 14, fontWeight: 800, color: isSidebarDark ? '#FFFFFF' : '#0F172A', marginTop: 2 }}>
-                      {palette.previewItem?.amount || 'रू 62,72,500'}
+                      {palette.previewItem?.amount || 'Rs. 62,72,500'}
                     </div>
                   </div>
 

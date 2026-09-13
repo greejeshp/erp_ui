@@ -191,7 +191,7 @@ export function formatNPR(amount: number): string {
 }
 
 export function formatNPRCurrency(amount: number): string {
-  return `रू ${formatNPR(amount)}`;
+  return `Rs. ${formatNPR(amount)}`;
 }
 
 // Calculate VAT at 13%

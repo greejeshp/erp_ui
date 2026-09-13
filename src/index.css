@@ -6,8 +6,8 @@
    STITCH DESIGN SYSTEM — DESIGN TOKENS
 ══════════════════════════════════════════════ */
 :root {
-  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'Fira Code', 'Courier New', monospace;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
 
   /* Brand - PivotalERP Palette */
   --primary: #00B894;       /* Growth Teal */
@@ -2989,4 +2989,11 @@ body {
 .dark .tb-hud-footer-wide { background: #1a1d27; border-top-color: #2d3142; }
 .dark .tb-hud-apply-btn.ant-btn { background: #6366f1 !important; border-color: #6366f1 !important; }
 
-
+/* Pivotal ERP Text Gradient Utility */
+.pivotal-gradient-text {
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+}

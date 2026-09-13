@@ -3,6 +3,7 @@
    Color palette definitions + font options for the UI & Branding
    settings. Each palette maps directly to CSS custom properties.
    ═══════════════════════════════════════════════════════════════ */
+import { useThemeStore, BUILTIN_PALETTES } from '../lib/store/themeStore';
 
 /* ── The original/default palette (stored for reset) ─────────── */
 export const DEFAULT_PALETTE_ID = 'nordic-deep-teal';
@@ -17,7 +18,7 @@ export const NORDIC_DEEP_TEAL_PALETTE = {
   previewItem: {
     title: 'Ledger Annexure 13',
     badge: 'Reconciled',
-    amount: 'रू 62,72,500',
+    amount: 'Rs. 62,72,500',
     button: 'Sync Ledger',
   },
   vars: {
@@ -59,87 +60,87 @@ export const DEFAULT_PALETTE = NORDIC_DEEP_TEAL_PALETTE;
 export const COLOR_PALETTES = [
   NORDIC_DEEP_TEAL_PALETTE,
   {
-    id: 'fintech-precision',
-    name: 'Fintech Precision',
-    subtitle: 'OPTION 1',
-    tag: 'Logo Matched',
-    description: 'Modern 2026 Ramp/Stripe feel, exact fit for Pivotal logo.',
-    swatches: ['#0A1128', '#0084E6', '#48BB28', '#F8FAFC'],
+    id: 'pivotal-cloud-growth',
+    name: 'Pivotal Sky & Meadow',
+    subtitle: 'OFFICIAL LOGO 1',
+    tag: 'Cloud Growth',
+    description: 'Fresh Azure Blue and Growth Meadow Green matching the official Cloud-Growth logo.',
+    swatches: ['#071F32', '#0083CA', '#62B237', '#00B4D8', '#F4F9FD'],
     previewItem: {
-      title: 'Sales Invoice #2081',
-      badge: 'IRD Matched',
-      amount: 'रू 12,40,000',
+      title: 'Cloud Sales Invoice #2082',
+      badge: 'IRD Verified',
+      amount: 'Rs. 18,75,000',
       button: 'Post Voucher',
     },
     vars: {
-      '--primary':            '#0084E6',
-      '--primary-mid':        '#0069CC',
-      '--primary-light':      '#EBF5FF',
-      '--primary-hover':      '#005BB5',
-      '--accent-blue':        '#48BB28',
-      '--accent':             '#48BB28',
-      '--bg-layout':          '#F8FAFC',
-      '--bg-app':             '#F8FAFC',
+      '--primary':            '#0083CA',
+      '--primary-mid':        '#006DA8',
+      '--primary-light':      '#EAF6FC',
+      '--primary-hover':      '#005D8F',
+      '--accent-blue':        '#00B4D8',
+      '--accent':             '#00B4D8',
+      '--bg-layout':          '#F4F9FD',
+      '--bg-app':             '#F4F9FD',
       '--bg-card':            '#FFFFFF',
-      '--bg-sidebar':         '#0A1128',
+      '--bg-sidebar':         '#071F32',
       '--border-color':       '#E2E8F0',
       '--border-input':       '#CBD5E1',
       '--text-main':          '#0F172A',
       '--text-secondary':     '#475569',
       '--text-muted':         '#64748B',
-      '--text-sidebar':       'rgba(255, 255, 255, 0.85)',
-      '--text-sidebar-hover': '#0084E6',
-      '--text-logo':          '#0084E6',
-      '--bg-sidebar-hover':   '#131E3A',
-      '--finance-blue':       '#0084E6',
-      '--color-primary':      '#0084E6',
-      '--color-accent':       '#48BB28',
-      '--color-debit':        '#0084E6',
-      '--color-credit':       '#48BB28',
-      '--heading-color':      '#0084E6',
-      '--sidebar-bg':         'linear-gradient(180deg, #0A1128 0%, #131E3A 100%)',
+      '--text-sidebar':       'rgba(255, 255, 255, 0.9)',
+      '--text-sidebar-hover': '#00B4D8',
+      '--text-logo':          '#0083CA',
+      '--bg-sidebar-hover':   '#0B314F',
+      '--finance-blue':       '#0083CA',
+      '--color-primary':      '#0083CA',
+      '--color-accent':       '#00B4D8',
+      '--color-debit':        '#0083CA',
+      '--color-credit':       '#62B237',
+      '--heading-color':      '#0083CA',
+      '--sidebar-bg':         'linear-gradient(180deg, #071F32 0%, #0B314F 100%)',
     },
   },
   {
-    id: 'institutional-cobalt',
-    name: 'Institutional Cobalt',
-    subtitle: 'OPTION 2',
-    tag: 'SAP / Oracle',
-    description: 'Traditional banking stability, maximum CFO audit trust.',
-    swatches: ['#0F172A', '#0F52BA', '#E2E8F0', '#FFFFFF'],
+    id: 'pivotal-cobalt-slate',
+    name: 'Pivotal Cobalt & Deep Slate',
+    subtitle: 'OFFICIAL LOGO 2',
+    tag: 'Modern Geometric',
+    description: 'High-contrast Royal Cobalt Blue and Deep Slate Navy matching the geometric P logo.',
+    swatches: ['#0A1124', '#1A56DB', '#0F1E36', '#3B82F6', '#F8FAFC'],
     previewItem: {
-      title: 'Audit Trial Balance',
-      badge: 'NFRS Valid',
-      amount: 'रू 4,82,50,000',
+      title: 'Institutional Audit Ledger',
+      badge: 'NFRS Validated',
+      amount: 'Rs. 5,42,80,000',
       button: 'Generate P&L',
     },
     vars: {
-      '--primary':            '#0F52BA',
-      '--primary-mid':        '#0D459D',
-      '--primary-light':      '#EEF4FD',
-      '--primary-hover':      '#0A3882',
+      '--primary':            '#1A56DB',
+      '--primary-mid':        '#1446B8',
+      '--primary-light':      '#EEF3FD',
+      '--primary-hover':      '#0F389A',
       '--accent-blue':        '#3B82F6',
       '--accent':             '#3B82F6',
       '--bg-layout':          '#F8FAFC',
       '--bg-app':             '#F8FAFC',
       '--bg-card':            '#FFFFFF',
-      '--bg-sidebar':         '#0F172A',
+      '--bg-sidebar':         '#0A1124',
       '--border-color':       '#E2E8F0',
       '--border-input':       '#CBD5E1',
       '--text-main':          '#0F172A',
       '--text-secondary':     '#475569',
       '--text-muted':         '#64748B',
-      '--text-sidebar':       'rgba(255, 255, 255, 0.85)',
-      '--text-sidebar-hover': '#0F52BA',
-      '--text-logo':          '#0F52BA',
-      '--bg-sidebar-hover':   '#1E293B',
-      '--finance-blue':       '#0F52BA',
-      '--color-primary':      '#0F52BA',
+      '--text-sidebar':       'rgba(255, 255, 255, 0.9)',
+      '--text-sidebar-hover': '#3B82F6',
+      '--text-logo':          '#1A56DB',
+      '--bg-sidebar-hover':   '#111C3A',
+      '--finance-blue':       '#1A56DB',
+      '--color-primary':      '#1A56DB',
       '--color-accent':       '#3B82F6',
-      '--color-debit':        '#0F52BA',
-      '--color-credit':       '#3B82F6',
-      '--heading-color':      '#0F52BA',
-      '--sidebar-bg':         'linear-gradient(180deg, #0F172A 0%, #1E293B 100%)',
+      '--color-debit':        '#1A56DB',
+      '--color-credit':       '#10B981',
+      '--heading-color':      '#1A56DB',
+      '--sidebar-bg':         'linear-gradient(180deg, #0A1124 0%, #111C3A 100%)',
     },
   },
 
@@ -302,64 +303,74 @@ export const COLOR_PALETTES = [
 /* ── Font options ──────────────────────────────────────────────── */
 export const FONT_OPTIONS = [
   {
-    id: 'montserrat',
-    name: 'Montserrat',
-    label: 'Montserrat (Default)',
-    value: "'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    googleUrl: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap',
-    preview: 'The quick brown fox jumps over the lazy dog',
+    id: 'plus-jakarta-sans',
+    name: 'Plus Jakarta Sans',
+    label: 'Plus Jakarta Sans — Executive Fintech (Default)',
+    value: "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    googleUrl: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap',
+    preview: 'NPR 1,48,250.00 • 13% VAT Annexure 13',
   },
   {
-    id: 'inter',
-    name: 'Inter',
-    label: 'Inter — Modern & Clean',
-    value: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    googleUrl: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap',
-    preview: 'The quick brown fox jumps over the lazy dog',
+    id: 'cabinet-grotesk',
+    name: 'Cabinet Grotesk',
+    label: 'Cabinet Grotesk — Distinctive Editorial & Bold',
+    value: "'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    googleUrl: 'https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,500,700,400,900&display=swap',
+    preview: 'NPR 1,48,250.00 • 13% VAT Annexure 13',
+  },
+  {
+    id: 'sora',
+    name: 'Sora',
+    label: 'Sora — Futuristic Tech & Crisp Clarity',
+    value: "'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    googleUrl: 'https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap',
+    preview: 'NPR 1,48,250.00 • 13% VAT Annexure 13',
   },
   {
     id: 'outfit',
     name: 'Outfit',
-    label: 'Outfit — Friendly & Round',
+    label: 'Outfit — Premium Geometric & Modern',
     value: "'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     googleUrl: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap',
-    preview: 'The quick brown fox jumps over the lazy dog',
+    preview: 'NPR 1,48,250.00 • 13% VAT Annexure 13',
   },
   {
-    id: 'nunito',
-    name: 'Nunito',
-    label: 'Nunito — Soft & Readable',
-    value: "'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    googleUrl: 'https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap',
-    preview: 'The quick brown fox jumps over the lazy dog',
+    id: 'geist',
+    name: 'Geist',
+    label: 'Geist — Precision Swiss Minimalist',
+    value: "'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+    googleUrl: 'https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&display=swap',
+    preview: 'NPR 1,48,250.00 • 13% VAT Annexure 13',
   },
   {
-    id: 'dm-sans',
-    name: 'DM Sans',
-    label: 'DM Sans — Minimal & Sharp',
-    value: "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    googleUrl: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap',
-    preview: 'The quick brown fox jumps over the lazy dog',
+    id: 'inter',
+    name: 'Inter',
+    label: 'Inter — Clean Data Utility',
+    value: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    googleUrl: 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap',
+    preview: 'NPR 1,48,250.00 • 13% VAT Annexure 13',
   },
   {
     id: 'poppins',
     name: 'Poppins',
-    label: 'Poppins — Bold & Geometric',
+    label: 'Poppins — Bold & Rounded',
     value: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     googleUrl: 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap',
-    preview: 'The quick brown fox jumps over the lazy dog',
+    preview: 'NPR 1,48,250.00 • 13% VAT Annexure 13',
   },
 ];
 
 /* ── Apply a palette to the document root ──────────────────────── */
 export function applyPalette(palette, sidebarMode = null) {
   const root = document.documentElement;
-  Object.entries(palette.vars).forEach(([key, value]) => {
-    root.style.setProperty(key, value);
-  });
+  if (palette.vars) {
+    Object.entries(palette.vars).forEach(([key, value]) => {
+      root.style.setProperty(key, value);
+    });
+  }
 
   // Determine effective sidebar mode: passed mode > palette default > 'dark'
-  const effectiveSidebarMode = sidebarMode || palette.sidebarMode || (palette.vars['--bg-sidebar'] === '#ffffff' ? 'light' : 'dark');
+  const effectiveSidebarMode = sidebarMode || palette.sidebarMode || (palette.vars?.['--bg-sidebar'] === '#ffffff' ? 'light' : 'dark');
 
   if (effectiveSidebarMode === 'light') {
     // Light sidebar theme
@@ -369,14 +380,14 @@ export function applyPalette(palette, sidebarMode = null) {
     root.style.setProperty('--sidebar-border', 'rgba(0, 0, 0, 0.08)');
     root.style.setProperty('--sidebar-text', '#1E293B');
     root.style.setProperty('--text-sidebar', '#1E293B');
-    root.style.setProperty('--text-sidebar-hover', palette.vars['--primary'] || '#0F766E');
-    root.style.setProperty('--bg-sidebar-hover', palette.vars['--primary-light'] || '#E6F4F2');
+    root.style.setProperty('--text-sidebar-hover', palette.vars?.['--primary'] || palette.primary || '#0F766E');
+    root.style.setProperty('--bg-sidebar-hover', palette.vars?.['--primary-light'] || '#E6F4F2');
   } else {
     // Dark sidebar theme (matches palette dark tone)
-    const darkBg = palette.vars['--bg-sidebar'] && palette.vars['--bg-sidebar'] !== '#ffffff' 
+    const darkBg = palette.vars?.['--bg-sidebar'] && palette.vars['--bg-sidebar'] !== '#ffffff' 
       ? palette.vars['--bg-sidebar'] 
-      : (palette.swatches[0] || '#092825');
-    const darkGrad = palette.vars['--sidebar-bg'] || `linear-gradient(180deg, ${darkBg} 0%, #0F3D39 100%)`;
+      : (palette.swatches?.[0] || '#092825');
+    const darkGrad = palette.vars?.['--sidebar-bg'] || `linear-gradient(180deg, ${darkBg} 0%, #0F3D39 100%)`;
 
     root.style.setProperty('--sidebar-type', 'dark');
     root.style.setProperty('--bg-sidebar', darkBg);
@@ -384,8 +395,17 @@ export function applyPalette(palette, sidebarMode = null) {
     root.style.setProperty('--sidebar-border', 'rgba(255, 255, 255, 0.08)');
     root.style.setProperty('--sidebar-text', 'rgba(255, 255, 255, 0.85)');
     root.style.setProperty('--text-sidebar', 'rgba(255, 255, 255, 0.85)');
-    root.style.setProperty('--text-sidebar-hover', palette.vars['--accent'] || '#14B8A6');
+    root.style.setProperty('--text-sidebar-hover', palette.vars?.['--accent'] || palette.accent || '#14B8A6');
     root.style.setProperty('--bg-sidebar-hover', 'rgba(255, 255, 255, 0.08)');
+  }
+
+  // Also sync to useThemeStore if matched
+  const matchedThemePalette = BUILTIN_PALETTES.find(p => p.id === palette.id);
+  if (matchedThemePalette) {
+    useThemeStore.getState().setPalette({
+      ...matchedThemePalette,
+      sidebarType: effectiveSidebarMode === 'light' ? 'white' : 'dark',
+    });
   }
 }
 
@@ -401,13 +421,19 @@ export function applyFont(fontOption) {
     document.head.appendChild(link);
   }
   document.documentElement.style.setProperty('--font-sans', fontOption.value);
+  document.documentElement.style.setProperty('--font-primary', fontOption.value);
+  document.documentElement.style.setProperty('--font-data', fontOption.value);
   document.body.style.fontFamily = fontOption.value;
+
+  // Sync to themeStore
+  if (fontOption.name) {
+    useThemeStore.getState().setFont(fontOption.name);
+  }
 }
 
 /* ── Reset all custom properties to CSS defaults ──────────────── */
 export function resetToDefault() {
   const root = document.documentElement;
-  // Remove all inline overrides — falls back to :root in CSS
   const defaultVarKeys = Object.keys(DEFAULT_PALETTE.vars);
   defaultVarKeys.forEach(key => root.style.removeProperty(key));
   root.style.removeProperty('--font-sans');
@@ -427,9 +453,14 @@ export function saveBranding(paletteId, fontId, sidebarMode = 'dark') {
 }
 
 export function loadBranding() {
+  const currentThemeStore = useThemeStore.getState();
+  const fallbackPaletteId = currentThemeStore?.palette?.id || DEFAULT_PALETTE_ID;
+  const match = FONT_OPTIONS.find(f => f.name === currentThemeStore?.font || f.id === currentThemeStore?.font);
+  const fallbackFontId = match?.id || 'plus-jakarta-sans';
+
   return {
-    paletteId:   localStorage.getItem(STORAGE_KEY_PALETTE) || DEFAULT_PALETTE_ID,
-    fontId:      localStorage.getItem(STORAGE_KEY_FONT)    || 'montserrat',
+    paletteId:   localStorage.getItem(STORAGE_KEY_PALETTE) || fallbackPaletteId,
+    fontId:      localStorage.getItem(STORAGE_KEY_FONT)    || fallbackFontId,
     sidebarMode: localStorage.getItem(STORAGE_KEY_SIDEBAR) || 'dark',
   };
 }

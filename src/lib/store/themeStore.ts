@@ -3,7 +3,14 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export type ThemeMode = "light" | "dark" | "system";
-export type FontFamily = "Poppins" | "Inter" | "Roboto" | "Outfit" | "DM Sans";
+export type FontFamily =
+  | "Plus Jakarta Sans"
+  | "Cabinet Grotesk"
+  | "Sora"
+  | "Outfit"
+  | "Geist"
+  | "Inter"
+  | "Poppins";
 
 export interface ColorPalette {
   id: string;
@@ -26,6 +33,23 @@ export interface ColorPalette {
 }
 
 export const BUILTIN_PALETTES: ColorPalette[] = [
+  // ─── Option 3: Nordic Deep Teal (Linear Style - System Default) ──
+  {
+    id: "nordic-deep-teal",
+    name: "Nordic Deep Teal (Linear Style - Default)",
+    primary: "#0F766E",
+    secondary: "#115E59",
+    accent: "#14B8A6",
+    bg: "#F7F9F9",
+    sidebarType: "dark",
+    sidebarBg: "linear-gradient(180deg, #092825 0%, #0F3D39 100%)",
+    sidebarText: "rgba(255, 255, 255, 0.85)",
+    sidebarBorder: "rgba(20, 184, 166, 0.15)",
+    headingColor: "#0F766E",
+    debitColor: "#0F766E",
+    creditColor: "#14B8A6",
+    logoKey: "classic",
+  },
   // ─── Official Pivotal Brand Palettes from Logos ──────────────────
   {
     id: "pivotal-cloud-growth",
@@ -59,7 +83,82 @@ export const BUILTIN_PALETTES: ColorPalette[] = [
     headerBg: "#FFFFFF",
     debitColor: "#1A56DB",
     creditColor: "#10B981",
-    logoKey: "modern",
+    logoKey: "classic",
+  },
+  {
+    id: "heirloom-plum-brunch",
+    name: "Heirloom Plum Brunch",
+    primary: "#6B1E3C",
+    secondary: "#561830",
+    accent: "#D45C1C",
+    bg: "#f9f1f5",
+    sidebarType: "white",
+    sidebarBg: "#ffffff",
+    sidebarText: "#4a1f30",
+    sidebarBorder: "#e8d5de",
+    headingColor: "#6B1E3C",
+    debitColor: "#6B1E3C",
+    creditColor: "#D45C1C",
+  },
+  {
+    id: "amethyst-wisteria-twilight",
+    name: "Amethyst Wisteria Twilight",
+    primary: "#6B4A8E",
+    secondary: "#573c73",
+    accent: "#6B6EA8",
+    bg: "#f4f0f8",
+    sidebarType: "white",
+    sidebarBg: "#ffffff",
+    sidebarText: "#3d2454",
+    sidebarBorder: "#dfd5eb",
+    headingColor: "#6B4A8E",
+    debitColor: "#6B4A8E",
+    creditColor: "#6B6EA8",
+  },
+  {
+    id: "jade-mahogany-muse",
+    name: "Jade Mahogany Muse",
+    primary: "#5C2830",
+    secondary: "#4a2028",
+    accent: "#A8C8B8",
+    bg: "#f5f0ee",
+    sidebarType: "white",
+    sidebarBg: "#ffffff",
+    sidebarText: "#3c2018",
+    sidebarBorder: "#e5d8d4",
+    headingColor: "#5C2830",
+    debitColor: "#5C2830",
+    creditColor: "#A8C8B8",
+  },
+  {
+    id: "sage-peridot-morning",
+    name: "Sage Peridot Morning",
+    primary: "#2E5C30",
+    secondary: "#254a28",
+    accent: "#8E9C30",
+    bg: "#f0f5f0",
+    sidebarType: "white",
+    sidebarBg: "#ffffff",
+    sidebarText: "#1e3e20",
+    sidebarBorder: "#d5e4d6",
+    headingColor: "#2E5C30",
+    debitColor: "#2E5C30",
+    creditColor: "#8E9C30",
+  },
+  {
+    id: "jade-blossom-daylight",
+    name: "Jade Blossom Daylight",
+    primary: "#3CB878",
+    secondary: "#30a068",
+    accent: "#3C3C3C",
+    bg: "#f0faf4",
+    sidebarType: "white",
+    sidebarBg: "#ffffff",
+    sidebarText: "#1a4030",
+    sidebarBorder: "#d0eedf",
+    headingColor: "#3CB878",
+    debitColor: "#3CB878",
+    creditColor: "#3CB878",
   },
   // ─── 6 Official Pivotal Brand Options ─────────────────────────────
   {
@@ -307,7 +406,7 @@ export const useThemeStore = create<ThemeState>()(
       mode: "light",
       resolvedMode: "light",
       palette: BUILTIN_PALETTES[0],
-      font: "Poppins",
+      font: "Plus Jakarta Sans",
       sidebarCollapsed: false,
       sidebarOpen: false,
 
@@ -341,8 +440,11 @@ export const useThemeStore = create<ThemeState>()(
 
       setFont: (font) => {
         set({ font });
-        document.documentElement.style.setProperty("--font-primary", `"${font}", sans-serif`);
-        document.documentElement.style.setProperty("--font-data", `"${font}", sans-serif`);
+        const fontValue = `"${font}", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`;
+        document.documentElement.style.setProperty("--font-primary", fontValue);
+        document.documentElement.style.setProperty("--font-data", fontValue);
+        document.documentElement.style.setProperty("--font-sans", fontValue);
+        document.body.style.fontFamily = fontValue;
       },
 
       toggleSidebar: () =>
@@ -355,11 +457,14 @@ export const useThemeStore = create<ThemeState>()(
         const root = document.documentElement;
         root.style.setProperty("--finance-blue", palette.primary);
         root.style.setProperty("--color-primary", palette.primary);
+        root.style.setProperty("--primary", palette.primary);
         root.style.setProperty("--teal", palette.secondary);
         root.style.setProperty("--color-success", palette.secondary);
         root.style.setProperty("--aqua", palette.accent);
         root.style.setProperty("--color-accent", palette.accent);
-        
+        root.style.setProperty("--accent", palette.accent);
+        root.style.setProperty("--accent-blue", palette.accent);
+
         if (palette.headingColor) {
           root.style.setProperty("--heading-color", palette.headingColor);
         } else {
@@ -384,44 +489,39 @@ export const useThemeStore = create<ThemeState>()(
           root.style.setProperty("--logo-bg", "transparent");
         }
 
-        if (palette.sidebarBg) {
-          root.style.setProperty("--sidebar-bg", palette.sidebarBg);
+        const isLightSidebar = palette.sidebarType === "white";
+        if (isLightSidebar) {
+          root.style.setProperty("--sidebar-type", "light");
+          root.style.setProperty("--bg-sidebar", "#FFFFFF");
+          root.style.setProperty("--sidebar-bg", "#FFFFFF");
+          root.style.setProperty("--sidebar-border", "rgba(0, 0, 0, 0.08)");
+          root.style.setProperty("--sidebar-text", "#1E293B");
+          root.style.setProperty("--text-sidebar", "#1E293B");
+          root.style.setProperty("--text-sidebar-hover", palette.primary);
+          root.style.setProperty("--bg-sidebar-hover", "rgba(0, 0, 0, 0.04)");
         } else {
-          root.style.setProperty("--sidebar-bg", "linear-gradient(180deg, #0a0e1a 0%, #0d1222 100%)");
+          const darkGrad = palette.sidebarBg || "linear-gradient(180deg, #071F32 0%, #0B314F 100%)";
+          root.style.setProperty("--sidebar-type", "dark");
+          root.style.setProperty("--sidebar-bg", darkGrad);
+          root.style.setProperty("--bg-sidebar", palette.primary === "#1A56DB" ? "#0A1124" : palette.primary === "#0083CA" ? "#071F32" : "#092825");
+          root.style.setProperty("--sidebar-border", palette.sidebarBorder || "rgba(255, 255, 255, 0.08)");
+          root.style.setProperty("--sidebar-text", palette.sidebarText || "rgba(255, 255, 255, 0.85)");
+          root.style.setProperty("--text-sidebar", palette.sidebarText || "rgba(255, 255, 255, 0.85)");
+          root.style.setProperty("--text-sidebar-hover", palette.accent || "#00B4D8");
+          root.style.setProperty("--bg-sidebar-hover", "rgba(255, 255, 255, 0.08)");
         }
 
-        if (palette.sidebarText) {
-          root.style.setProperty("--sidebar-text", palette.sidebarText);
-        } else {
-          root.style.setProperty("--sidebar-text", "rgba(255, 255, 255, 0.75)");
-        }
+        root.style.setProperty("--color-debit", palette.debitColor || palette.primary || "#0083CA");
+        root.style.setProperty("--color-credit", palette.creditColor || palette.secondary || "#62B237");
 
-        if (palette.sidebarBorder) {
-          root.style.setProperty("--sidebar-border", palette.sidebarBorder);
-        } else {
-          root.style.setProperty("--sidebar-border", "rgba(255, 255, 255, 0.08)");
-        }
-
-        root.style.setProperty("--sidebar-type", palette.sidebarType || "dark");
-
-        root.style.setProperty("--color-debit", palette.debitColor || palette.primary || "#143E9F");
-        root.style.setProperty("--color-credit", palette.creditColor || palette.accent || "#FC814A");
-
-        if (palette.id === "open-emr") {
-          root.style.setProperty("--border-color", "rgba(26, 31, 54, 0.12)");
-          root.style.setProperty("--border-strong", "rgba(26, 31, 54, 0.22)");
-          root.style.setProperty("--bg-card", "#FFFFFF");
-          root.style.setProperty("--bg-secondary", "#f1f3f7");
-          root.style.setProperty("--bg-tertiary", "#e2e5ed");
-          root.style.setProperty("--text-primary", "#1a1f36");
-          root.style.setProperty("--text-secondary", "#5c6478");
-          root.style.setProperty("--text-tertiary", "#9299aa");
-        }
-
-        if (resolvedMode === "dark") {
-          root.style.setProperty("--deep-navy", palette.bg);
-        } else if (palette.bg && palette.bg !== "#F7F8FA") {
-          root.style.setProperty("--bg-primary", palette.bg);
+        if (palette.bg) {
+          root.style.setProperty("--bg-layout", palette.bg);
+          root.style.setProperty("--bg-app", palette.bg);
+          if (resolvedMode === "dark") {
+            root.style.setProperty("--deep-navy", palette.bg);
+          } else {
+            root.style.setProperty("--bg-primary", palette.bg);
+          }
         }
       },
     }),

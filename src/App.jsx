@@ -10,6 +10,7 @@ import QuickCreateModal from './components/QuickCreateModal';
 import BrandingModal from './components/BrandingModal';
 import { Plus, ChevronDown, Check, LogOut, Upload, ArrowRight, Globe } from 'lucide-react';
 import PublicLayout from './layouts/PublicLayout';
+import BrandThemeHUD from './components/BrandThemeHUD';
 import LandingPage from './pages/public/LandingPage';
 import LoginPage from './pages/public/LoginPage';
 import SignupPage from './pages/public/SignupPage';
@@ -928,20 +929,23 @@ export default function App() {
   }, [resolvedMode, mode, setMode]);
 
   return (
-    <Routes>
-      {/* Public Routes from Pivotal ERP */}
-      <Route path="/" element={<PublicLayout />}>
-        <Route index element={<LandingPage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="signup" element={<SignupPage />} />
-        <Route path="trial" element={<TrialPage />} />
-        <Route path="blog" element={<BlogPage />} />
-        <Route path="change-password" element={<ChangePasswordPage />} />
-      </Route>
+    <>
+      <Routes>
+        {/* Public Routes from Pivotal ERP */}
+        <Route path="/" element={<PublicLayout />}>
+          <Route index element={<LandingPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
+          <Route path="trial" element={<TrialPage />} />
+          <Route path="blog" element={<BlogPage />} />
+          <Route path="change-password" element={<ChangePasswordPage />} />
+        </Route>
 
-      <Route path="/erp"            element={<ERPApp collapsed={collapsed} setCollapsed={setCollapsed} tabs={tabs} activeTabId={activeTabId} setActiveTabId={setActiveTabId} closeTab={closeTab} activeTab={activeTab} openTab={openTab} toggleQuickAccess={toggleQuickAccess} quickAccessItems={quickAccessItems} spotlight={spotlight} setSpotlight={setSpotlight} brandingOpen={brandingOpen} setBrandingOpen={setBrandingOpen} activePaletteId={activePaletteId} setActivePaletteId={setActivePaletteId} activeFontId={activeFontId} setActiveFontId={setActiveFontId} quickCreate={quickCreate} setQuickCreate={setQuickCreate} shortcutsOpen={shortcutsOpen} setShortcutsOpen={setShortcutsOpen} shortcutColumns={shortcutColumns} shortcutData={shortcutData} darkMode={darkMode} setDarkMode={setDarkMode} />} />
-      <Route path="/erp/*"          element={<ERPApp collapsed={collapsed} setCollapsed={setCollapsed} tabs={tabs} activeTabId={activeTabId} setActiveTabId={setActiveTabId} closeTab={closeTab} activeTab={activeTab} openTab={openTab} toggleQuickAccess={toggleQuickAccess} quickAccessItems={quickAccessItems} spotlight={spotlight} setSpotlight={setSpotlight} brandingOpen={brandingOpen} setBrandingOpen={setBrandingOpen} activePaletteId={activePaletteId} setActivePaletteId={setActivePaletteId} activeFontId={activeFontId} setActiveFontId={setActiveFontId} quickCreate={quickCreate} setQuickCreate={setQuickCreate} shortcutsOpen={shortcutsOpen} setShortcutsOpen={setShortcutsOpen} shortcutColumns={shortcutColumns} shortcutData={shortcutData} darkMode={darkMode} setDarkMode={setDarkMode} />} />
-      <Route path="*"               element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="/erp"            element={<ERPApp collapsed={collapsed} setCollapsed={setCollapsed} tabs={tabs} activeTabId={activeTabId} setActiveTabId={setActiveTabId} closeTab={closeTab} activeTab={activeTab} openTab={openTab} toggleQuickAccess={toggleQuickAccess} quickAccessItems={quickAccessItems} spotlight={spotlight} setSpotlight={setSpotlight} brandingOpen={brandingOpen} setBrandingOpen={setBrandingOpen} activePaletteId={activePaletteId} setActivePaletteId={setActivePaletteId} activeFontId={activeFontId} setActiveFontId={setActiveFontId} quickCreate={quickCreate} setQuickCreate={setQuickCreate} shortcutsOpen={shortcutsOpen} setShortcutsOpen={setShortcutsOpen} shortcutColumns={shortcutColumns} shortcutData={shortcutData} darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        <Route path="/erp/*"          element={<ERPApp collapsed={collapsed} setCollapsed={setCollapsed} tabs={tabs} activeTabId={activeTabId} setActiveTabId={setActiveTabId} closeTab={closeTab} activeTab={activeTab} openTab={openTab} toggleQuickAccess={toggleQuickAccess} quickAccessItems={quickAccessItems} spotlight={spotlight} setSpotlight={setSpotlight} brandingOpen={brandingOpen} setBrandingOpen={setBrandingOpen} activePaletteId={activePaletteId} setActivePaletteId={setActivePaletteId} activeFontId={activeFontId} setActiveFontId={setActiveFontId} quickCreate={quickCreate} setQuickCreate={setQuickCreate} shortcutsOpen={shortcutsOpen} setShortcutsOpen={setShortcutsOpen} shortcutColumns={shortcutColumns} shortcutData={shortcutData} darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        <Route path="*"               element={<Navigate to="/" replace />} />
+      </Routes>
+      <BrandThemeHUD />
+    </>
   );
 }
