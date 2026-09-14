@@ -19,7 +19,7 @@ function LoginSlider() {
   const settings = useMemo(() => blogStore.getSliderSettings(), []);
 
   const slides = useMemo(() => {
-    const list: { title: string; subtitle: string; tag?: string; image?: string; isBlog?: boolean }[] = [];
+    const list: { title: string; subtitle: string; tag?: string; image?: string; isBlog?: boolean; blogId?: string }[] = [];
     settings.slideItems.forEach((itemId) => {
       if (itemId === "features") {
         list.push({
@@ -36,7 +36,8 @@ function LoginSlider() {
             subtitle: blog.excerpt,
             tag: blog.tags.join(" · "),
             image: blog.imageUrl,
-            isBlog: true
+            isBlog: true,
+            blogId: blog.id
           });
         }
       }
@@ -113,10 +114,13 @@ function LoginSlider() {
         </p>
 
         {activeSlide.isBlog && (
-          <Link to="/blog" style={{
-            color: isDark ? "#22D3EE" : "#A7F3D0", textDecoration: "none", fontSize: "0.85rem",
-            fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 6, marginTop: "1rem"
-          }}>
+          <Link
+            to={activeSlide.blogId ? `/blog?id=${encodeURIComponent(activeSlide.blogId)}` : "/blog"}
+            style={{
+              color: isDark ? "#22D3EE" : "#A7F3D0", textDecoration: "none", fontSize: "0.85rem",
+              fontWeight: 700, display: "inline-flex", alignItems: "center", gap: 6, marginTop: "1rem"
+            }}
+          >
             Read Full Article ↗
           </Link>
         )}

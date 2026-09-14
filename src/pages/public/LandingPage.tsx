@@ -81,26 +81,39 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
         }}
       >
         {/* Left: Brand Logo Lockup */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: "260px" }}>
-          <Link
-            to="/"
+        <Link
+          to="/"
+          onClick={(e) => {
+            if (window.location.pathname === "/" || window.location.pathname === "/erp_ui" || window.location.pathname === "/erp_ui/") {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+              window.scrollTo({ top: 0 });
+            }
+          }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            minWidth: "260px",
+            textDecoration: "none",
+            cursor: "pointer",
+            transition: "opacity 0.2s ease",
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
+          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          title="Pivotal ERP - Return to Hero"
+        >
+          <img
+            src={brandLogo}
+            alt="Pivotal ERP"
             style={{
-              display: "flex",
-              alignItems: "center",
-              textDecoration: "none",
+              height: 42,
+              width: "auto",
+              objectFit: "contain",
+              display: "block",
             }}
-          >
-            <img
-              src={brandLogo}
-              alt="Pivotal ERP"
-              style={{
-                height: 42,
-                width: "auto",
-                objectFit: "contain",
-                display: "block",
-              }}
-            />
-          </Link>
+          />
 
           {/* Parent company endorsement lockup (like Busy | an indiamart company) */}
           <div
@@ -140,7 +153,7 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
               }}
             />
           </div>
-        </div>
+        </Link>
 
         {/* Center: Main Landing Page Navigation Menu */}
         <div
@@ -2809,7 +2822,31 @@ function Footer() {
         >
           <div>
             <div style={{ marginBottom: "1.25rem" }}>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", background: "rgba(255,255,255,0.06)", padding: "8px 14px", borderRadius: "10px" }}>
+              <Link
+                to="/"
+                onClick={(e) => {
+                  if (window.location.pathname === "/" || window.location.pathname === "/erp_ui" || window.location.pathname === "/erp_ui/") {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  } else {
+                    window.scrollTo({ top: 0 });
+                  }
+                }}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  background: "rgba(255,255,255,0.06)",
+                  padding: "8px 14px",
+                  borderRadius: "10px",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                  transition: "background 0.2s, opacity 0.2s",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.06)")}
+                title="Pivotal ERP - Return to Top"
+              >
                 <img
                   src={brandLogo}
                   alt="Pivotal ERP"
@@ -2844,7 +2881,7 @@ function Footer() {
                     }}
                   />
                 </div>
-              </div>
+              </Link>
             </div>
             <p
               style={{
