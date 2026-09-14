@@ -2736,43 +2736,43 @@ function CtaBanner() {
               style={{
                 background: "#FFFFFF",
                 color: palette.primary,
-                fontWeight: 800,
-                fontSize: "1.05rem",
-                padding: "16px 32px",
-                borderRadius: "12px",
-                border: "1.5px solid #FFFFFF",
-                cursor: "pointer",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.08)",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "10px",
-                height: "56px",
-                boxSizing: "border-box",
-                transition: "transform 0.18s, box-shadow 0.18s",
-              }}
-            >
-              Start 14-Day Free Trial <ArrowRight size={18} />
-            </button>
-            <button
-              onClick={() => navigate("/login")}
-              style={{
-                background: "rgba(255, 255, 255, 0.18)",
-                color: "#FFFFFF",
                 fontWeight: 700,
-                fontSize: "1.05rem",
-                padding: "16px 32px",
-                borderRadius: "12px",
-                border: "1.5px solid rgba(255, 255, 255, 0.5)",
+                fontSize: "0.95rem",
+                padding: "12px 26px",
+                borderRadius: "8px",
+                border: "none",
                 cursor: "pointer",
-                backdropFilter: "blur(14px)",
+                boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
                 gap: "8px",
-                height: "56px",
+                height: "46px",
                 boxSizing: "border-box",
-                transition: "background 0.18s, border-color 0.18s",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Start 14-Day Free Trial <ArrowRight size={16} />
+            </button>
+            <button
+              onClick={() => navigate("/login")}
+              style={{
+                background: "rgba(255, 255, 255, 0.15)",
+                color: "#FFFFFF",
+                fontWeight: 600,
+                fontSize: "0.95rem",
+                padding: "12px 26px",
+                borderRadius: "8px",
+                border: "1px solid rgba(255, 255, 255, 0.35)",
+                cursor: "pointer",
+                backdropFilter: "blur(10px)",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "8px",
+                height: "46px",
+                boxSizing: "border-box",
+                transition: "all 0.2s ease",
               }}
             >
               Sign In to Your Account
