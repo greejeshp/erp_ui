@@ -2691,40 +2691,7 @@ function CtaBanner() {
           }}
         />
 
-        {/* Subtle geometric dot grid pattern */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-            opacity: 0.8,
-            pointerEvents: "none",
-          }}
-        />
-
         <div style={{ maxWidth: "780px", margin: "0 auto", position: "relative", zIndex: 1 }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              background: "rgba(255, 255, 255, 0.16)",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255, 255, 255, 0.25)",
-              color: "#FFFFFF",
-              fontSize: "0.825rem",
-              fontWeight: 700,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              padding: "6px 16px",
-              borderRadius: "100px",
-              marginBottom: "1.5rem",
-            }}
-          >
-            <Sparkles size={14} /> Ready For Modernization
-          </div>
-
           <h2
             style={{
               fontSize: "clamp(2.2rem, 4.2vw, 3.25rem)",
@@ -2773,12 +2740,15 @@ function CtaBanner() {
                 fontSize: "1.05rem",
                 padding: "16px 32px",
                 borderRadius: "12px",
-                border: "none",
+                border: "1.5px solid #FFFFFF",
                 cursor: "pointer",
                 boxShadow: "0 8px 24px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.08)",
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "10px",
+                height: "56px",
+                boxSizing: "border-box",
                 transition: "transform 0.18s, box-shadow 0.18s",
               }}
             >
@@ -2791,14 +2761,17 @@ function CtaBanner() {
                 color: "#FFFFFF",
                 fontWeight: 700,
                 fontSize: "1.05rem",
-                padding: "16px 30px",
+                padding: "16px 32px",
                 borderRadius: "12px",
                 border: "1.5px solid rgba(255, 255, 255, 0.5)",
                 cursor: "pointer",
                 backdropFilter: "blur(14px)",
                 display: "inline-flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: "8px",
+                height: "56px",
+                boxSizing: "border-box",
                 transition: "background 0.18s, border-color 0.18s",
               }}
             >
