@@ -2855,7 +2855,7 @@ export function PaymentForm({
               {plan.name} Tier
             </span>
             <span style={{ fontSize: "0.78rem", color: isDark ? "#94A3B8" : "#64748B", marginLeft: 8 }}>
-              (Up to {plan.maxUsers} Users · {billingCycle === "annual" ? "Annual Billing" : "Monthly Billing"})
+              (Up to {plan.maxUsers} Users · Annual Billing)
             </span>
           </div>
           <div style={{ fontSize: "0.95rem", fontWeight: 800, color: isDark ? "#F8FAFC" : "#0F172A" }}>
@@ -3889,7 +3889,7 @@ function SignupPageInner() {
         {/* ── Step 2: Choose Plan (Enterprise 3-Column Grid) ── */}
         {step === 2 && (
           <div>
-            {/* Header: Configured Entity on Left + Monthly/Annual Enterprise Toggle on Right */}
+            {/* Header: Configured Entity on Left + Annual Plan Badge on Right */}
             <div style={{
               display: "flex",
               justifyContent: "space-between",
@@ -3909,76 +3909,30 @@ function SignupPageInner() {
                 </div>
               </div>
 
-              {/* Enterprise Billing Cycle Segmented Toggle */}
+              {/* Annual Billing Badge */}
               <div style={{
                 display: "inline-flex",
                 alignItems: "center",
-                padding: "3px",
-                borderRadius: 24,
-                background: isDark ? "rgba(255,255,255,0.06)" : "#F1F5F9",
-                border: isDark ? "1px solid rgba(255,255,255,0.12)" : "1px solid #E2E8F0",
+                gap: 6,
+                padding: "6px 14px",
+                borderRadius: 20,
+                background: isDark ? "rgba(16,185,129,0.15)" : "#DCFCE7",
+                border: isDark ? "1px solid rgba(16,185,129,0.3)" : "1px solid #86EFAC",
+                color: isDark ? "#34D399" : "#15803D",
+                fontSize: "0.78rem",
+                fontWeight: 700,
               }}>
-                <button
-                  type="button"
-                  onClick={() => setBillingCycle("monthly")}
-                  style={{
-                    padding: "5px 14px",
-                    borderRadius: 20,
-                    border: "none",
-                    background: billingCycle === "monthly"
-                      ? (isDark ? "#0F172A" : "#FFFFFF")
-                      : "transparent",
-                    color: billingCycle === "monthly"
-                      ? (isDark ? "#22D3EE" : "#0F766E")
-                      : (isDark ? "#94A3B8" : "#64748B"),
-                    fontSize: "0.78rem",
-                    fontWeight: billingCycle === "monthly" ? 700 : 500,
-                    cursor: "pointer",
-                    boxShadow: billingCycle === "monthly"
-                      ? (isDark ? "0 2px 8px rgba(0,0,0,0.4)" : "0 2px 6px rgba(0,0,0,0.08)")
-                      : "none",
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  Monthly
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setBillingCycle("annual")}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 6,
-                    padding: "5px 14px",
-                    borderRadius: 20,
-                    border: "none",
-                    background: billingCycle === "annual"
-                      ? (isDark ? "#0F172A" : "#FFFFFF")
-                      : "transparent",
-                    color: billingCycle === "annual"
-                      ? (isDark ? "#22D3EE" : "#0F766E")
-                      : (isDark ? "#94A3B8" : "#64748B"),
-                    fontSize: "0.78rem",
-                    fontWeight: billingCycle === "annual" ? 700 : 500,
-                    cursor: "pointer",
-                    boxShadow: billingCycle === "annual"
-                      ? (isDark ? "0 2px 8px rgba(0,0,0,0.4)" : "0 2px 6px rgba(0,0,0,0.08)")
-                      : "none",
-                    transition: "all 0.2s ease",
-                  }}
-                >
-                  <span>Annual</span>
-                  <span style={{
-                    fontSize: "0.65rem",
-                    fontWeight: 700,
-                    padding: "1px 6px",
-                    borderRadius: 10,
-                    background: isDark ? "rgba(16,185,129,0.2)" : "#DCFCE7",
-                    color: isDark ? "#34D399" : "#15803D",
-                  }}>
-                    Save ~17%
-                  </span>
-                </button>
+                <span>Annual Enterprise Plan</span>
+                <span style={{
+                  fontSize: "0.65rem",
+                  fontWeight: 800,
+                  padding: "1px 6px",
+                  borderRadius: 10,
+                  background: isDark ? "rgba(52,211,153,0.25)" : "#BBF7D0",
+                  color: isDark ? "#A7F3D0" : "#166534",
+                }}>
+                  Save ~17%
+                </span>
               </div>
             </div>
 
@@ -3990,13 +3944,9 @@ function SignupPageInner() {
             }}>
               {plans.map((p) => {
                 const isSelected = selectedPlan === p.id;
-                // Calculate price based on selected billing cycle
-                const displayPrice = billingCycle === "annual"
-                  ? Math.round((p.annualPrice || p.price * 10) / 12)
-                  : p.price;
-                const billedTotal = billingCycle === "annual"
-                  ? (p.annualPrice || p.price * 10)
-                  : p.price;
+                // Annual pricing only
+                const displayPrice = Math.round((p.annualPrice || p.price * 10) / 12);
+                const billedTotal = p.annualPrice || p.price * 10;
 
                 return (
                   <div
@@ -4065,9 +4015,7 @@ function SignupPageInner() {
                           Rs. {displayPrice.toLocaleString()}
                         </div>
                         <div style={{ fontSize: "0.72rem", color: isDark ? "#94A3B8" : "#64748B", marginTop: 2 }}>
-                          {billingCycle === "annual"
-                            ? `per month · Rs. ${billedTotal.toLocaleString()} billed annually`
-                            : "per month · billed monthly"}
+                          per month · Rs. {billedTotal.toLocaleString()} billed annually
                         </div>
                       </div>
 
