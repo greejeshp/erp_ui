@@ -1306,21 +1306,6 @@ function BentoCapabilities() {
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 3.5rem" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              color: palette.primary,
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              marginBottom: "0.75rem",
-            }}
-          >
-            <Zap size={15} /> Platform Features &amp; Architecture
-          </div>
           <h2
             style={{
               fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
@@ -1630,18 +1615,6 @@ function ComparisonSection() {
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 3rem" }}>
-          <div
-            style={{
-              color: palette.primary,
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Why Modern CFOs Switch
-          </div>
           <h2
             style={{
               fontSize: "clamp(1.9rem, 3.5vw, 2.5rem)",
@@ -1795,21 +1768,6 @@ function RoiCalculator() {
     >
       <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 3rem" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              color: palette.secondary,
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              marginBottom: "0.75rem",
-            }}
-          >
-            <Calculator size={15} /> Quantifiable ROI
-          </div>
           <h2
             style={{
               fontSize: "clamp(1.9rem, 3.5vw, 2.5rem)",
@@ -2070,21 +2028,9 @@ function IndustriesSection() {
           style={{
             textAlign: "center",
             maxWidth: "760px",
-            margin: "0 auto 3rem",
+            margin: "0 auto 3.5rem",
           }}
         >
-          <div
-            style={{
-              color: palette.secondary,
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Configured for your exact niche
-          </div>
           <h2
             style={{
               fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
@@ -2328,18 +2274,6 @@ function PricingSection() {
             margin: "0 auto 3.5rem",
           }}
         >
-          <div
-            style={{
-              color: palette.primary,
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Annual Enterprise Pricing
-          </div>
           <h2
             style={{
               fontSize: "clamp(2rem, 3.8vw, 2.75rem)",
@@ -2618,18 +2552,6 @@ function FAQSection() {
     >
       <div style={{ maxWidth: "860px", margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <div
-            style={{
-              color: palette.primary,
-              fontSize: "0.85rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-              marginBottom: "0.75rem",
-            }}
-          >
-            Got Questions?
-          </div>
           <h2
             style={{
               fontSize: "clamp(2rem, 3.8vw, 2.5rem)",
