@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { mockDB, MOCK_PLANS } from "@/lib/mock/mockData";
 import { useThemeStore, BUILTIN_PALETTES } from "@/lib/store/themeStore";
 import { useBrandLogo } from "@/lib/brand/logoHelper";
@@ -48,6 +48,7 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isDark = mode === "dark";
   const brandLogo = useBrandLogo();
+  const location = useLocation();
 
   return (
     <>
@@ -84,11 +85,11 @@ function LandingNav({ scrolled }: { scrolled: boolean }) {
         <Link
           to="/"
           onClick={(e) => {
-            if (window.location.pathname === "/" || window.location.pathname === "/erp_ui" || window.location.pathname === "/erp_ui/") {
+            if (location.pathname === "/") {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             } else {
-              window.scrollTo({ top: 0 });
+              window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
           style={{
@@ -2801,6 +2802,7 @@ function CtaBanner() {
 function Footer() {
   const brandLogo = useBrandLogo();
   const { palette } = useThemeStore();
+  const location = useLocation();
 
   return (
     <footer
@@ -2825,11 +2827,11 @@ function Footer() {
               <Link
                 to="/"
                 onClick={(e) => {
-                  if (window.location.pathname === "/" || window.location.pathname === "/erp_ui" || window.location.pathname === "/erp_ui/") {
+                  if (location.pathname === "/") {
                     e.preventDefault();
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   } else {
-                    window.scrollTo({ top: 0 });
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                   }
                 }}
                 style={{

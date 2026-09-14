@@ -442,9 +442,7 @@ function EnterpriseSplitLayout({
   return (
     <div
       style={{
-        height: "100vh",
-        maxHeight: "100vh",
-        overflow: "hidden",
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "row",
         background: isDark ? "#090D16" : "#F8FAFC",
@@ -472,9 +470,10 @@ function EnterpriseSplitLayout({
           boxShadow: isDark
             ? "4px 0 24px rgba(0,0,0,0.4)"
             : `4px 0 20px ${palette.primary}33`,
-          height: "100vh",
-          maxHeight: "100vh",
-          overflowY: "hidden",
+          minHeight: "100vh",
+          position: "sticky",
+          top: 0,
+          alignSelf: "flex-start",
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: "1.35rem", paddingTop: "1.75rem" }}>
@@ -766,9 +765,7 @@ function EnterpriseSplitLayout({
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          height: "100vh",
-          maxHeight: "100vh",
-          overflowY: "auto",
+          minHeight: "100vh",
         }}
       >
         {/* Top Minimal Bar */}
