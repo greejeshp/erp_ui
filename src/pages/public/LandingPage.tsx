@@ -2643,63 +2643,124 @@ function CtaBanner() {
   const isDark = mode === "dark";
 
   return (
-    <section style={{ padding: "4rem 1.5rem", background: isDark ? "#092825" : "#FFFFFF" }}>
+    <section style={{ padding: "5rem 1.5rem", background: isDark ? "#061715" : "#F8FAFC" }}>
       <div
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
-          borderRadius: "20px",
+          borderRadius: "24px",
           background: `linear-gradient(135deg, ${palette.primary} 0%, ${palette.secondary} 100%)`,
-          padding: "4rem 2rem",
+          padding: "5rem 2.5rem",
           textAlign: "center",
-          color: "white",
-          boxShadow: `0 20px 50px ${palette.primary}44`,
+          color: "#FFFFFF",
+          boxShadow: isDark
+            ? `0 24px 60px rgba(0,0,0,0.5), 0 0 40px ${palette.primary}33`
+            : `0 24px 60px ${palette.primary}35`,
           position: "relative",
           overflow: "hidden",
+          border: "1px solid rgba(255, 255, 255, 0.15)",
         }}
       >
+        {/* Ambient Top Right Glow */}
         <div
           style={{
             position: "absolute",
-            top: -100,
+            top: -120,
             right: -100,
-            width: 300,
-            height: 300,
+            width: 360,
+            height: 360,
             borderRadius: "50%",
-            background: `${palette.accent || palette.secondary}33`,
-            filter: "blur(50px)",
+            background: "radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 70%)",
+            filter: "blur(40px)",
             pointerEvents: "none",
           }}
         />
 
-        <div style={{ maxWidth: "700px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+        {/* Ambient Bottom Left Glow */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: -120,
+            left: -80,
+            width: 320,
+            height: 320,
+            borderRadius: "50%",
+            background: `${palette.accent || palette.secondary}44`,
+            filter: "blur(60px)",
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Subtle geometric dot grid pattern */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            backgroundImage: "radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+            opacity: 0.8,
+            pointerEvents: "none",
+          }}
+        />
+
+        <div style={{ maxWidth: "780px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "rgba(255, 255, 255, 0.16)",
+              backdropFilter: "blur(12px)",
+              border: "1px solid rgba(255, 255, 255, 0.25)",
+              color: "#FFFFFF",
+              fontSize: "0.825rem",
+              fontWeight: 700,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              padding: "6px 16px",
+              borderRadius: "100px",
+              marginBottom: "1.5rem",
+            }}
+          >
+            <Sparkles size={14} /> Ready For Modernization
+          </div>
+
           <h2
             style={{
-              fontSize: "clamp(2.1rem, 4vw, 3rem)",
+              fontSize: "clamp(2.2rem, 4.2vw, 3.25rem)",
               fontWeight: 800,
-              lineHeight: 1.2,
-              marginBottom: "1rem",
+              lineHeight: 1.18,
+              marginBottom: "1.25rem",
+              color: "#FFFFFF",
+              letterSpacing: "-0.03em",
+              textShadow: "0 2px 10px rgba(0,0,0,0.18)",
             }}
           >
             Ready to upgrade your enterprise accounting?
           </h2>
+
           <p
             style={{
-              fontSize: "1.1rem",
-              color: "rgba(255, 255, 255, 0.85)",
-              marginBottom: "2.25rem",
-              lineHeight: 1.6,
+              fontSize: "clamp(1.05rem, 1.8vw, 1.2rem)",
+              color: "rgba(255, 255, 255, 0.95)",
+              marginBottom: "2.75rem",
+              lineHeight: 1.65,
+              fontWeight: 400,
+              maxWidth: "680px",
+              margin: "0 auto 2.75rem",
+              textShadow: "0 1px 4px rgba(0,0,0,0.12)",
             }}
           >
             Join 500+ Nepalese enterprises who streamlined their VAT filing,
-            financial statements, and branch audits with Pivotal ERP.
+            financial statements, and multi-branch audits with Pivotal ERP.
           </p>
 
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "1rem",
+              alignItems: "center",
+              gap: "1.25rem",
               flexWrap: "wrap",
             }}
           >
@@ -2708,16 +2769,17 @@ function CtaBanner() {
               style={{
                 background: "#FFFFFF",
                 color: palette.primary,
-                fontWeight: 700,
-                fontSize: "1rem",
-                padding: "14px 28px",
-                borderRadius: "10px",
+                fontWeight: 800,
+                fontSize: "1.05rem",
+                padding: "16px 32px",
+                borderRadius: "12px",
                 border: "none",
                 cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
-                display: "flex",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.08)",
+                display: "inline-flex",
                 alignItems: "center",
-                gap: "8px",
+                gap: "10px",
+                transition: "transform 0.18s, box-shadow 0.18s",
               }}
             >
               Start 14-Day Free Trial <ArrowRight size={18} />
@@ -2725,15 +2787,19 @@ function CtaBanner() {
             <button
               onClick={() => navigate("/login")}
               style={{
-                background: "rgba(255, 255, 255, 0.15)",
-                color: "white",
-                fontWeight: 600,
-                fontSize: "1rem",
-                padding: "14px 28px",
-                borderRadius: "10px",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
+                background: "rgba(255, 255, 255, 0.18)",
+                color: "#FFFFFF",
+                fontWeight: 700,
+                fontSize: "1.05rem",
+                padding: "16px 30px",
+                borderRadius: "12px",
+                border: "1.5px solid rgba(255, 255, 255, 0.5)",
                 cursor: "pointer",
-                backdropFilter: "blur(10px)",
+                backdropFilter: "blur(14px)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                transition: "background 0.18s, border-color 0.18s",
               }}
             >
               Sign In to Your Account
