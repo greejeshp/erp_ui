@@ -106,12 +106,11 @@
 html {
   min-height: 100%;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
+  overflow-y: auto;
 }
 body {
   min-height: 100%;
   overflow-x: hidden;
-  overscroll-behavior-y: none;
 }
 #root {
   min-height: 100%;
